@@ -1,0 +1,4 @@
+zfit
+zfit_physics
+-e git+https://github.com/zfit/benchmarks#egg=zfit_benchmarks
+seaborn
