@@ -33,6 +33,8 @@ wget -O $TMP_DIR/pandoc.deb https://github.com/jgm/pandoc/releases/download/2.9.
 sudo dpkg -i $TMP_DIR/pandoc.deb
 wget -O $TMP_DIR/pandoc-crossref.tar.xz https://github.com/lierdakil/pandoc-crossref/releases/download/v0.4.0.0-alpha6d/pandoc-crossref-Linux-2.9.2.1.tar.xz
 sudo tar -xf $TMP_DIR/pandoc-crossref.tar.xz -C /usr/bin/ pandoc-crossref
+wget -O $TMP_DIR/pandoc-plot.tar.xz https://github.com/LaurentRDC/pandoc-plot/releases/download/0.3.0.0/pandoc-plot-linux-x86_64.tar.xz
+sudo tar -xf $TMP_DIR/pandoc-plot.tar.xz -C /usr/bin/ pandoc-plot
 
 rm -rf $TMP_DIR
 
