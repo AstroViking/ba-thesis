@@ -14,4 +14,4 @@ TEXLIVE_BIN_DIR="$TEXLIVE_DIR/2020/bin/x86_64-linux/"
 $DIR/install-tools.sh
 
 jupyter nbconvert --to markdown $DIR/../thesis.ipynb
-export PATH=$PATH:$TEXLIVE_BIN_DIR && pandoc -f markdown -s $DIR/../thesis.md -t pdf -o $DIR/../thesis.pdf --filter pandoc-plot --filter pandoc-crossref --filter pandoc-citeproc --bibliography=citations.bib --csl=$DIR/../citation-styles/aip.csl -M date="$(date "+%B %e, %Y")" --template $DIR/../templates/eisvogel-m --listings --number-sections --highlight-style breezedark
+export PATH=$PATH:$TEXLIVE_BIN_DIR && pandoc -f markdown -s $DIR/../thesis.md -t pdf -o $DIR/../thesis.pdf --filter pandoc-crossref --filter pandoc-citeproc --bibliography=citations.bib --csl=$DIR/../citation-styles/aip.csl -M date="$(date "+%B %e, %Y")" --template $DIR/../templates/eisvogel-m --listings --number-sections --highlight-style breezedark
