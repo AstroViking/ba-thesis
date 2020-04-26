@@ -894,7 +894,7 @@ $if(titlepage-background)$
   {\Large \textsf{$subtitle$}}
   $endif$
   \vskip 2em
-  \noindent {\Large \textsf{$for(author)$$author$$sep$, $endfor$} \vskip 0.6em \textsf{$date$}}
+  \noindent {\Large \textsf{Author: $for(author)$$author$$sep$, $endfor$} \vskip 0.1em \textsf{Supervisors: $for(supervisor)$$supervisor$$sep$, $endfor$} \vskip 0.6em \textsf{$institute$} \vskip 0.1em \textsf{$date$}}
   \vfill
 }
 $else$
@@ -907,7 +907,7 @@ $else$
   {\Large \textsf{$subtitle$}}
   $endif$
   \vskip 2em
-  \noindent {\Large \textsf{$for(author)$$author$$sep$, $endfor$}}
+  \noindent {\Large \textsf{$for(author)$$author$$sep$, $endfor$} \vskip 0.1em \textsf{Supervisors: $for(supervisor)$$supervisor$$sep$, $endfor$} \vskip 0.6em \textsf{$institute$}}
   \vfill
 }
 $endif$
@@ -980,12 +980,6 @@ $endif$
 }
 $endif$
 $endif$
-$if(lot)$
-\listoftables
-$endif$
-$if(lof)$
-\listoffigures
-$endif$
 $if(linestretch)$
 \setstretch{$linestretch$}
 $endif$
@@ -1028,6 +1022,17 @@ $else$
 $endif$
 
 $endif$
+
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+$if(lol)$
+\lstlistoflistings
+$endif$
+
 $for(include-after)$
 $include-after$
 
