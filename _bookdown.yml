@@ -1,0 +1,6 @@
+delete_merged_file: true
+output_dir: "docs"
+view: https://github.com/AstroViking/ba-thesis/blob/master/%s
+edit: https://github.com/AstroViking/ba-thesis/edit/master/%s
+#before_chapter_script: ["scripts/createvirtualEnv.R", "scripts/useVirtualEnv.R"]
+before_chapter_script: "scripts/useVirtualEnv.R"

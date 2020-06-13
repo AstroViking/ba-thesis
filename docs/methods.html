@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Methods | Efficiency of Univariate Kernel Density Estimation with TensorFlow</title>
+  <meta name="description" content="1 Methods | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Methods | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Methods | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  
+  
+  
+
+<meta name="author" content="Marc Steiner" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="abstract-1.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+true
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Efficiency of Univariate Kernel Density Estimation with TensorFlow</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="methods" class="section level1">
+<h1><span class="header-section-number">1</span> Methods</h1>
+<div id="generation-of-test-distribution" class="section level2">
+<h2><span class="header-section-number">1.1</span> Generation of Test Distribution</h2>
+<p>Listing: Test Distribution generation</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="methods.html#cb3-1"></a>r_seed <span class="op">=</span> <span class="dv">1978239485</span></span>
+<span id="cb3-2"><a href="methods.html#cb3-2"></a></span>
+<span id="cb3-3"><a href="methods.html#cb3-3"></a>n_datapoints <span class="op">=</span> <span class="dv">1000000</span></span>
+<span id="cb3-4"><a href="methods.html#cb3-4"></a></span>
+<span id="cb3-5"><a href="methods.html#cb3-5"></a></span>
+<span id="cb3-6"><a href="methods.html#cb3-6"></a></span>
+<span id="cb3-7"><a href="methods.html#cb3-7"></a>tfd <span class="op">=</span> tfp.distributions</span>
+<span id="cb3-8"><a href="methods.html#cb3-8"></a></span>
+<span id="cb3-9"><a href="methods.html#cb3-9"></a>mix_3gauss_1exp_1uni <span class="op">=</span> tfd.Mixture(</span>
+<span id="cb3-10"><a href="methods.html#cb3-10"></a></span>
+<span id="cb3-11"><a href="methods.html#cb3-11"></a>  cat<span class="op">=</span>tfd.Categorical(probs<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>]),</span>
+<span id="cb3-12"><a href="methods.html#cb3-12"></a></span>
+<span id="cb3-13"><a href="methods.html#cb3-13"></a>  components<span class="op">=</span>[</span>
+<span id="cb3-14"><a href="methods.html#cb3-14"></a></span>
+<span id="cb3-15"><a href="methods.html#cb3-15"></a>    tfd.Normal(loc<span class="op">=-</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.4</span>),</span>
+<span id="cb3-16"><a href="methods.html#cb3-16"></a></span>
+<span id="cb3-17"><a href="methods.html#cb3-17"></a>    tfd.Normal(loc<span class="op">=+</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb3-18"><a href="methods.html#cb3-18"></a></span>
+<span id="cb3-19"><a href="methods.html#cb3-19"></a>    tfd.Normal(loc<span class="op">=+</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.3</span>),</span>
+<span id="cb3-20"><a href="methods.html#cb3-20"></a></span>
+<span id="cb3-21"><a href="methods.html#cb3-21"></a>    tfd.Exponential(rate<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb3-22"><a href="methods.html#cb3-22"></a></span>
+<span id="cb3-23"><a href="methods.html#cb3-23"></a>    tfd.Uniform(low<span class="op">=-</span><span class="dv">5</span>, high<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb3-24"><a href="methods.html#cb3-24"></a></span>
+<span id="cb3-25"><a href="methods.html#cb3-25"></a>])</span>
+<span id="cb3-26"><a href="methods.html#cb3-26"></a></span>
+<span id="cb3-27"><a href="methods.html#cb3-27"></a></span>
+<span id="cb3-28"><a href="methods.html#cb3-28"></a></span>
+<span id="cb3-29"><a href="methods.html#cb3-29"></a>data <span class="op">=</span> mix_3gauss_1exp_1uni.sample(sample_shape<span class="op">=</span>n_datapoints, seed<span class="op">=</span>r_seed).numpy()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="methods.html#cb4-1"></a></span>
+<span id="cb4-2"><a href="methods.html#cb4-2"></a></span>
+<span id="cb4-3"><a href="methods.html#cb4-3"></a>ax <span class="op">=</span> plt.gca()</span>
+<span id="cb4-4"><a href="methods.html#cb4-4"></a></span>
+<span id="cb4-5"><a href="methods.html#cb4-5"></a></span>
+<span id="cb4-6"><a href="methods.html#cb4-6"></a></span>
+<span id="cb4-7"><a href="methods.html#cb4-7"></a>n_testpoints <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb4-8"><a href="methods.html#cb4-8"></a></span>
+<span id="cb4-9"><a href="methods.html#cb4-9"></a>fac1 <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> np.pi)</span>
+<span id="cb4-10"><a href="methods.html#cb4-10"></a></span>
+<span id="cb4-11"><a href="methods.html#cb4-11"></a>exp_fac1 <span class="op">=</span> <span class="fl">-1.0</span><span class="op">/</span><span class="fl">2.0</span></span>
+<span id="cb4-12"><a href="methods.html#cb4-12"></a></span>
+<span id="cb4-13"><a href="methods.html#cb4-13"></a>h1 <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb4-14"><a href="methods.html#cb4-14"></a></span>
+<span id="cb4-15"><a href="methods.html#cb4-15"></a>y_fac1 <span class="op">=</span> <span class="fl">1.0</span><span class="op">/</span>(h1<span class="op">*</span>n_datapoints)</span>
+<span id="cb4-16"><a href="methods.html#cb4-16"></a></span>
+<span id="cb4-17"><a href="methods.html#cb4-17"></a></span>
+<span id="cb4-18"><a href="methods.html#cb4-18"></a></span>
+<span id="cb4-19"><a href="methods.html#cb4-19"></a></span>
+<span id="cb4-20"><a href="methods.html#cb4-20"></a></span>
+<span id="cb4-21"><a href="methods.html#cb4-21"></a><span class="cf">with</span> Timer (<span class="st">&quot;Benchmarking&quot;</span>) <span class="im">as</span> timer:</span>
+<span id="cb4-22"><a href="methods.html#cb4-22"></a></span>
+<span id="cb4-23"><a href="methods.html#cb4-23"></a>    <span class="cf">with</span> timer.child(<span class="st">&#39;tf.simple-kde&#39;</span>):</span>
+<span id="cb4-24"><a href="methods.html#cb4-24"></a></span>
+<span id="cb4-25"><a href="methods.html#cb4-25"></a>        <span class="at">@tf.function</span>(autograph<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-26"><a href="methods.html#cb4-26"></a></span>
+<span id="cb4-27"><a href="methods.html#cb4-27"></a>        <span class="kw">def</span> tf_kde():</span>
+<span id="cb4-28"><a href="methods.html#cb4-28"></a></span>
+<span id="cb4-29"><a href="methods.html#cb4-29"></a>            fac <span class="op">=</span> tf.constant(fac1, tf.float64)</span>
+<span id="cb4-30"><a href="methods.html#cb4-30"></a></span>
+<span id="cb4-31"><a href="methods.html#cb4-31"></a>            exp_fac <span class="op">=</span> tf.constant(exp_fac1, tf.float64)</span>
+<span id="cb4-32"><a href="methods.html#cb4-32"></a></span>
+<span id="cb4-33"><a href="methods.html#cb4-33"></a>            y_fac <span class="op">=</span> tf.constant(y_fac1, tf.float64)</span>
+<span id="cb4-34"><a href="methods.html#cb4-34"></a></span>
+<span id="cb4-35"><a href="methods.html#cb4-35"></a>            h <span class="op">=</span> tf.constant(h1, tf.float64)</span>
+<span id="cb4-36"><a href="methods.html#cb4-36"></a></span>
+<span id="cb4-37"><a href="methods.html#cb4-37"></a>            data_tf <span class="op">=</span> tf.convert_to_tensor(data, tf.float64)</span>
+<span id="cb4-38"><a href="methods.html#cb4-38"></a></span>
+<span id="cb4-39"><a href="methods.html#cb4-39"></a>            gauss_kernel <span class="op">=</span> <span class="kw">lambda</span> x: tf.math.multiply(fac, tf.math.exp(tf.math.multiply(exp_fac, tf.math.square(x))))</span>
+<span id="cb4-40"><a href="methods.html#cb4-40"></a></span>
+<span id="cb4-41"><a href="methods.html#cb4-41"></a>            calc_value <span class="op">=</span> <span class="kw">lambda</span> x: tf.math.multiply(y_fac, tf.math.reduce_sum(gauss_kernel(tf.math.divide(tf.math.subtract(x, data_tf), h))))</span>
+<span id="cb4-42"><a href="methods.html#cb4-42"></a></span>
+<span id="cb4-43"><a href="methods.html#cb4-43"></a>            x <span class="op">=</span> tf.linspace(tf.cast(<span class="op">-</span><span class="fl">5.0</span>, tf.float64), tf.cast(<span class="fl">5.0</span>, tf.float64), num<span class="op">=</span>tf.cast(n_testpoints, tf.int64))</span>
+<span id="cb4-44"><a href="methods.html#cb4-44"></a></span>
+<span id="cb4-45"><a href="methods.html#cb4-45"></a>            y <span class="op">=</span> tf.zeros(n_testpoints)</span>
+<span id="cb4-46"><a href="methods.html#cb4-46"></a></span>
+<span id="cb4-47"><a href="methods.html#cb4-47"></a>        </span>
+<span id="cb4-48"><a href="methods.html#cb4-48"></a></span>
+<span id="cb4-49"><a href="methods.html#cb4-49"></a>            <span class="cf">return</span> x, tf.map_fn(calc_value, x)</span>
+<span id="cb4-50"><a href="methods.html#cb4-50"></a></span>
+<span id="cb4-51"><a href="methods.html#cb4-51"></a>        x, y <span class="op">=</span> tf_kde()</span>
+<span id="cb4-52"><a href="methods.html#cb4-52"></a></span>
+<span id="cb4-53"><a href="methods.html#cb4-53"></a>        sns.lineplot(x, y, ax<span class="op">=</span>ax)</span>
+<span id="cb4-54"><a href="methods.html#cb4-54"></a></span>
+<span id="cb4-55"><a href="methods.html#cb4-55"></a>        timer.stop()</span>
+<span id="cb4-56"><a href="methods.html#cb4-56"></a></span>
+<span id="cb4-57"><a href="methods.html#cb4-57"></a>    <span class="cf">with</span> timer.child(<span class="st">&#39;simple-kde&#39;</span>):</span>
+<span id="cb4-58"><a href="methods.html#cb4-58"></a></span>
+<span id="cb4-59"><a href="methods.html#cb4-59"></a>        fac <span class="op">=</span> fac1</span>
+<span id="cb4-60"><a href="methods.html#cb4-60"></a></span>
+<span id="cb4-61"><a href="methods.html#cb4-61"></a>        exp_fac <span class="op">=</span> exp_fac1</span>
+<span id="cb4-62"><a href="methods.html#cb4-62"></a></span>
+<span id="cb4-63"><a href="methods.html#cb4-63"></a>        y_fac <span class="op">=</span> y_fac1</span>
+<span id="cb4-64"><a href="methods.html#cb4-64"></a></span>
+<span id="cb4-65"><a href="methods.html#cb4-65"></a>        h <span class="op">=</span> h1</span>
+<span id="cb4-66"><a href="methods.html#cb4-66"></a></span>
+<span id="cb4-67"><a href="methods.html#cb4-67"></a>        </span>
+<span id="cb4-68"><a href="methods.html#cb4-68"></a></span>
+<span id="cb4-69"><a href="methods.html#cb4-69"></a>        gauss_kernel <span class="op">=</span> <span class="kw">lambda</span> x: fac <span class="op">*</span> np.exp(exp_fac <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb4-70"><a href="methods.html#cb4-70"></a></span>
+<span id="cb4-71"><a href="methods.html#cb4-71"></a>        x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">5.0</span>, <span class="fl">5.0</span>, num<span class="op">=</span>n_testpoints)     </span>
+<span id="cb4-72"><a href="methods.html#cb4-72"></a></span>
+<span id="cb4-73"><a href="methods.html#cb4-73"></a>        y2 <span class="op">=</span> np.zeros(n_testpoints)</span>
+<span id="cb4-74"><a href="methods.html#cb4-74"></a></span>
+<span id="cb4-75"><a href="methods.html#cb4-75"></a>        <span class="cf">for</span> i, x_i <span class="kw">in</span> <span class="bu">enumerate</span>(x2):</span>
+<span id="cb4-76"><a href="methods.html#cb4-76"></a></span>
+<span id="cb4-77"><a href="methods.html#cb4-77"></a>            y2[i] <span class="op">=</span> y_fac <span class="op">*</span> np.<span class="bu">sum</span>(gauss_kernel((x_i<span class="op">-</span>data)<span class="op">/</span>h))</span>
+<span id="cb4-78"><a href="methods.html#cb4-78"></a></span>
+<span id="cb4-79"><a href="methods.html#cb4-79"></a>        sns.lineplot(x2,y2, ax<span class="op">=</span>ax)</span>
+<span id="cb4-80"><a href="methods.html#cb4-80"></a></span>
+<span id="cb4-81"><a href="methods.html#cb4-81"></a>        timer.stop()</span>
+<span id="cb4-82"><a href="methods.html#cb4-82"></a></span>
+<span id="cb4-83"><a href="methods.html#cb4-83"></a>    <span class="cf">with</span> timer.child(<span class="st">&#39;sns.distplot&#39;</span>):</span>
+<span id="cb4-84"><a href="methods.html#cb4-84"></a></span>
+<span id="cb4-85"><a href="methods.html#cb4-85"></a>        plot <span class="op">=</span> sns.distplot(data, bins<span class="op">=</span><span class="dv">1000</span>, kde<span class="op">=</span><span class="va">True</span>, rug<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb4-86"><a href="methods.html#cb4-86"></a></span>
+<span id="cb4-87"><a href="methods.html#cb4-87"></a>        timer.stop()</span>
+<span id="cb4-88"><a href="methods.html#cb4-88"></a></span>
+<span id="cb4-89"><a href="methods.html#cb4-89"></a></span>
+<span id="cb4-90"><a href="methods.html#cb4-90"></a></span>
+<span id="cb4-91"><a href="methods.html#cb4-91"></a><span class="bu">print</span>(timer.child(<span class="st">&#39;tf.simple-kde&#39;</span>).elapsed)</span></code></pre></div>
+<pre><code>## 1.452238089999999814949660504</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="methods.html#cb6-1"></a><span class="bu">print</span>(timer.child(<span class="st">&#39;simple-kde&#39;</span>).elapsed)</span></code></pre></div>
+<pre><code>## 1.767026535000001175035322376</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="methods.html#cb8-1"></a><span class="bu">print</span>(timer.child(<span class="st">&#39;sns.distplot&#39;</span>).elapsed)</span></code></pre></div>
+<pre><code>## 1.109701278999999374264007201</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="methods.html#cb10-1"></a>plt.savefig(<span class="st">&#39;plots/kde.png&#39;</span>)</span></code></pre></div>
+<div class="figure">
+<img src="plots/kde.png" id="fig:kde" alt="" />
+<p class="caption">Kernel Density Estimation</p>
+</div>
+<p><span class="math display">\[
+\mathbf{r} \equiv \begin{bmatrix}
+y \\
+\theta
+\end{bmatrix}
+\]</span> {#eq:eq1}</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="abstract-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/AstroViking/ba-thesis/edit/master/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/AstroViking/ba-thesis/blob/master/index.Rmd",
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

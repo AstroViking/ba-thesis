@@ -1,1 +1,6 @@
-*_files/*
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.log
+.DS_Store
