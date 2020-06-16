@@ -1,5 +1,0 @@
-# Abstract {.unnumbered.unlisted}
-
-This study aims at comparing the speed and accuracy of differentu methods for one-dimensional kernel density estimation in Python/TensorFlow, especially concerning applications in high energy physics.
-
-Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm.

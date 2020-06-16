@@ -1,11 +1,14 @@
 bookdown::gitbook:
-  css: style.css
+  highlight: "breezedark"
+  link-citations: True
   config:
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
   latex_engine: xelatex
-  keep_tex: yes
+  keep_tex: False
   template: "templates/eisvogel-m.latex"
+  pandoc_args:
+    "--metadata-file=_pdf_options.yml"
 bookdown::epub_book: default

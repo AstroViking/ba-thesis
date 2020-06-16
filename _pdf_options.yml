@@ -1,0 +1,15 @@
+reference-section-title: "References"
+titlepage: True
+titlepage-background: "templates/images/background.pdf"
+titlepage-text-color: "FFFFFF"
+toc: True
+toc-own-page: True
+lof: True
+lot: True
+lol: True
+thanks: True
+footnotes-pretty: True
+logo: "templates/images/uzh-logo.png"
+titlegraphic: "templates/images/uzh-logo.png"
+highlight-style: "darkbreeze"
+listings: True

@@ -3,4 +3,5 @@
 .RData
 .Ruserdata
 *.log
+*.lol
 .DS_Store
