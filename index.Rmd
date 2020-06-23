@@ -7,11 +7,12 @@ institute: ["University of Zurich"]
 keywords: ["Kernel Density Estimation", "Python", "TensorFlow"]
 site: "bookdown::bookdown_site"
 bibliography: ["citations/papers.bib"]
+link-citations: True
 csl: "citation-styles/aip.csl"
 ---
 
 # Abstract {-}
 
-This study aims at comparing the speed and accuracy of differentu methods for one-dimensional kernel density estimation in Python/TensorFlow, especially concerning applications in high energy physics.
+An implementation of a one-dimensional Kernel Density Estimation in TensorFlow is proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python as well to density estimations by smoothed histograms it is shown as competitive and useful in real world applications.
 
-Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm.
+\tableofcontents

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 Introduction | Efficiency of Univariate Kernel Density Estimation with TensorFlow</title>
-  <meta name="description" content="1 Introduction | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <title>4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow</title>
+  <meta name="description" content="4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
   <meta name="generator" content="bookdown 0.19.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 Introduction | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <meta property="og:title" content="4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 Introduction | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <meta name="twitter:title" content="4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="currentState.html"/>
+<link rel="prev" href="tensorflowImplementation.html"/>
+<link rel="next" href="summary.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -160,42 +160,17 @@ code span.wa { color: #da4453; } /* Warning */
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction</h1>
-<div id="kernel-density-estimation" class="section level2">
-<h2><span class="header-section-number">1.1</span> Kernel Density Estimation</h2>
-<p>In many fields of science and in physics especially, scientists need to estimate the probability density function (PDF) from which a set of data is drawn without having a approximate model of the underlying mechanisms, since they are too complex to be fully understood analytically. So called parametric methods fail, because the knowledge of the system is to poor to design a model, which parameters can then be fitted by some goodness-of-fit criterion like log-likelihood or <span class="math inline">\(\chi^2\)</span>. In the particle accelerator at CERN for instance, they record a whooping 25 gigabytes of data per second<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, resulting from the process of many physical interactions that occur almost simultaneously, making it impossible to anticipate features of the distribution one observes.</p>
-<p>To combat this so called non-parametric methods like histograms are used. By summing the the data up in discrete bins we can approximate the underlying parent distribution, without needing any knowledge of the physical interactions. However there are also many more sophisticated non-parametric methods, one in particular is Kernel Density Estimation (KDE), which can be looked at as a sort of generalized histogram.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p>Histograms tend to produce PDFs that are highly dependent on bin width and bin positioning, meaning the interpretion of the data changes by a lot by two arbitrary parameters. KDE circumvents this problem by replacing each data point with a so called kernel that specifies how much it influences its neighbouring regions as well. The kernels themselves are centered at the data point directly, eliminating the need for arbitrary bin positioning<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. Since KDE still depends on kernel width (instead of bin width), one might argue that this is not a major improvement. However, upon closer inspection, one finds that the underlying PDF does depend less strongly on the kernel width than histograms on bin width and it is much easier to specify rules for an approximately optimal kernel width than it is to do so for bin width.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> In addition, by specifying a smooth kernel, one gets a smooth distribution as well, which is often desirable or even expected from theory.</p>
-<p>Due to this increased robustness, KDE is particular useful in High-Energy Physics (HEP) where it has been used for confidence level calculations for the Higgs Searches at the Large Electron Positron Collider (LEP)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. However there is still room for improvement and certain more sophisticated approaches to Kernel Density Estimation have been proposed in dependence on specific areas of application<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
-</div>
-<div id="zfit-and-tensorflow" class="section level2">
-<h2><span class="header-section-number">1.2</span> zfit and TensorFlow</h2>
-<p>Currently the basic principle of KDE has been implemented in various programming languages and statistical modeling tools. The standard framework used in HEP, that includes KDE is the ROOT/RooFit toolkit written in C++. However, Python plays an increasingly large role in the natural sciences due to support by corporations involved in Big Data and its superior accessibility. To elevate research in HEP, zfit, a new alternative to RooFit, was proposed. It is implemented on top of TensorFlow, one of the leading Python frameworks to handle large data and high parallelization, allowing a transparent usage of CPUs and GPUs<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
-<p>So far there exists no direct implementation of Kernel Density Estimation in zfit nor TensorFlow, but various implementations in Python. This implementations will be discussed in the next chapter before I propose an implementation of Kernel Density Estimation in TensorFlow. Starting with a rather simple implementation, multiple improvements from recent papers are integrated to ameliorate its efficiency. Efficiency and accuracy of the implementation are then tested by comparing it to other implementations in pure Python and simple smoothed histograms.</p>
-<p>In the last chapter I compare its accurracy and efficiency to smoothed histograms and implementations in pure Python.</p>
+<div id="comparison" class="section level1">
+<h1><span class="header-section-number">4</span> Comparison</h1>
 
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p><span class="citation"><a href="#ref-cern" role="doc-biblioref">1</a></span><a href="introduction.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p><span class="citation"><a href="#ref-rosenblatt1956remarks" role="doc-biblioref">2</a></span><a href="introduction.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><span class="citation"><a href="#ref-duong2001" role="doc-biblioref">3</a></span><a href="introduction.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p><span class="citation"><a href="#ref-lerner2013" role="doc-biblioref">4</a></span><a href="introduction.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p><span class="citation"><a href="#ref-cranmer2000kernel" role="doc-biblioref">5</a></span><a href="introduction.html#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p><span class="citation"><a href="#ref-cranmer2000kernel" role="doc-biblioref">5</a></span><a href="introduction.html#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p><span class="citation"><a href="#ref-eschle2019zfit" role="doc-biblioref">6</a></span><a href="introduction.html#fnref7" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="currentState.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tensorflowImplementation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -226,7 +201,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/01-introduction.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/04-comparison.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -234,7 +209,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/01-introduction.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/04-comparison.Rmd",
 "text": null
 },
 "download": ["thesis.pdf", "thesis.epub"],

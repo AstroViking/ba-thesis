@@ -2,7 +2,7 @@ reference-section-title: "References"
 titlepage: True
 titlepage-background: "templates/images/background.pdf"
 titlepage-text-color: "FFFFFF"
-toc: True
+toc: False
 toc-own-page: True
 lof: True
 lot: True

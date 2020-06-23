@@ -1,6 +1,8 @@
-# Methods
+# Implementation {#tensorflowImplementation}
 
-We describe our methods in this chapter.
+The following is an implementation of Kernel Density Estimation using TensorFlow.
+
+
 ```{python}
 import numpy as np
 

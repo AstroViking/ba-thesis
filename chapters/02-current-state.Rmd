@@ -1,0 +1,7 @@
+# Current state of the art {#currentState}
+
+...
+
+For humongous data streams (like at CERN @cern), Kernel Density Estimation itself needs to be approximated.
+
+...

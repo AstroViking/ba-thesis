@@ -1,1 +1,20 @@
 # Introduction
+
+## Kernel Density Estimation
+
+In many fields of science and in physics especially, scientists need to estimate the probability density function (PDF) from which a set of data is drawn without having a approximate model of the underlying mechanisms, since they are too complex to be fully understood analytically. So called parametric methods fail, because the knowledge of the system is to poor to design a model, which parameters can then be fitted by some goodness-of-fit criterion like log-likelihood or $\chi^2$. In the particle accelerator at CERN for instance, they record a whooping 25 gigabytes of data per second^[@cern], resulting from the process of many physical interactions that occur almost simultaneously, making it impossible to anticipate features of the distribution one observes.
+
+To combat this so called non-parametric methods like histograms are used. By summing the the data up in discrete bins we can approximate the underlying parent distribution, without needing any knowledge of the physical interactions. However there are also many more sophisticated non-parametric methods, one in particular is Kernel Density Estimation (KDE), which can be looked at as a sort of generalized histogram ^[@rosenblatt1956remarks]. 
+
+Histograms tend to produce PDFs that are highly dependent on bin width and bin positioning, meaning the interpretion of the data changes by a lot by two arbitrary parameters. KDE circumvents this problem by replacing each data point with a so called kernel that specifies how much it influences its neighbouring regions as well. The kernels themselves are centered at the data point directly, eliminating the need for arbitrary bin positioning^[@duong2001]. Since KDE still depends on kernel width (instead of bin width), one might argue that this is not a major improvement. However, upon closer inspection, one finds that the underlying PDF does depend less strongly on the kernel width than histograms on bin width and it is much easier to specify rules for an approximately optimal kernel width than it is to do so for bin width ^[@lerner2013]. In addition, by specifying a smooth kernel, one gets a smooth distribution as well, which is often desirable or even expected from theory.
+
+Due to this increased robustness, KDE is particular useful in High-Energy Physics (HEP) where it has been used for confidence level calculations for the Higgs Searches at the Large Electron Positron Collider (LEP)^[@cranmer2000kernel]. However there is still room for improvement and certain more sophisticated approaches to Kernel Density Estimation have been proposed in dependence on specific areas of application^[@cranmer2000kernel].
+
+
+## zfit and TensorFlow
+
+Currently the basic principle of KDE has been implemented in various programming languages and statistical modeling tools. The standard framework used in HEP, that includes KDE is the ROOT/RooFit toolkit written in C++. However, Python plays an increasingly large role in the natural sciences due to support by corporations involved in Big Data and its superior accessibility. To elevate research in HEP, zfit, a new alternative to RooFit, was proposed. It is implemented on top of TensorFlow, one of the leading Python frameworks to handle large data and high parallelization, allowing a transparent usage of CPUs and GPUs^[@eschle2019zfit].
+
+So far there exists no direct implementation of Kernel Density Estimation in zfit nor TensorFlow, but various implementations in Python. This implementations will be discussed in the next chapter before I propose an implementation of Kernel Density Estimation in TensorFlow. Starting with a rather simple implementation, multiple improvements from recent papers are integrated to ameliorate its efficiency. Efficiency and accuracy of the implementation are then tested by comparing it to other implementations in pure Python and simple smoothed histograms.
+
+In the last chapter I compare its accurracy and efficiency to smoothed histograms and implementations in pure Python.

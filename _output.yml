@@ -1,6 +1,5 @@
 bookdown::gitbook:
   highlight: "breezedark"
-  link-citations: True
   config:
     download: ["pdf", "epub"]
 bookdown::pdf_book:
