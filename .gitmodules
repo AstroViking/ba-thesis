@@ -1,0 +1,6 @@
+[submodule "src/src/zfit-benchmarks"]
+	path = src/src/zfit-benchmarks
+	url = git@github.com:zfit/benchmarks.git
+[submodule "src/zfit-benchmarks"]
+	path = src/zfit-benchmarks
+	url = git@github.com:zfit/benchmarks.git
