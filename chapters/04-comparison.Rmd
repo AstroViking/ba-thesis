@@ -1,1 +1,167 @@
 # Comparison {#comparison}
+
+```{r, echo=FALSE, eval=TRUE}
+library('reticulate')
+use_condaenv('ba-thesis')
+```
+
+To compare the different implementations I created a simple test distribution comprised of three gaussian, one uniform and one exponential distribution. The distribution is created by using the TensorFlow Probability package and its Mixture Model.
+
+## Generation of Test Distribution
+
+Listing: Test Distribution generation
+```{python}
+import numpy as np
+import tensorflow as tf
+import tensorflow_probability as tfp
+
+r_seed = 1978239485
+
+n_datapoints = 1000000
+
+tfd = tfp.distributions
+
+mix_3gauss_1exp_1uni = tfd.Mixture(
+
+  cat=tfd.Categorical(probs=[0.1, 0.2, 0.1, 0.4, 0.2]),
+
+  components=[
+
+    tfd.Normal(loc=-1., scale=0.4),
+
+    tfd.Normal(loc=+1., scale=0.5),
+
+    tfd.Normal(loc=+1., scale=0.3),
+
+    tfd.Exponential(rate=2),
+
+    tfd.Uniform(low=-5, high=5)
+
+])
+
+data = mix_3gauss_1exp_1uni.sample(sample_shape=n_datapoints, seed=r_seed)
+
+# Why is this needed???
+data = tf.cast(data, tf.float64).numpy()
+
+```
+
+
+```{python, echo=FALSE}
+#!TODO: Fix: fig.cap="Test distribution comprised of three gaussian, one uniform and one exponential distribtution", echo=FALSE, results="hide", fig.show="asis"
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set()
+ax = sns.distplot(data, bins=1000, kde=True, rug=False)
+ax.set(xlabel='Some event wiht value x', ylabel='Probabililty of occurring')
+plt.show()
+```
+
+
+
+
+```{python, results='hide'}
+from zfit_benchmark.timer import Timer
+import zfit as zfit
+import pandas as pd
+
+n_testpoints = 200
+
+def kde_basic(data, x):
+
+  fac = 1.0 / np.sqrt(2.0 * np.pi)
+  exp_fac = -1.0/2.0
+  h = 0.01
+  y_fac = 1.0/(h*data.size)
+
+  gauss_kernel = lambda x: fac * np.exp(exp_fac * x**2)
+          
+  y = np.zeros(x.size)
+
+  for i, x_i in enumerate(x):
+      y[i] = y_fac * np.sum(gauss_kernel((x_i-data)/h))
+      
+  return y
+  
+def kde_seaborn(data, x):
+  sns.distplot(data, bins=1000, kde=True, rug=False)
+  return np.NaN
+
+@tf.function(autograph=False)
+def kde_basic_tf_internal(data, x, n_datapoints):
+
+  # TODO: Use tf-kde package here
+  
+  h1 = 0.01
+  
+  fac = tf.constant(1.0 / np.sqrt(2.0 * np.pi), tf.float64)
+  exp_fac = tf.constant(-1.0/2.0, tf.float64)
+  y_fac = tf.constant(1.0/(h1 * n_datapoints), tf.float64)
+  h = tf.constant(h1, tf.float64)
+  
+  gauss_kernel = lambda x: tf.math.multiply(fac, tf.math.exp(tf.math.multiply(exp_fac, tf.math.square(x))))
+  calc_value = lambda x: tf.math.multiply(y_fac, tf.math.reduce_sum(gauss_kernel(tf.math.divide(tf.math.subtract(x, data), h))))
+  
+  return tf.map_fn(calc_value, x)
+  
+def kde_basic_tf(data, x):
+  n_datapoints = data.size
+  return kde_basic_tf_internal(data, x, n_datapoints).numpy()
+  
+methods = pd.DataFrame({
+  'identifier': [
+    'basic',
+    'seaborn',
+    'basicTF'
+  ],
+  'label': [
+    'Basic KDE with Python',
+    'Using seaborn.distplot',
+    'Basic KDE in TensorFlow'
+  ],
+  'function':[
+    kde_basic,
+    kde_seaborn,
+    kde_basic_tf
+  ]
+})
+methods.set_index('identifier', drop=False, inplace=True)
+
+estimations = pd.DataFrame()
+estimations['x'] = np.linspace(-5.0, 5.0, num=n_testpoints, dtype=np.float64)
+
+methods['runtime'] = np.NaN
+for index, method in methods.iterrows():
+  with Timer('Benchmarking') as timer:
+    estimations[method['identifier']] = method['function'](data, estimations['x'])
+    timer.stop()
+  print(methods.loc[method['identifier']])
+  methods.at[method['identifier'], 'runtime'] = timer.elapsed
+
+print(estimations)
+print(methods)
+
+methods.drop('function', axis=1, inplace=True)
+```
+
+Running this, leads to the following comparison:
+
+```{r}
+knitr::kable(py$methods, booktabs = TRUE, caption = 'Runtime comparison')
+```
+
+```{r}
+knitr::kable(py$estimations, booktabs = TRUE, caption = 'Estimations comparison')
+```
+
+Plotted for reference:
+```{python, echo=FALSE}
+ax = plt.gca()
+
+sns.lineplot(estimations['x'], estimations['basic'], ax=ax)
+sns.distplot(data, bins=1000, kde=True, rug=False, ax=ax)
+sns.lineplot(estimations['x'], estimations['basicTF'], ax=ax)
+plt.show()
+```
