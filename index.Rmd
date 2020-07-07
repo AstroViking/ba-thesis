@@ -2,7 +2,7 @@
 title: "Efficiency of Univariate Kernel Density Estimation with TensorFlow"
 subtitle: "Bachelor Thesis"
 author: ["Marc Steiner"]
-supervisor: ["Jonas Eschle"]
+supervisor: ["Jonas Eschle", "Nicola Serra"]
 institute: ["University of Zurich"]
 keywords: ["Kernel Density Estimation", "Python", "TensorFlow"]
 site: "bookdown::bookdown_site"
