@@ -140,6 +140,7 @@ code span.wa { color: #da4453; } /* Warning */
 <li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a></li>
 <li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a><ul>
 <li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#generation-of-test-distribution"><i class="fa fa-check"></i><b>4.1</b> Generation of Test Distribution</a></li>
+<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#comparing-different-methods"><i class="fa fa-check"></i><b>4.2</b> Comparing different methods</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -166,123 +167,154 @@ code span.wa { color: #da4453; } /* Warning */
 <div id="generation-of-test-distribution" class="section level2">
 <h2><span class="header-section-number">4.1</span> Generation of Test Distribution</h2>
 <p>Listing: Test Distribution generation</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="comparison.html#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="comparison.html#cb1-2"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
-<span id="cb1-3"><a href="comparison.html#cb1-3"></a><span class="im">import</span> tensorflow_probability <span class="im">as</span> tfp</span>
-<span id="cb1-4"><a href="comparison.html#cb1-4"></a></span>
-<span id="cb1-5"><a href="comparison.html#cb1-5"></a>r_seed <span class="op">=</span> <span class="dv">1978239485</span></span>
-<span id="cb1-6"><a href="comparison.html#cb1-6"></a></span>
-<span id="cb1-7"><a href="comparison.html#cb1-7"></a>n_datapoints <span class="op">=</span> <span class="dv">1000000</span></span>
-<span id="cb1-8"><a href="comparison.html#cb1-8"></a></span>
-<span id="cb1-9"><a href="comparison.html#cb1-9"></a>tfd <span class="op">=</span> tfp.distributions</span>
-<span id="cb1-10"><a href="comparison.html#cb1-10"></a></span>
-<span id="cb1-11"><a href="comparison.html#cb1-11"></a>mix_3gauss_1exp_1uni <span class="op">=</span> tfd.Mixture(</span>
-<span id="cb1-12"><a href="comparison.html#cb1-12"></a></span>
-<span id="cb1-13"><a href="comparison.html#cb1-13"></a>  cat<span class="op">=</span>tfd.Categorical(probs<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>]),</span>
-<span id="cb1-14"><a href="comparison.html#cb1-14"></a></span>
-<span id="cb1-15"><a href="comparison.html#cb1-15"></a>  components<span class="op">=</span>[</span>
-<span id="cb1-16"><a href="comparison.html#cb1-16"></a></span>
-<span id="cb1-17"><a href="comparison.html#cb1-17"></a>    tfd.Normal(loc<span class="op">=-</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.4</span>),</span>
-<span id="cb1-18"><a href="comparison.html#cb1-18"></a></span>
-<span id="cb1-19"><a href="comparison.html#cb1-19"></a>    tfd.Normal(loc<span class="op">=+</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.5</span>),</span>
-<span id="cb1-20"><a href="comparison.html#cb1-20"></a></span>
-<span id="cb1-21"><a href="comparison.html#cb1-21"></a>    tfd.Normal(loc<span class="op">=+</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.3</span>),</span>
-<span id="cb1-22"><a href="comparison.html#cb1-22"></a></span>
-<span id="cb1-23"><a href="comparison.html#cb1-23"></a>    tfd.Exponential(rate<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb1-24"><a href="comparison.html#cb1-24"></a></span>
-<span id="cb1-25"><a href="comparison.html#cb1-25"></a>    tfd.Uniform(low<span class="op">=-</span><span class="dv">5</span>, high<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb1-26"><a href="comparison.html#cb1-26"></a></span>
-<span id="cb1-27"><a href="comparison.html#cb1-27"></a>])</span>
-<span id="cb1-28"><a href="comparison.html#cb1-28"></a></span>
-<span id="cb1-29"><a href="comparison.html#cb1-29"></a>data <span class="op">=</span> mix_3gauss_1exp_1uni.sample(sample_shape<span class="op">=</span>n_datapoints, seed<span class="op">=</span>r_seed)</span>
-<span id="cb1-30"><a href="comparison.html#cb1-30"></a></span>
-<span id="cb1-31"><a href="comparison.html#cb1-31"></a><span class="co"># Why is this needed???</span></span>
-<span id="cb1-32"><a href="comparison.html#cb1-32"></a>data <span class="op">=</span> tf.cast(data, tf.float64).numpy()</span></code></pre></div>
-<pre><code>## [Text(0, 0.5, &#39;Probabililty of occurring&#39;), Text(0.5, 0, &#39;Some event wiht value x&#39;)]</code></pre>
-<p><img src="thesis_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="comparison.html#cb3-1"></a><span class="im">from</span> zfit_benchmark.timer <span class="im">import</span> Timer</span>
-<span id="cb3-2"><a href="comparison.html#cb3-2"></a><span class="im">import</span> zfit <span class="im">as</span> zfit</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="comparison.html#cb4-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-2"><a href="comparison.html#cb4-2"></a></span>
-<span id="cb4-3"><a href="comparison.html#cb4-3"></a>n_testpoints <span class="op">=</span> <span class="dv">200</span></span>
-<span id="cb4-4"><a href="comparison.html#cb4-4"></a></span>
-<span id="cb4-5"><a href="comparison.html#cb4-5"></a><span class="kw">def</span> kde_basic(data, x):</span>
-<span id="cb4-6"><a href="comparison.html#cb4-6"></a></span>
-<span id="cb4-7"><a href="comparison.html#cb4-7"></a>  fac <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> np.pi)</span>
-<span id="cb4-8"><a href="comparison.html#cb4-8"></a>  exp_fac <span class="op">=</span> <span class="fl">-1.0</span><span class="op">/</span><span class="fl">2.0</span></span>
-<span id="cb4-9"><a href="comparison.html#cb4-9"></a>  h <span class="op">=</span> <span class="fl">0.01</span></span>
-<span id="cb4-10"><a href="comparison.html#cb4-10"></a>  y_fac <span class="op">=</span> <span class="fl">1.0</span><span class="op">/</span>(h<span class="op">*</span>data.size)</span>
-<span id="cb4-11"><a href="comparison.html#cb4-11"></a></span>
-<span id="cb4-12"><a href="comparison.html#cb4-12"></a>  gauss_kernel <span class="op">=</span> <span class="kw">lambda</span> x: fac <span class="op">*</span> np.exp(exp_fac <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb4-13"><a href="comparison.html#cb4-13"></a>          </span>
-<span id="cb4-14"><a href="comparison.html#cb4-14"></a>  y <span class="op">=</span> np.zeros(x.size)</span>
-<span id="cb4-15"><a href="comparison.html#cb4-15"></a></span>
-<span id="cb4-16"><a href="comparison.html#cb4-16"></a>  <span class="cf">for</span> i, x_i <span class="kw">in</span> <span class="bu">enumerate</span>(x):</span>
-<span id="cb4-17"><a href="comparison.html#cb4-17"></a>      y[i] <span class="op">=</span> y_fac <span class="op">*</span> np.<span class="bu">sum</span>(gauss_kernel((x_i<span class="op">-</span>data)<span class="op">/</span>h))</span>
-<span id="cb4-18"><a href="comparison.html#cb4-18"></a>      </span>
-<span id="cb4-19"><a href="comparison.html#cb4-19"></a>  <span class="cf">return</span> y</span>
-<span id="cb4-20"><a href="comparison.html#cb4-20"></a>  </span>
-<span id="cb4-21"><a href="comparison.html#cb4-21"></a><span class="kw">def</span> kde_seaborn(data, x):</span>
-<span id="cb4-22"><a href="comparison.html#cb4-22"></a>  sns.distplot(data, bins<span class="op">=</span><span class="dv">1000</span>, kde<span class="op">=</span><span class="va">True</span>, rug<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-23"><a href="comparison.html#cb4-23"></a>  <span class="cf">return</span> np.NaN</span>
-<span id="cb4-24"><a href="comparison.html#cb4-24"></a></span>
-<span id="cb4-25"><a href="comparison.html#cb4-25"></a><span class="at">@tf.function</span>(autograph<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-26"><a href="comparison.html#cb4-26"></a><span class="kw">def</span> kde_basic_tf_internal(data, x, n_datapoints):</span>
-<span id="cb4-27"><a href="comparison.html#cb4-27"></a></span>
-<span id="cb4-28"><a href="comparison.html#cb4-28"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co">: Use tf-kde package here</span></span>
-<span id="cb4-29"><a href="comparison.html#cb4-29"></a>  </span>
-<span id="cb4-30"><a href="comparison.html#cb4-30"></a>  h1 <span class="op">=</span> <span class="fl">0.01</span></span>
-<span id="cb4-31"><a href="comparison.html#cb4-31"></a>  </span>
-<span id="cb4-32"><a href="comparison.html#cb4-32"></a>  fac <span class="op">=</span> tf.constant(<span class="fl">1.0</span> <span class="op">/</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> np.pi), tf.float64)</span>
-<span id="cb4-33"><a href="comparison.html#cb4-33"></a>  exp_fac <span class="op">=</span> tf.constant(<span class="op">-</span><span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>, tf.float64)</span>
-<span id="cb4-34"><a href="comparison.html#cb4-34"></a>  y_fac <span class="op">=</span> tf.constant(<span class="fl">1.0</span><span class="op">/</span>(h1 <span class="op">*</span> n_datapoints), tf.float64)</span>
-<span id="cb4-35"><a href="comparison.html#cb4-35"></a>  h <span class="op">=</span> tf.constant(h1, tf.float64)</span>
-<span id="cb4-36"><a href="comparison.html#cb4-36"></a>  </span>
-<span id="cb4-37"><a href="comparison.html#cb4-37"></a>  gauss_kernel <span class="op">=</span> <span class="kw">lambda</span> x: tf.math.multiply(fac, tf.math.exp(tf.math.multiply(exp_fac, tf.math.square(x))))</span>
-<span id="cb4-38"><a href="comparison.html#cb4-38"></a>  calc_value <span class="op">=</span> <span class="kw">lambda</span> x: tf.math.multiply(y_fac, tf.math.reduce_sum(gauss_kernel(tf.math.divide(tf.math.subtract(x, data), h))))</span>
-<span id="cb4-39"><a href="comparison.html#cb4-39"></a>  </span>
-<span id="cb4-40"><a href="comparison.html#cb4-40"></a>  <span class="cf">return</span> tf.map_fn(calc_value, x)</span>
-<span id="cb4-41"><a href="comparison.html#cb4-41"></a>  </span>
-<span id="cb4-42"><a href="comparison.html#cb4-42"></a><span class="kw">def</span> kde_basic_tf(data, x):</span>
-<span id="cb4-43"><a href="comparison.html#cb4-43"></a>  n_datapoints <span class="op">=</span> data.size</span>
-<span id="cb4-44"><a href="comparison.html#cb4-44"></a>  <span class="cf">return</span> kde_basic_tf_internal(data, x, n_datapoints).numpy()</span>
-<span id="cb4-45"><a href="comparison.html#cb4-45"></a>  </span>
-<span id="cb4-46"><a href="comparison.html#cb4-46"></a>methods <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb4-47"><a href="comparison.html#cb4-47"></a>  <span class="st">&#39;identifier&#39;</span>: [</span>
-<span id="cb4-48"><a href="comparison.html#cb4-48"></a>    <span class="st">&#39;basic&#39;</span>,</span>
-<span id="cb4-49"><a href="comparison.html#cb4-49"></a>    <span class="st">&#39;seaborn&#39;</span>,</span>
-<span id="cb4-50"><a href="comparison.html#cb4-50"></a>    <span class="st">&#39;basicTF&#39;</span></span>
-<span id="cb4-51"><a href="comparison.html#cb4-51"></a>  ],</span>
-<span id="cb4-52"><a href="comparison.html#cb4-52"></a>  <span class="st">&#39;label&#39;</span>: [</span>
-<span id="cb4-53"><a href="comparison.html#cb4-53"></a>    <span class="st">&#39;Basic KDE with Python&#39;</span>,</span>
-<span id="cb4-54"><a href="comparison.html#cb4-54"></a>    <span class="st">&#39;Using seaborn.distplot&#39;</span>,</span>
-<span id="cb4-55"><a href="comparison.html#cb4-55"></a>    <span class="st">&#39;Basic KDE in TensorFlow&#39;</span></span>
-<span id="cb4-56"><a href="comparison.html#cb4-56"></a>  ],</span>
-<span id="cb4-57"><a href="comparison.html#cb4-57"></a>  <span class="st">&#39;function&#39;</span>:[</span>
-<span id="cb4-58"><a href="comparison.html#cb4-58"></a>    kde_basic,</span>
-<span id="cb4-59"><a href="comparison.html#cb4-59"></a>    kde_seaborn,</span>
-<span id="cb4-60"><a href="comparison.html#cb4-60"></a>    kde_basic_tf</span>
-<span id="cb4-61"><a href="comparison.html#cb4-61"></a>  ]</span>
-<span id="cb4-62"><a href="comparison.html#cb4-62"></a>})</span>
-<span id="cb4-63"><a href="comparison.html#cb4-63"></a>methods.set_index(<span class="st">&#39;identifier&#39;</span>, drop<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-64"><a href="comparison.html#cb4-64"></a></span>
-<span id="cb4-65"><a href="comparison.html#cb4-65"></a>estimations <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb4-66"><a href="comparison.html#cb4-66"></a>estimations[<span class="st">&#39;x&#39;</span>] <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">5.0</span>, <span class="fl">5.0</span>, num<span class="op">=</span>n_testpoints, dtype<span class="op">=</span>np.float64)</span>
-<span id="cb4-67"><a href="comparison.html#cb4-67"></a></span>
-<span id="cb4-68"><a href="comparison.html#cb4-68"></a>methods[<span class="st">&#39;runtime&#39;</span>] <span class="op">=</span> np.NaN</span>
-<span id="cb4-69"><a href="comparison.html#cb4-69"></a><span class="cf">for</span> index, method <span class="kw">in</span> methods.iterrows():</span>
-<span id="cb4-70"><a href="comparison.html#cb4-70"></a>  <span class="cf">with</span> Timer(<span class="st">&#39;Benchmarking&#39;</span>) <span class="im">as</span> timer:</span>
-<span id="cb4-71"><a href="comparison.html#cb4-71"></a>    estimations[method[<span class="st">&#39;identifier&#39;</span>]] <span class="op">=</span> method[<span class="st">&#39;function&#39;</span>](data, estimations[<span class="st">&#39;x&#39;</span>])</span>
-<span id="cb4-72"><a href="comparison.html#cb4-72"></a>    timer.stop()</span>
-<span id="cb4-73"><a href="comparison.html#cb4-73"></a>  <span class="bu">print</span>(methods.loc[method[<span class="st">&#39;identifier&#39;</span>]])</span>
-<span id="cb4-74"><a href="comparison.html#cb4-74"></a>  methods.at[method[<span class="st">&#39;identifier&#39;</span>], <span class="st">&#39;runtime&#39;</span>] <span class="op">=</span> timer.elapsed</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="comparison.html#cb5-1"></a><span class="bu">print</span>(estimations)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="comparison.html#cb6-1"></a><span class="bu">print</span>(methods)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="comparison.html#cb7-1"></a>methods.drop(<span class="st">&#39;function&#39;</span>, axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="comparison.html#cb2-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="comparison.html#cb2-2"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb2-3"><a href="comparison.html#cb2-3"></a><span class="im">import</span> tensorflow_probability <span class="im">as</span> tfp</span>
+<span id="cb2-4"><a href="comparison.html#cb2-4"></a><span class="im">import</span> tensorflow_probability.python.distributions <span class="im">as</span> tfd</span>
+<span id="cb2-5"><a href="comparison.html#cb2-5"></a><span class="im">from</span> tf_kde.distribution <span class="im">import</span> KernelDensityEstimation</span>
+<span id="cb2-6"><a href="comparison.html#cb2-6"></a></span>
+<span id="cb2-7"><a href="comparison.html#cb2-7"></a>r_seed <span class="op">=</span> <span class="dv">1978239485</span></span>
+<span id="cb2-8"><a href="comparison.html#cb2-8"></a>n_datapoints <span class="op">=</span> <span class="dv">1000000</span></span>
+<span id="cb2-9"><a href="comparison.html#cb2-9"></a>tfd <span class="op">=</span> tfp.distributions</span>
+<span id="cb2-10"><a href="comparison.html#cb2-10"></a></span>
+<span id="cb2-11"><a href="comparison.html#cb2-11"></a>mix_3gauss_1exp_1uni <span class="op">=</span> tfd.Mixture(</span>
+<span id="cb2-12"><a href="comparison.html#cb2-12"></a></span>
+<span id="cb2-13"><a href="comparison.html#cb2-13"></a>  cat<span class="op">=</span>tfd.Categorical(probs<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>]),</span>
+<span id="cb2-14"><a href="comparison.html#cb2-14"></a></span>
+<span id="cb2-15"><a href="comparison.html#cb2-15"></a>  components<span class="op">=</span>[</span>
+<span id="cb2-16"><a href="comparison.html#cb2-16"></a>    tfd.Normal(loc<span class="op">=-</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.4</span>),</span>
+<span id="cb2-17"><a href="comparison.html#cb2-17"></a>    tfd.Normal(loc<span class="op">=+</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb2-18"><a href="comparison.html#cb2-18"></a>    tfd.Normal(loc<span class="op">=+</span><span class="fl">1.</span>, scale<span class="op">=</span><span class="fl">0.3</span>),</span>
+<span id="cb2-19"><a href="comparison.html#cb2-19"></a>    tfd.Exponential(rate<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb2-20"><a href="comparison.html#cb2-20"></a>    tfd.Uniform(low<span class="op">=-</span><span class="dv">5</span>, high<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb2-21"><a href="comparison.html#cb2-21"></a>])</span>
+<span id="cb2-22"><a href="comparison.html#cb2-22"></a></span>
+<span id="cb2-23"><a href="comparison.html#cb2-23"></a>data <span class="op">=</span> mix_3gauss_1exp_1uni.sample(sample_shape<span class="op">=</span>n_datapoints, seed<span class="op">=</span>r_seed)</span>
+<span id="cb2-24"><a href="comparison.html#cb2-24"></a>data <span class="op">=</span> data.numpy()</span></code></pre></div>
+</div>
+<div id="comparing-different-methods" class="section level2">
+<h2><span class="header-section-number">4.2</span> Comparing different methods</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="comparison.html#cb3-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb3-2"><a href="comparison.html#cb3-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="comparison.html#cb3-3"></a><span class="im">from</span> KDEpy <span class="im">import</span> FFTKDE</span>
+<span id="cb3-4"><a href="comparison.html#cb3-4"></a><span class="im">from</span> tf_kde.distribution <span class="im">import</span> KernelDensityEstimation, KernelDensityEstimationBasic</span>
+<span id="cb3-5"><a href="comparison.html#cb3-5"></a><span class="im">from</span> zfit_benchmark.timer <span class="im">import</span> Timer</span>
+<span id="cb3-6"><a href="comparison.html#cb3-6"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb3-7"><a href="comparison.html#cb3-7"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-8"><a href="comparison.html#cb3-8"></a></span>
+<span id="cb3-9"><a href="comparison.html#cb3-9"></a><span class="im">from</span> tf_kde.tests.test_distribution <span class="im">import</span> data</span>
+<span id="cb3-10"><a href="comparison.html#cb3-10"></a></span>
+<span id="cb3-11"><a href="comparison.html#cb3-11"></a></span>
+<span id="cb3-12"><a href="comparison.html#cb3-12"></a>n_testpoints <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb3-13"><a href="comparison.html#cb3-13"></a></span>
+<span id="cb3-14"><a href="comparison.html#cb3-14"></a><span class="kw">def</span> kde_basic(data, x):</span>
+<span id="cb3-15"><a href="comparison.html#cb3-15"></a></span>
+<span id="cb3-16"><a href="comparison.html#cb3-16"></a>    fac <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> np.pi)</span>
+<span id="cb3-17"><a href="comparison.html#cb3-17"></a>    exp_fac <span class="op">=</span> <span class="fl">-1.0</span><span class="op">/</span><span class="fl">2.0</span></span>
+<span id="cb3-18"><a href="comparison.html#cb3-18"></a>    h <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb3-19"><a href="comparison.html#cb3-19"></a>    y_fac <span class="op">=</span> <span class="fl">1.0</span><span class="op">/</span>(h<span class="op">*</span>data.size)</span>
+<span id="cb3-20"><a href="comparison.html#cb3-20"></a></span>
+<span id="cb3-21"><a href="comparison.html#cb3-21"></a>    gauss_kernel <span class="op">=</span> <span class="kw">lambda</span> x: fac <span class="op">*</span> np.exp(exp_fac <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb3-22"><a href="comparison.html#cb3-22"></a>          </span>
+<span id="cb3-23"><a href="comparison.html#cb3-23"></a>    y <span class="op">=</span> np.zeros(x.size)</span>
+<span id="cb3-24"><a href="comparison.html#cb3-24"></a></span>
+<span id="cb3-25"><a href="comparison.html#cb3-25"></a>    <span class="cf">for</span> i, x_i <span class="kw">in</span> <span class="bu">enumerate</span>(x):</span>
+<span id="cb3-26"><a href="comparison.html#cb3-26"></a>        y[i] <span class="op">=</span> y_fac <span class="op">*</span> np.<span class="bu">sum</span>(gauss_kernel((x_i<span class="op">-</span>data)<span class="op">/</span>h))</span>
+<span id="cb3-27"><a href="comparison.html#cb3-27"></a>      </span>
+<span id="cb3-28"><a href="comparison.html#cb3-28"></a>    <span class="cf">return</span> y</span>
+<span id="cb3-29"><a href="comparison.html#cb3-29"></a>  </span>
+<span id="cb3-30"><a href="comparison.html#cb3-30"></a><span class="kw">def</span> kde_seaborn(data, x):</span>
+<span id="cb3-31"><a href="comparison.html#cb3-31"></a>    sns.distplot(data, bins<span class="op">=</span><span class="dv">1000</span>, kde<span class="op">=</span><span class="va">True</span>, rug<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-32"><a href="comparison.html#cb3-32"></a>    <span class="cf">return</span> np.NaN</span>
+<span id="cb3-33"><a href="comparison.html#cb3-33"></a></span>
+<span id="cb3-34"><a href="comparison.html#cb3-34"></a><span class="kw">def</span> kde_kdepy_fft(data, x):</span>
+<span id="cb3-35"><a href="comparison.html#cb3-35"></a>    x <span class="op">=</span> np.array(x)</span>
+<span id="cb3-36"><a href="comparison.html#cb3-36"></a>    <span class="cf">return</span> FFTKDE(kernel<span class="op">=</span><span class="st">&quot;gaussian&quot;</span>, bw<span class="op">=</span><span class="st">&quot;silverman&quot;</span>).fit(data).evaluate(x)</span>
+<span id="cb3-37"><a href="comparison.html#cb3-37"></a></span>
+<span id="cb3-38"><a href="comparison.html#cb3-38"></a><span class="at">@tf.function</span>(autograph<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-39"><a href="comparison.html#cb3-39"></a><span class="kw">def</span> kde_basic_tf_internal(data, x, n_datapoints):</span>
+<span id="cb3-40"><a href="comparison.html#cb3-40"></a></span>
+<span id="cb3-41"><a href="comparison.html#cb3-41"></a>    h1 <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb3-42"><a href="comparison.html#cb3-42"></a>  </span>
+<span id="cb3-43"><a href="comparison.html#cb3-43"></a>    fac <span class="op">=</span> tf.constant(<span class="fl">1.0</span> <span class="op">/</span> np.sqrt(<span class="fl">2.0</span> <span class="op">*</span> np.pi), tf.float32)</span>
+<span id="cb3-44"><a href="comparison.html#cb3-44"></a>    exp_fac <span class="op">=</span> tf.constant(<span class="op">-</span><span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>, tf.float32)</span>
+<span id="cb3-45"><a href="comparison.html#cb3-45"></a>    y_fac <span class="op">=</span> tf.constant(<span class="fl">1.0</span><span class="op">/</span>(h1 <span class="op">*</span> n_datapoints), tf.float32)</span>
+<span id="cb3-46"><a href="comparison.html#cb3-46"></a>    h <span class="op">=</span> tf.constant(h1, tf.float32)</span>
+<span id="cb3-47"><a href="comparison.html#cb3-47"></a>  </span>
+<span id="cb3-48"><a href="comparison.html#cb3-48"></a>    gauss_kernel <span class="op">=</span> <span class="kw">lambda</span> x: tf.math.multiply(fac, tf.math.exp(tf.math.multiply(exp_fac, tf.math.square(x))))</span>
+<span id="cb3-49"><a href="comparison.html#cb3-49"></a>    calc_value <span class="op">=</span> <span class="kw">lambda</span> x: tf.math.multiply(y_fac, tf.math.reduce_sum(gauss_kernel(tf.math.divide(tf.math.subtract(x, data), h))))</span>
+<span id="cb3-50"><a href="comparison.html#cb3-50"></a>  </span>
+<span id="cb3-51"><a href="comparison.html#cb3-51"></a>    <span class="cf">return</span> tf.map_fn(calc_value, x)</span>
+<span id="cb3-52"><a href="comparison.html#cb3-52"></a></span>
+<span id="cb3-53"><a href="comparison.html#cb3-53"></a><span class="kw">def</span> kde_basic_tf(data, x):</span>
+<span id="cb3-54"><a href="comparison.html#cb3-54"></a>    n_datapoints <span class="op">=</span> data.size</span>
+<span id="cb3-55"><a href="comparison.html#cb3-55"></a>    <span class="cf">return</span> kde_basic_tf_internal(data, x, n_datapoints).numpy()</span>
+<span id="cb3-56"><a href="comparison.html#cb3-56"></a></span>
+<span id="cb3-57"><a href="comparison.html#cb3-57"></a><span class="kw">def</span> kde_tfp(data, x):</span>
+<span id="cb3-58"><a href="comparison.html#cb3-58"></a>    dist <span class="op">=</span> KernelDensityEstimationBasic(bandwidth<span class="op">=</span><span class="fl">0.01</span>, data<span class="op">=</span>data)</span>
+<span id="cb3-59"><a href="comparison.html#cb3-59"></a>    <span class="cf">return</span> dist.prob(x).numpy()</span>
+<span id="cb3-60"><a href="comparison.html#cb3-60"></a></span>
+<span id="cb3-61"><a href="comparison.html#cb3-61"></a><span class="kw">def</span> kde_tfp_mixture(data, x):</span>
+<span id="cb3-62"><a href="comparison.html#cb3-62"></a>    dist <span class="op">=</span> KernelDensityEstimation(bandwidth<span class="op">=</span><span class="fl">0.01</span>, data<span class="op">=</span>data)</span>
+<span id="cb3-63"><a href="comparison.html#cb3-63"></a>    <span class="cf">return</span> dist.prob(x).numpy()</span>
+<span id="cb3-64"><a href="comparison.html#cb3-64"></a></span>
+<span id="cb3-65"><a href="comparison.html#cb3-65"></a><span class="kw">def</span> kde_tfp_mixture_with_binned_data(data, x):</span>
+<span id="cb3-66"><a href="comparison.html#cb3-66"></a>    dist <span class="op">=</span> KernelDensityEstimation(bandwidth<span class="op">=</span><span class="fl">0.01</span>, data<span class="op">=</span>data, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-67"><a href="comparison.html#cb3-67"></a>    <span class="cf">return</span> dist.prob(x).numpy()</span>
+<span id="cb3-68"><a href="comparison.html#cb3-68"></a></span>
+<span id="cb3-69"><a href="comparison.html#cb3-69"></a><span class="kw">def</span> kde_tfp_mixture_with_fft(data, x):</span>
+<span id="cb3-70"><a href="comparison.html#cb3-70"></a>    dist <span class="op">=</span> KernelDensityEstimation(bandwidth<span class="op">=</span><span class="fl">0.01</span>, data<span class="op">=</span>data, use_grid<span class="op">=</span><span class="va">True</span>, use_fft<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-71"><a href="comparison.html#cb3-71"></a>    <span class="cf">return</span> dist.prob(x).numpy()</span>
+<span id="cb3-72"><a href="comparison.html#cb3-72"></a>  </span>
+<span id="cb3-73"><a href="comparison.html#cb3-73"></a>methods <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb3-74"><a href="comparison.html#cb3-74"></a>    <span class="st">&#39;identifier&#39;</span>: [</span>
+<span id="cb3-75"><a href="comparison.html#cb3-75"></a>        <span class="st">&#39;basic&#39;</span>,</span>
+<span id="cb3-76"><a href="comparison.html#cb3-76"></a>        <span class="st">&#39;seaborn&#39;</span>,</span>
+<span id="cb3-77"><a href="comparison.html#cb3-77"></a>        <span class="st">&#39;KDEpy&#39;</span>,</span>
+<span id="cb3-78"><a href="comparison.html#cb3-78"></a>        <span class="st">&#39;basicTF&#39;</span>,</span>
+<span id="cb3-79"><a href="comparison.html#cb3-79"></a>        <span class="st">&#39;tfp&#39;</span>,</span>
+<span id="cb3-80"><a href="comparison.html#cb3-80"></a>        <span class="st">&#39;tfpM&#39;</span>,</span>
+<span id="cb3-81"><a href="comparison.html#cb3-81"></a>        <span class="st">&#39;tfpMB&#39;</span>,</span>
+<span id="cb3-82"><a href="comparison.html#cb3-82"></a>        <span class="st">&#39;tfpMFFT&#39;</span></span>
+<span id="cb3-83"><a href="comparison.html#cb3-83"></a>    ],</span>
+<span id="cb3-84"><a href="comparison.html#cb3-84"></a>    <span class="st">&#39;label&#39;</span>: [</span>
+<span id="cb3-85"><a href="comparison.html#cb3-85"></a>        <span class="st">&#39;Basic KDE with Python&#39;</span>,</span>
+<span id="cb3-86"><a href="comparison.html#cb3-86"></a>        <span class="st">&#39;KDE using seaborn.distplot&#39;</span>,</span>
+<span id="cb3-87"><a href="comparison.html#cb3-87"></a>        <span class="st">&#39;KDE using KDEpy.FFTKDE&#39;</span>,</span>
+<span id="cb3-88"><a href="comparison.html#cb3-88"></a>        <span class="st">&#39;Basic KDE in TensorFlow&#39;</span>,</span>
+<span id="cb3-89"><a href="comparison.html#cb3-89"></a>        <span class="st">&#39;KDE implemented as TensorFlow Probability Distribution Subclass&#39;</span>,</span>
+<span id="cb3-90"><a href="comparison.html#cb3-90"></a>        <span class="st">&#39;KDE implemented as TensorFlow Probability MixtureSameFamily Subclass&#39;</span>,</span>
+<span id="cb3-91"><a href="comparison.html#cb3-91"></a>        <span class="st">&#39;KDE implemented as TensorFlow Probability MixtureSameFamily Subclass with Binned Data&#39;</span>,</span>
+<span id="cb3-92"><a href="comparison.html#cb3-92"></a>        <span class="st">&#39;KDE implemented as TensorFlow Probability MixtureSameFamily Subclass with Fast Fourier Transform&#39;</span></span>
+<span id="cb3-93"><a href="comparison.html#cb3-93"></a></span>
+<span id="cb3-94"><a href="comparison.html#cb3-94"></a>    ],</span>
+<span id="cb3-95"><a href="comparison.html#cb3-95"></a>    <span class="st">&#39;function&#39;</span>:[</span>
+<span id="cb3-96"><a href="comparison.html#cb3-96"></a>        kde_basic,</span>
+<span id="cb3-97"><a href="comparison.html#cb3-97"></a>        kde_seaborn,</span>
+<span id="cb3-98"><a href="comparison.html#cb3-98"></a>        kde_kdepy_fft,</span>
+<span id="cb3-99"><a href="comparison.html#cb3-99"></a>        kde_basic_tf,</span>
+<span id="cb3-100"><a href="comparison.html#cb3-100"></a>        kde_tfp,</span>
+<span id="cb3-101"><a href="comparison.html#cb3-101"></a>        kde_tfp_mixture,</span>
+<span id="cb3-102"><a href="comparison.html#cb3-102"></a>        kde_tfp_mixture_with_binned_data,</span>
+<span id="cb3-103"><a href="comparison.html#cb3-103"></a>        kde_tfp_mixture_with_fft</span>
+<span id="cb3-104"><a href="comparison.html#cb3-104"></a>    ]</span>
+<span id="cb3-105"><a href="comparison.html#cb3-105"></a>})</span>
+<span id="cb3-106"><a href="comparison.html#cb3-106"></a>methods.set_index(<span class="st">&#39;identifier&#39;</span>, drop<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-107"><a href="comparison.html#cb3-107"></a></span>
+<span id="cb3-108"><a href="comparison.html#cb3-108"></a>estimations <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb3-109"><a href="comparison.html#cb3-109"></a>estimations[<span class="st">&#39;x&#39;</span>] <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">7.0</span>, <span class="fl">7.0</span>, num<span class="op">=</span>n_testpoints, dtype<span class="op">=</span>np.float32)</span>
+<span id="cb3-110"><a href="comparison.html#cb3-110"></a></span>
+<span id="cb3-111"><a href="comparison.html#cb3-111"></a>methods[<span class="st">&#39;runtime&#39;</span>] <span class="op">=</span> np.NaN</span>
+<span id="cb3-112"><a href="comparison.html#cb3-112"></a><span class="cf">for</span> index, method <span class="kw">in</span> methods.iterrows():</span>
+<span id="cb3-113"><a href="comparison.html#cb3-113"></a>    <span class="cf">with</span> Timer(<span class="st">&#39;Benchmarking&#39;</span>) <span class="im">as</span> timer:</span>
+<span id="cb3-114"><a href="comparison.html#cb3-114"></a>        estimations[method[<span class="st">&#39;identifier&#39;</span>]] <span class="op">=</span> method[<span class="st">&#39;function&#39;</span>](data, estimations[<span class="st">&#39;x&#39;</span>])</span>
+<span id="cb3-115"><a href="comparison.html#cb3-115"></a>        timer.stop()</span>
+<span id="cb3-116"><a href="comparison.html#cb3-116"></a>    methods.at[method[<span class="st">&#39;identifier&#39;</span>], <span class="st">&#39;runtime&#39;</span>] <span class="op">=</span> timer.elapsed</span>
+<span id="cb3-117"><a href="comparison.html#cb3-117"></a></span>
+<span id="cb3-118"><a href="comparison.html#cb3-118"></a>methods.drop(<span class="st">&#39;function&#39;</span>, axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 <p>Running this, leads to the following comparison:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="comparison.html#cb8-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(py<span class="op">$</span>methods, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>, <span class="dt">caption =</span> <span class="st">&#39;Runtime comparison&#39;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-10">Table 4.1: </span>Runtime comparison</caption>
+<caption><span id="tab:unnamed-chunk-6">Table 4.1: </span>Runtime comparison</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -296,1240 +328,2272 @@ code span.wa { color: #da4453; } /* Warning */
 <td>basic</td>
 <td align="left">basic</td>
 <td align="left">Basic KDE with Python</td>
-<td align="right">7.243051</td>
+<td align="right">2.8499737</td>
 </tr>
 <tr class="even">
 <td>seaborn</td>
 <td align="left">seaborn</td>
-<td align="left">Using seaborn.distplot</td>
-<td align="right">2.875691</td>
+<td align="left">KDE using seaborn.distplot</td>
+<td align="right">2.2177022</td>
 </tr>
 <tr class="odd">
+<td>KDEpy</td>
+<td align="left">KDEpy</td>
+<td align="left">KDE using KDEpy.FFTKDE</td>
+<td align="right">0.0921045</td>
+</tr>
+<tr class="even">
 <td>basicTF</td>
 <td align="left">basicTF</td>
 <td align="left">Basic KDE in TensorFlow</td>
-<td align="right">2.531482</td>
+<td align="right">1.3024085</td>
+</tr>
+<tr class="odd">
+<td>tfp</td>
+<td align="left">tfp</td>
+<td align="left">KDE implemented as TensorFlow Probability Distribution Subclass</td>
+<td align="right">2.4570163</td>
+</tr>
+<tr class="even">
+<td>tfpM</td>
+<td align="left">tfpM</td>
+<td align="left">KDE implemented as TensorFlow Probability MixtureSameFamily Subclass</td>
+<td align="right">3.3410472</td>
+</tr>
+<tr class="odd">
+<td>tfpMB</td>
+<td align="left">tfpMB</td>
+<td align="left">KDE implemented as TensorFlow Probability MixtureSameFamily Subclass with Binned Data</td>
+<td align="right">0.0704233</td>
+</tr>
+<tr class="even">
+<td>tfpMFFT</td>
+<td align="left">tfpMFFT</td>
+<td align="left">KDE implemented as TensorFlow Probability MixtureSameFamily Subclass with Fast Fourier Transform</td>
+<td align="right">0.0703308</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="comparison.html#cb9-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(py<span class="op">$</span>estimations, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimations comparison&#39;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 4.2: </span>Estimations comparison</caption>
+<caption><span id="tab:unnamed-chunk-7">Table 4.2: </span>Accuracy comparison</caption>
 <thead>
 <tr class="header">
 <th align="right">x</th>
 <th align="right">basic</th>
 <th align="right">seaborn</th>
+<th align="right">KDEpy</th>
 <th align="right">basicTF</th>
+<th align="right">tfp</th>
+<th align="right">tfpM</th>
+<th align="right">tfpMB</th>
+<th align="right">tfpMFFT</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">-5.0000000</td>
-<td align="right">0.0108500</td>
+<td align="right">-7.0000000</td>
+<td align="right">0.0000000</td>
 <td align="right">NaN</td>
-<td align="right">0.0108500</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
 </tr>
 <tr class="even">
-<td align="right">-4.9497487</td>
-<td align="right">0.0202858</td>
+<td align="right">-6.9296484</td>
+<td align="right">0.0000000</td>
 <td align="right">NaN</td>
-<td align="right">0.0202858</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.8994975</td>
-<td align="right">0.0207934</td>
+<td align="right">-6.8592963</td>
+<td align="right">0.0000000</td>
 <td align="right">NaN</td>
-<td align="right">0.0207934</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
 </tr>
 <tr class="even">
-<td align="right">-4.8492462</td>
-<td align="right">0.0201125</td>
+<td align="right">-6.7889447</td>
+<td align="right">0.0000000</td>
 <td align="right">NaN</td>
-<td align="right">0.0201125</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.7989950</td>
-<td align="right">0.0207554</td>
+<td align="right">-6.7185931</td>
+<td align="right">0.0000000</td>
 <td align="right">NaN</td>
-<td align="right">0.0207554</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
 </tr>
 <tr class="even">
-<td align="right">-4.7487437</td>
+<td align="right">-6.6482410</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-6.5778894</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-6.5075378</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-6.4371858</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-6.3668342</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-6.2964826</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-6.2261305</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-6.1557789</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-6.0854273</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-6.0150752</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.9447236</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.8743720</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.8040199</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.7336683</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.6633167</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.5929646</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.5226130</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.4522614</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.3819094</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.3115578</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.2412062</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000004</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.1708541</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000442</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">-5.1005025</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0009742</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">-5.0301509</td>
+<td align="right">0.0000293</td>
+<td align="right">NaN</td>
+<td align="right">0.0062010</td>
+<td align="right">0.0000293</td>
+<td align="right">0.0000293</td>
+<td align="right">0.0000293</td>
+<td align="right">0.0000548</td>
+<td align="right">0.0000548</td>
+</tr>
+<tr class="even">
+<td align="right">-4.9597988</td>
+<td align="right">0.0208125</td>
+<td align="right">NaN</td>
+<td align="right">0.0158229</td>
+<td align="right">0.0208125</td>
+<td align="right">0.0208125</td>
+<td align="right">0.0208125</td>
+<td align="right">0.0207540</td>
+<td align="right">0.0207540</td>
+</tr>
+<tr class="odd">
+<td align="right">-4.8894472</td>
+<td align="right">0.0208162</td>
+<td align="right">NaN</td>
+<td align="right">0.0200963</td>
+<td align="right">0.0208162</td>
+<td align="right">0.0208162</td>
+<td align="right">0.0208162</td>
+<td align="right">0.0208610</td>
+<td align="right">0.0208610</td>
+</tr>
+<tr class="even">
+<td align="right">-4.8190956</td>
+<td align="right">0.0204375</td>
+<td align="right">NaN</td>
+<td align="right">0.0206161</td>
+<td align="right">0.0204375</td>
+<td align="right">0.0204375</td>
+<td align="right">0.0204375</td>
+<td align="right">0.0205128</td>
+<td align="right">0.0205128</td>
+</tr>
+<tr class="odd">
+<td align="right">-4.7487435</td>
 <td align="right">0.0204646</td>
 <td align="right">NaN</td>
+<td align="right">0.0205411</td>
 <td align="right">0.0204646</td>
-</tr>
-<tr class="odd">
-<td align="right">-4.6984925</td>
-<td align="right">0.0189298</td>
-<td align="right">NaN</td>
-<td align="right">0.0189298</td>
+<td align="right">0.0204646</td>
+<td align="right">0.0204646</td>
+<td align="right">0.0204957</td>
+<td align="right">0.0204957</td>
 </tr>
 <tr class="even">
-<td align="right">-4.6482412</td>
-<td align="right">0.0213905</td>
+<td align="right">-4.6783919</td>
+<td align="right">0.0205341</td>
 <td align="right">NaN</td>
-<td align="right">0.0213905</td>
+<td align="right">0.0204012</td>
+<td align="right">0.0205341</td>
+<td align="right">0.0205341</td>
+<td align="right">0.0205341</td>
+<td align="right">0.0204630</td>
+<td align="right">0.0204630</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.5979899</td>
-<td align="right">0.0191852</td>
+<td align="right">-4.6080403</td>
+<td align="right">0.0195643</td>
 <td align="right">NaN</td>
-<td align="right">0.0191852</td>
+<td align="right">0.0202287</td>
+<td align="right">0.0195643</td>
+<td align="right">0.0195643</td>
+<td align="right">0.0195643</td>
+<td align="right">0.0196219</td>
+<td align="right">0.0196219</td>
 </tr>
 <tr class="even">
-<td align="right">-4.5477387</td>
-<td align="right">0.0197819</td>
+<td align="right">-4.5376883</td>
+<td align="right">0.0210927</td>
 <td align="right">NaN</td>
-<td align="right">0.0197819</td>
+<td align="right">0.0201746</td>
+<td align="right">0.0210927</td>
+<td align="right">0.0210927</td>
+<td align="right">0.0210927</td>
+<td align="right">0.0209914</td>
+<td align="right">0.0209914</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.4974874</td>
-<td align="right">0.0202592</td>
+<td align="right">-4.4673367</td>
+<td align="right">0.0195981</td>
 <td align="right">NaN</td>
-<td align="right">0.0202592</td>
+<td align="right">0.0201938</td>
+<td align="right">0.0195981</td>
+<td align="right">0.0195981</td>
+<td align="right">0.0195981</td>
+<td align="right">0.0196680</td>
+<td align="right">0.0196680</td>
 </tr>
 <tr class="even">
-<td align="right">-4.4472362</td>
-<td align="right">0.0199215</td>
-<td align="right">NaN</td>
-<td align="right">0.0199215</td>
-</tr>
-<tr class="odd">
-<td align="right">-4.3969849</td>
+<td align="right">-4.3969851</td>
 <td align="right">0.0204729</td>
 <td align="right">NaN</td>
+<td align="right">0.0204491</td>
 <td align="right">0.0204729</td>
-</tr>
-<tr class="even">
-<td align="right">-4.3467337</td>
-<td align="right">0.0212416</td>
-<td align="right">NaN</td>
-<td align="right">0.0212416</td>
+<td align="right">0.0204729</td>
+<td align="right">0.0204729</td>
+<td align="right">0.0205494</td>
+<td align="right">0.0205494</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.2964824</td>
-<td align="right">0.0202678</td>
+<td align="right">-4.3266330</td>
+<td align="right">0.0210287</td>
 <td align="right">NaN</td>
-<td align="right">0.0202678</td>
+<td align="right">0.0205885</td>
+<td align="right">0.0210287</td>
+<td align="right">0.0210287</td>
+<td align="right">0.0210287</td>
+<td align="right">0.0209845</td>
+<td align="right">0.0209845</td>
 </tr>
 <tr class="even">
-<td align="right">-4.2462312</td>
-<td align="right">0.0200485</td>
+<td align="right">-4.2562814</td>
+<td align="right">0.0198982</td>
 <td align="right">NaN</td>
-<td align="right">0.0200485</td>
+<td align="right">0.0204054</td>
+<td align="right">0.0198982</td>
+<td align="right">0.0198982</td>
+<td align="right">0.0198982</td>
+<td align="right">0.0200070</td>
+<td align="right">0.0200070</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.1959799</td>
-<td align="right">0.0206836</td>
+<td align="right">-4.1859298</td>
+<td align="right">0.0204449</td>
 <td align="right">NaN</td>
-<td align="right">0.0206836</td>
+<td align="right">0.0202258</td>
+<td align="right">0.0204449</td>
+<td align="right">0.0204449</td>
+<td align="right">0.0204449</td>
+<td align="right">0.0205717</td>
+<td align="right">0.0205717</td>
 </tr>
 <tr class="even">
-<td align="right">-4.1457286</td>
-<td align="right">0.0190015</td>
+<td align="right">-4.1155777</td>
+<td align="right">0.0204613</td>
 <td align="right">NaN</td>
-<td align="right">0.0190015</td>
+<td align="right">0.0201229</td>
+<td align="right">0.0204613</td>
+<td align="right">0.0204613</td>
+<td align="right">0.0204613</td>
+<td align="right">0.0203703</td>
+<td align="right">0.0203703</td>
 </tr>
 <tr class="odd">
-<td align="right">-4.0954774</td>
-<td align="right">0.0191545</td>
-<td align="right">NaN</td>
-<td align="right">0.0191545</td>
-</tr>
-<tr class="even">
 <td align="right">-4.0452261</td>
 <td align="right">0.0210005</td>
 <td align="right">NaN</td>
+<td align="right">0.0204305</td>
 <td align="right">0.0210005</td>
-</tr>
-<tr class="odd">
-<td align="right">-3.9949749</td>
-<td align="right">0.0204607</td>
-<td align="right">NaN</td>
-<td align="right">0.0204607</td>
+<td align="right">0.0210005</td>
+<td align="right">0.0210006</td>
+<td align="right">0.0210243</td>
+<td align="right">0.0210243</td>
 </tr>
 <tr class="even">
-<td align="right">-3.9447236</td>
-<td align="right">0.0201610</td>
+<td align="right">-3.9748743</td>
+<td align="right">0.0194273</td>
 <td align="right">NaN</td>
-<td align="right">0.0201610</td>
+<td align="right">0.0204547</td>
+<td align="right">0.0194273</td>
+<td align="right">0.0194273</td>
+<td align="right">0.0194273</td>
+<td align="right">0.0195512</td>
+<td align="right">0.0195512</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.8944724</td>
-<td align="right">0.0202566</td>
+<td align="right">-3.9045227</td>
+<td align="right">0.0202804</td>
 <td align="right">NaN</td>
-<td align="right">0.0202566</td>
+<td align="right">0.0204616</td>
+<td align="right">0.0202804</td>
+<td align="right">0.0202804</td>
+<td align="right">0.0202804</td>
+<td align="right">0.0203311</td>
+<td align="right">0.0203311</td>
 </tr>
 <tr class="even">
-<td align="right">-3.8442211</td>
-<td align="right">0.0197011</td>
+<td align="right">-3.8341708</td>
+<td align="right">0.0199572</td>
 <td align="right">NaN</td>
-<td align="right">0.0197011</td>
+<td align="right">0.0202563</td>
+<td align="right">0.0199572</td>
+<td align="right">0.0199572</td>
+<td align="right">0.0199572</td>
+<td align="right">0.0200177</td>
+<td align="right">0.0200177</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.7939698</td>
-<td align="right">0.0197743</td>
+<td align="right">-3.7638190</td>
+<td align="right">0.0201123</td>
 <td align="right">NaN</td>
-<td align="right">0.0197743</td>
+<td align="right">0.0201723</td>
+<td align="right">0.0201123</td>
+<td align="right">0.0201123</td>
+<td align="right">0.0201123</td>
+<td align="right">0.0201145</td>
+<td align="right">0.0201145</td>
 </tr>
 <tr class="even">
-<td align="right">-3.7437186</td>
-<td align="right">0.0193818</td>
-<td align="right">NaN</td>
-<td align="right">0.0193818</td>
-</tr>
-<tr class="odd">
-<td align="right">-3.6934673</td>
+<td align="right">-3.6934674</td>
 <td align="right">0.0209057</td>
 <td align="right">NaN</td>
+<td align="right">0.0202445</td>
 <td align="right">0.0209057</td>
-</tr>
-<tr class="even">
-<td align="right">-3.6432161</td>
-<td align="right">0.0195578</td>
-<td align="right">NaN</td>
-<td align="right">0.0195578</td>
+<td align="right">0.0209057</td>
+<td align="right">0.0209057</td>
+<td align="right">0.0209104</td>
+<td align="right">0.0209104</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.5929648</td>
-<td align="right">0.0193330</td>
+<td align="right">-3.6231155</td>
+<td align="right">0.0203726</td>
 <td align="right">NaN</td>
-<td align="right">0.0193330</td>
+<td align="right">0.0198083</td>
+<td align="right">0.0203726</td>
+<td align="right">0.0203726</td>
+<td align="right">0.0203726</td>
+<td align="right">0.0202654</td>
+<td align="right">0.0202654</td>
 </tr>
 <tr class="even">
-<td align="right">-3.5427136</td>
-<td align="right">0.0187924</td>
+<td align="right">-3.5527637</td>
+<td align="right">0.0193254</td>
 <td align="right">NaN</td>
-<td align="right">0.0187924</td>
+<td align="right">0.0192608</td>
+<td align="right">0.0193254</td>
+<td align="right">0.0193254</td>
+<td align="right">0.0193254</td>
+<td align="right">0.0192831</td>
+<td align="right">0.0192831</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.4924623</td>
-<td align="right">0.0195692</td>
+<td align="right">-3.4824121</td>
+<td align="right">0.0193953</td>
 <td align="right">NaN</td>
-<td align="right">0.0195692</td>
+<td align="right">0.0193589</td>
+<td align="right">0.0193953</td>
+<td align="right">0.0193953</td>
+<td align="right">0.0193953</td>
+<td align="right">0.0193969</td>
+<td align="right">0.0193969</td>
 </tr>
 <tr class="even">
-<td align="right">-3.4422111</td>
-<td align="right">0.0205190</td>
+<td align="right">-3.4120603</td>
+<td align="right">0.0200990</td>
 <td align="right">NaN</td>
-<td align="right">0.0205190</td>
+<td align="right">0.0198782</td>
+<td align="right">0.0200990</td>
+<td align="right">0.0200990</td>
+<td align="right">0.0200990</td>
+<td align="right">0.0201507</td>
+<td align="right">0.0201507</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.3919598</td>
-<td align="right">0.0205917</td>
+<td align="right">-3.3417087</td>
+<td align="right">0.0196300</td>
 <td align="right">NaN</td>
-<td align="right">0.0205917</td>
-</tr>
-<tr class="even">
-<td align="right">-3.3417085</td>
+<td align="right">0.0197611</td>
+<td align="right">0.0196300</td>
+<td align="right">0.0196300</td>
 <td align="right">0.0196299</td>
-<td align="right">NaN</td>
-<td align="right">0.0196299</td>
-</tr>
-<tr class="odd">
-<td align="right">-3.2914573</td>
-<td align="right">0.0181004</td>
-<td align="right">NaN</td>
-<td align="right">0.0181004</td>
+<td align="right">0.0196535</td>
+<td align="right">0.0196535</td>
 </tr>
 <tr class="even">
-<td align="right">-3.2412060</td>
-<td align="right">0.0200508</td>
+<td align="right">-3.2713568</td>
+<td align="right">0.0180111</td>
 <td align="right">NaN</td>
-<td align="right">0.0200508</td>
+<td align="right">0.0194851</td>
+<td align="right">0.0180111</td>
+<td align="right">0.0180111</td>
+<td align="right">0.0180111</td>
+<td align="right">0.0180661</td>
+<td align="right">0.0180661</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.1909548</td>
-<td align="right">0.0210303</td>
+<td align="right">-3.2010050</td>
+<td align="right">0.0209866</td>
 <td align="right">NaN</td>
-<td align="right">0.0210303</td>
+<td align="right">0.0198947</td>
+<td align="right">0.0209866</td>
+<td align="right">0.0209866</td>
+<td align="right">0.0209866</td>
+<td align="right">0.0209217</td>
+<td align="right">0.0209217</td>
 </tr>
 <tr class="even">
-<td align="right">-3.1407035</td>
-<td align="right">0.0189306</td>
+<td align="right">-3.1306534</td>
+<td align="right">0.0192494</td>
 <td align="right">NaN</td>
-<td align="right">0.0189306</td>
+<td align="right">0.0199137</td>
+<td align="right">0.0192494</td>
+<td align="right">0.0192494</td>
+<td align="right">0.0192494</td>
+<td align="right">0.0192090</td>
+<td align="right">0.0192090</td>
 </tr>
 <tr class="odd">
-<td align="right">-3.0904523</td>
-<td align="right">0.0200319</td>
+<td align="right">-3.0603015</td>
+<td align="right">0.0206995</td>
 <td align="right">NaN</td>
-<td align="right">0.0200319</td>
+<td align="right">0.0201499</td>
+<td align="right">0.0206995</td>
+<td align="right">0.0206995</td>
+<td align="right">0.0206995</td>
+<td align="right">0.0206156</td>
+<td align="right">0.0206156</td>
 </tr>
 <tr class="even">
-<td align="right">-3.0402010</td>
-<td align="right">0.0198879</td>
-<td align="right">NaN</td>
-<td align="right">0.0198879</td>
-</tr>
-<tr class="odd">
 <td align="right">-2.9899497</td>
 <td align="right">0.0202502</td>
 <td align="right">NaN</td>
+<td align="right">0.0204208</td>
 <td align="right">0.0202502</td>
-</tr>
-<tr class="even">
-<td align="right">-2.9396985</td>
-<td align="right">0.0210968</td>
-<td align="right">NaN</td>
-<td align="right">0.0210968</td>
+<td align="right">0.0202502</td>
+<td align="right">0.0202502</td>
+<td align="right">0.0202171</td>
+<td align="right">0.0202171</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.8894472</td>
-<td align="right">0.0201990</td>
+<td align="right">-2.9195981</td>
+<td align="right">0.0208145</td>
 <td align="right">NaN</td>
-<td align="right">0.0201990</td>
+<td align="right">0.0205284</td>
+<td align="right">0.0208145</td>
+<td align="right">0.0208145</td>
+<td align="right">0.0208145</td>
+<td align="right">0.0208098</td>
+<td align="right">0.0208098</td>
 </tr>
 <tr class="even">
-<td align="right">-2.8391960</td>
-<td align="right">0.0198535</td>
+<td align="right">-2.8492463</td>
+<td align="right">0.0200826</td>
 <td align="right">NaN</td>
-<td align="right">0.0198535</td>
+<td align="right">0.0202775</td>
+<td align="right">0.0200826</td>
+<td align="right">0.0200826</td>
+<td align="right">0.0200826</td>
+<td align="right">0.0201099</td>
+<td align="right">0.0201099</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.7889447</td>
-<td align="right">0.0201914</td>
+<td align="right">-2.7788944</td>
+<td align="right">0.0200118</td>
 <td align="right">NaN</td>
-<td align="right">0.0201914</td>
+<td align="right">0.0199981</td>
+<td align="right">0.0200118</td>
+<td align="right">0.0200118</td>
+<td align="right">0.0200118</td>
+<td align="right">0.0200466</td>
+<td align="right">0.0200466</td>
 </tr>
 <tr class="even">
-<td align="right">-2.7386935</td>
-<td align="right">0.0194153</td>
+<td align="right">-2.7085428</td>
+<td align="right">0.0199587</td>
 <td align="right">NaN</td>
-<td align="right">0.0194153</td>
+<td align="right">0.0197106</td>
+<td align="right">0.0199587</td>
+<td align="right">0.0199587</td>
+<td align="right">0.0199587</td>
+<td align="right">0.0199001</td>
+<td align="right">0.0199001</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.6884422</td>
-<td align="right">0.0186982</td>
-<td align="right">NaN</td>
-<td align="right">0.0186982</td>
-</tr>
-<tr class="even">
 <td align="right">-2.6381910</td>
 <td align="right">0.0200374</td>
 <td align="right">NaN</td>
+<td align="right">0.0199455</td>
 <td align="right">0.0200374</td>
-</tr>
-<tr class="odd">
-<td align="right">-2.5879397</td>
-<td align="right">0.0197658</td>
-<td align="right">NaN</td>
-<td align="right">0.0197658</td>
+<td align="right">0.0200374</td>
+<td align="right">0.0200374</td>
+<td align="right">0.0201217</td>
+<td align="right">0.0201217</td>
 </tr>
 <tr class="even">
-<td align="right">-2.5376884</td>
-<td align="right">0.0193036</td>
+<td align="right">-2.5678391</td>
+<td align="right">0.0199971</td>
 <td align="right">NaN</td>
-<td align="right">0.0193036</td>
+<td align="right">0.0201614</td>
+<td align="right">0.0199971</td>
+<td align="right">0.0199971</td>
+<td align="right">0.0199971</td>
+<td align="right">0.0200583</td>
+<td align="right">0.0200583</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.4874372</td>
-<td align="right">0.0205794</td>
+<td align="right">-2.4974875</td>
+<td align="right">0.0203591</td>
 <td align="right">NaN</td>
-<td align="right">0.0205794</td>
+<td align="right">0.0203501</td>
+<td align="right">0.0203591</td>
+<td align="right">0.0203591</td>
+<td align="right">0.0203591</td>
+<td align="right">0.0203331</td>
+<td align="right">0.0203331</td>
 </tr>
 <tr class="even">
-<td align="right">-2.4371859</td>
-<td align="right">0.0213497</td>
+<td align="right">-2.4271357</td>
+<td align="right">0.0208892</td>
 <td align="right">NaN</td>
-<td align="right">0.0213497</td>
+<td align="right">0.0206034</td>
+<td align="right">0.0208892</td>
+<td align="right">0.0208892</td>
+<td align="right">0.0208892</td>
+<td align="right">0.0209156</td>
+<td align="right">0.0209156</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.3869347</td>
-<td align="right">0.0207420</td>
+<td align="right">-2.3567839</td>
+<td align="right">0.0202368</td>
 <td align="right">NaN</td>
-<td align="right">0.0207420</td>
+<td align="right">0.0204627</td>
+<td align="right">0.0202368</td>
+<td align="right">0.0202368</td>
+<td align="right">0.0202368</td>
+<td align="right">0.0202893</td>
+<td align="right">0.0202893</td>
 </tr>
 <tr class="even">
-<td align="right">-2.3366834</td>
-<td align="right">0.0196691</td>
-<td align="right">NaN</td>
-<td align="right">0.0196691</td>
-</tr>
-<tr class="odd">
-<td align="right">-2.2864322</td>
+<td align="right">-2.2864323</td>
 <td align="right">0.0214166</td>
 <td align="right">NaN</td>
+<td align="right">0.0206318</td>
 <td align="right">0.0214166</td>
-</tr>
-<tr class="even">
-<td align="right">-2.2361809</td>
-<td align="right">0.0208898</td>
-<td align="right">NaN</td>
-<td align="right">0.0208898</td>
+<td align="right">0.0214166</td>
+<td align="right">0.0214166</td>
+<td align="right">0.0213925</td>
+<td align="right">0.0213925</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.1859296</td>
-<td align="right">0.0215725</td>
+<td align="right">-2.2160804</td>
+<td align="right">0.0206180</td>
 <td align="right">NaN</td>
-<td align="right">0.0215725</td>
+<td align="right">0.0211450</td>
+<td align="right">0.0206180</td>
+<td align="right">0.0206180</td>
+<td align="right">0.0206180</td>
+<td align="right">0.0206368</td>
+<td align="right">0.0206368</td>
 </tr>
 <tr class="even">
-<td align="right">-2.1356784</td>
-<td align="right">0.0223938</td>
+<td align="right">-2.1457286</td>
+<td align="right">0.0221667</td>
 <td align="right">NaN</td>
-<td align="right">0.0223938</td>
+<td align="right">0.0219538</td>
+<td align="right">0.0221667</td>
+<td align="right">0.0221667</td>
+<td align="right">0.0221667</td>
+<td align="right">0.0221991</td>
+<td align="right">0.0221991</td>
 </tr>
 <tr class="odd">
-<td align="right">-2.0854271</td>
-<td align="right">0.0222078</td>
+<td align="right">-2.0753770</td>
+<td align="right">0.0230426</td>
 <td align="right">NaN</td>
-<td align="right">0.0222078</td>
+<td align="right">0.0229285</td>
+<td align="right">0.0230426</td>
+<td align="right">0.0230426</td>
+<td align="right">0.0230426</td>
+<td align="right">0.0229957</td>
+<td align="right">0.0229957</td>
 </tr>
 <tr class="even">
-<td align="right">-2.0351759</td>
-<td align="right">0.0233766</td>
+<td align="right">-2.0050251</td>
+<td align="right">0.0235689</td>
 <td align="right">NaN</td>
-<td align="right">0.0233766</td>
+<td align="right">0.0242916</td>
+<td align="right">0.0235689</td>
+<td align="right">0.0235689</td>
+<td align="right">0.0235689</td>
+<td align="right">0.0237029</td>
+<td align="right">0.0237029</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.9849246</td>
-<td align="right">0.0255492</td>
-<td align="right">NaN</td>
-<td align="right">0.0255492</td>
-</tr>
-<tr class="even">
-<td align="right">-1.9346734</td>
+<td align="right">-1.9346733</td>
 <td align="right">0.0246321</td>
 <td align="right">NaN</td>
+<td align="right">0.0262133</td>
 <td align="right">0.0246321</td>
-</tr>
-<tr class="odd">
-<td align="right">-1.8844221</td>
-<td align="right">0.0286739</td>
-<td align="right">NaN</td>
-<td align="right">0.0286739</td>
+<td align="right">0.0246321</td>
+<td align="right">0.0246321</td>
+<td align="right">0.0246177</td>
+<td align="right">0.0246177</td>
 </tr>
 <tr class="even">
-<td align="right">-1.8341709</td>
-<td align="right">0.0303388</td>
+<td align="right">-1.8643216</td>
+<td align="right">0.0304180</td>
 <td align="right">NaN</td>
-<td align="right">0.0303388</td>
+<td align="right">0.0298103</td>
+<td align="right">0.0304180</td>
+<td align="right">0.0304180</td>
+<td align="right">0.0304180</td>
+<td align="right">0.0301851</td>
+<td align="right">0.0301851</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.7839196</td>
-<td align="right">0.0354143</td>
+<td align="right">-1.7939699</td>
+<td align="right">0.0340315</td>
 <td align="right">NaN</td>
-<td align="right">0.0354143</td>
+<td align="right">0.0347089</td>
+<td align="right">0.0340315</td>
+<td align="right">0.0340315</td>
+<td align="right">0.0340315</td>
+<td align="right">0.0341411</td>
+<td align="right">0.0341411</td>
 </tr>
 <tr class="even">
-<td align="right">-1.7336683</td>
-<td align="right">0.0391140</td>
+<td align="right">-1.7236181</td>
+<td align="right">0.0398586</td>
 <td align="right">NaN</td>
-<td align="right">0.0391140</td>
+<td align="right">0.0404316</td>
+<td align="right">0.0398586</td>
+<td align="right">0.0398586</td>
+<td align="right">0.0398586</td>
+<td align="right">0.0397733</td>
+<td align="right">0.0397733</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.6834171</td>
-<td align="right">0.0431889</td>
+<td align="right">-1.6532663</td>
+<td align="right">0.0487671</td>
 <td align="right">NaN</td>
-<td align="right">0.0431889</td>
+<td align="right">0.0469134</td>
+<td align="right">0.0487671</td>
+<td align="right">0.0487671</td>
+<td align="right">0.0487671</td>
+<td align="right">0.0486207</td>
+<td align="right">0.0486207</td>
 </tr>
 <tr class="even">
-<td align="right">-1.6331658</td>
-<td align="right">0.0482850</td>
-<td align="right">NaN</td>
-<td align="right">0.0482850</td>
-</tr>
-<tr class="odd">
 <td align="right">-1.5829146</td>
 <td align="right">0.0540091</td>
 <td align="right">NaN</td>
+<td align="right">0.0542382</td>
 <td align="right">0.0540091</td>
-</tr>
-<tr class="even">
-<td align="right">-1.5326633</td>
-<td align="right">0.0598962</td>
-<td align="right">NaN</td>
-<td align="right">0.0598962</td>
+<td align="right">0.0540091</td>
+<td align="right">0.0540091</td>
+<td align="right">0.0538893</td>
+<td align="right">0.0538893</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.4824121</td>
-<td align="right">0.0697304</td>
+<td align="right">-1.5125629</td>
+<td align="right">0.0631989</td>
 <td align="right">NaN</td>
-<td align="right">0.0697304</td>
+<td align="right">0.0637595</td>
+<td align="right">0.0631988</td>
+<td align="right">0.0631988</td>
+<td align="right">0.0631988</td>
+<td align="right">0.0631624</td>
+<td align="right">0.0631624</td>
 </tr>
 <tr class="even">
-<td align="right">-1.4321608</td>
-<td align="right">0.0749172</td>
+<td align="right">-1.4422110</td>
+<td align="right">0.0729860</td>
 <td align="right">NaN</td>
-<td align="right">0.0749172</td>
+<td align="right">0.0745362</td>
+<td align="right">0.0729860</td>
+<td align="right">0.0729860</td>
+<td align="right">0.0729860</td>
+<td align="right">0.0731662</td>
+<td align="right">0.0731662</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.3819095</td>
-<td align="right">0.0864962</td>
+<td align="right">-1.3718593</td>
+<td align="right">0.0877974</td>
 <td align="right">NaN</td>
-<td align="right">0.0864962</td>
+<td align="right">0.0854362</td>
+<td align="right">0.0877974</td>
+<td align="right">0.0877974</td>
+<td align="right">0.0877974</td>
+<td align="right">0.0876047</td>
+<td align="right">0.0876047</td>
 </tr>
 <tr class="even">
-<td align="right">-1.3316583</td>
-<td align="right">0.0910830</td>
+<td align="right">-1.3015076</td>
+<td align="right">0.0932362</td>
 <td align="right">NaN</td>
-<td align="right">0.0910830</td>
+<td align="right">0.0946122</td>
+<td align="right">0.0932363</td>
+<td align="right">0.0932363</td>
+<td align="right">0.0932363</td>
+<td align="right">0.0934022</td>
+<td align="right">0.0934022</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.2814070</td>
-<td align="right">0.0966851</td>
-<td align="right">NaN</td>
-<td align="right">0.0966851</td>
-</tr>
-<tr class="even">
 <td align="right">-1.2311558</td>
 <td align="right">0.1034280</td>
 <td align="right">NaN</td>
+<td align="right">0.1035766</td>
 <td align="right">0.1034280</td>
-</tr>
-<tr class="odd">
-<td align="right">-1.1809045</td>
-<td align="right">0.1103136</td>
-<td align="right">NaN</td>
-<td align="right">0.1103136</td>
+<td align="right">0.1034280</td>
+<td align="right">0.1034280</td>
+<td align="right">0.1034043</td>
+<td align="right">0.1034043</td>
 </tr>
 <tr class="even">
-<td align="right">-1.1306533</td>
-<td align="right">0.1155620</td>
+<td align="right">-1.1608040</td>
+<td align="right">0.1111406</td>
 <td align="right">NaN</td>
-<td align="right">0.1155620</td>
+<td align="right">0.1113007</td>
+<td align="right">0.1111406</td>
+<td align="right">0.1111406</td>
+<td align="right">0.1111406</td>
+<td align="right">0.1111827</td>
+<td align="right">0.1111827</td>
 </tr>
 <tr class="odd">
-<td align="right">-1.0804020</td>
-<td align="right">0.1178405</td>
+<td align="right">-1.0904523</td>
+<td align="right">0.1183688</td>
 <td align="right">NaN</td>
-<td align="right">0.1178405</td>
+<td align="right">0.1161050</td>
+<td align="right">0.1183688</td>
+<td align="right">0.1183688</td>
+<td align="right">0.1183688</td>
+<td align="right">0.1184133</td>
+<td align="right">0.1184133</td>
 </tr>
 <tr class="even">
-<td align="right">-1.0301508</td>
-<td align="right">0.1158540</td>
+<td align="right">-1.0201005</td>
+<td align="right">0.1154359</td>
 <td align="right">NaN</td>
-<td align="right">0.1158540</td>
+<td align="right">0.1170385</td>
+<td align="right">0.1154359</td>
+<td align="right">0.1154359</td>
+<td align="right">0.1154359</td>
+<td align="right">0.1157021</td>
+<td align="right">0.1157021</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.9798995</td>
-<td align="right">0.1170738</td>
+<td align="right">-0.9497488</td>
+<td align="right">0.1166944</td>
 <td align="right">NaN</td>
-<td align="right">0.1170738</td>
+<td align="right">0.1159430</td>
+<td align="right">0.1166944</td>
+<td align="right">0.1166944</td>
+<td align="right">0.1166943</td>
+<td align="right">0.1166564</td>
+<td align="right">0.1166564</td>
 </tr>
 <tr class="even">
-<td align="right">-0.9296482</td>
-<td align="right">0.1159391</td>
-<td align="right">NaN</td>
-<td align="right">0.1159391</td>
-</tr>
-<tr class="odd">
 <td align="right">-0.8793970</td>
 <td align="right">0.1136776</td>
 <td align="right">NaN</td>
+<td align="right">0.1130470</td>
 <td align="right">0.1136776</td>
-</tr>
-<tr class="even">
-<td align="right">-0.8291457</td>
-<td align="right">0.1098528</td>
-<td align="right">NaN</td>
-<td align="right">0.1098528</td>
+<td align="right">0.1136776</td>
+<td align="right">0.1136776</td>
+<td align="right">0.1137577</td>
+<td align="right">0.1137577</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.7788945</td>
-<td align="right">0.1063201</td>
+<td align="right">-0.8090453</td>
+<td align="right">0.1095859</td>
 <td align="right">NaN</td>
-<td align="right">0.1063201</td>
+<td align="right">0.1075309</td>
+<td align="right">0.1095859</td>
+<td align="right">0.1095859</td>
+<td align="right">0.1095859</td>
+<td align="right">0.1096082</td>
+<td align="right">0.1096082</td>
 </tr>
 <tr class="even">
-<td align="right">-0.7286432</td>
-<td align="right">0.0974345</td>
+<td align="right">-0.7386935</td>
+<td align="right">0.0972383</td>
 <td align="right">NaN</td>
-<td align="right">0.0974345</td>
+<td align="right">0.0990830</td>
+<td align="right">0.0972383</td>
+<td align="right">0.0972383</td>
+<td align="right">0.0972383</td>
+<td align="right">0.0974528</td>
+<td align="right">0.0974528</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.6783920</td>
-<td align="right">0.0904665</td>
+<td align="right">-0.6683417</td>
+<td align="right">0.0900137</td>
 <td align="right">NaN</td>
-<td align="right">0.0904665</td>
+<td align="right">0.0905486</td>
+<td align="right">0.0900137</td>
+<td align="right">0.0900137</td>
+<td align="right">0.0900136</td>
+<td align="right">0.0900610</td>
+<td align="right">0.0900610</td>
 </tr>
 <tr class="even">
-<td align="right">-0.6281407</td>
-<td align="right">0.0859556</td>
+<td align="right">-0.5979900</td>
+<td align="right">0.0822598</td>
 <td align="right">NaN</td>
-<td align="right">0.0859556</td>
+<td align="right">0.0815774</td>
+<td align="right">0.0822598</td>
+<td align="right">0.0822598</td>
+<td align="right">0.0822598</td>
+<td align="right">0.0823508</td>
+<td align="right">0.0823508</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.5778894</td>
-<td align="right">0.0794421</td>
-<td align="right">NaN</td>
-<td align="right">0.0794421</td>
-</tr>
-<tr class="even">
 <td align="right">-0.5276382</td>
 <td align="right">0.0711820</td>
 <td align="right">NaN</td>
+<td align="right">0.0718010</td>
 <td align="right">0.0711820</td>
-</tr>
-<tr class="odd">
-<td align="right">-0.4773869</td>
-<td align="right">0.0633642</td>
-<td align="right">NaN</td>
-<td align="right">0.0633642</td>
+<td align="right">0.0711820</td>
+<td align="right">0.0711820</td>
+<td align="right">0.0710989</td>
+<td align="right">0.0710989</td>
 </tr>
 <tr class="even">
-<td align="right">-0.4271357</td>
-<td align="right">0.0586890</td>
+<td align="right">-0.4572864</td>
+<td align="right">0.0632002</td>
 <td align="right">NaN</td>
-<td align="right">0.0586890</td>
+<td align="right">0.0629390</td>
+<td align="right">0.0632002</td>
+<td align="right">0.0632002</td>
+<td align="right">0.0632001</td>
+<td align="right">0.0630253</td>
+<td align="right">0.0630253</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.3768844</td>
-<td align="right">0.0536386</td>
+<td align="right">-0.3869347</td>
+<td align="right">0.0542016</td>
 <td align="right">NaN</td>
-<td align="right">0.0536386</td>
+<td align="right">0.0552546</td>
+<td align="right">0.0542016</td>
+<td align="right">0.0542016</td>
+<td align="right">0.0542016</td>
+<td align="right">0.0542900</td>
+<td align="right">0.0542900</td>
 </tr>
 <tr class="even">
-<td align="right">-0.3266332</td>
-<td align="right">0.0501011</td>
+<td align="right">-0.3165829</td>
+<td align="right">0.0479771</td>
 <td align="right">NaN</td>
-<td align="right">0.0501011</td>
+<td align="right">0.0491212</td>
+<td align="right">0.0479771</td>
+<td align="right">0.0479771</td>
+<td align="right">0.0479771</td>
+<td align="right">0.0479605</td>
+<td align="right">0.0479605</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.2763819</td>
-<td align="right">0.0457846</td>
+<td align="right">-0.2462312</td>
+<td align="right">0.0458891</td>
 <td align="right">NaN</td>
-<td align="right">0.0457846</td>
+<td align="right">0.0453334</td>
+<td align="right">0.0458891</td>
+<td align="right">0.0458891</td>
+<td align="right">0.0458891</td>
+<td align="right">0.0458408</td>
+<td align="right">0.0458408</td>
 </tr>
 <tr class="even">
-<td align="right">-0.2261307</td>
-<td align="right">0.0445249</td>
-<td align="right">NaN</td>
-<td align="right">0.0445249</td>
-</tr>
-<tr class="odd">
 <td align="right">-0.1758794</td>
 <td align="right">0.0430577</td>
 <td align="right">NaN</td>
+<td align="right">0.0445461</td>
 <td align="right">0.0430577</td>
-</tr>
-<tr class="even">
-<td align="right">-0.1256281</td>
-<td align="right">0.0429717</td>
-<td align="right">NaN</td>
-<td align="right">0.0429717</td>
+<td align="right">0.0430577</td>
+<td align="right">0.0430577</td>
+<td align="right">0.0429996</td>
+<td align="right">0.0429996</td>
 </tr>
 <tr class="odd">
-<td align="right">-0.0753769</td>
-<td align="right">0.0430780</td>
+<td align="right">-0.1055276</td>
+<td align="right">0.0409512</td>
 <td align="right">NaN</td>
-<td align="right">0.0430780</td>
+<td align="right">0.0718943</td>
+<td align="right">0.0409512</td>
+<td align="right">0.0409512</td>
+<td align="right">0.0409512</td>
+<td align="right">0.0410765</td>
+<td align="right">0.0410765</td>
 </tr>
 <tr class="even">
-<td align="right">-0.0251256</td>
-<td align="right">0.0503268</td>
+<td align="right">-0.0351759</td>
+<td align="right">0.0454857</td>
 <td align="right">NaN</td>
-<td align="right">0.0503268</td>
+<td align="right">0.2440335</td>
+<td align="right">0.0454857</td>
+<td align="right">0.0454857</td>
+<td align="right">0.0454857</td>
+<td align="right">0.0459486</td>
+<td align="right">0.0459486</td>
 </tr>
 <tr class="odd">
-<td align="right">0.0251256</td>
-<td align="right">0.8009036</td>
+<td align="right">0.0351759</td>
+<td align="right">0.7873049</td>
 <td align="right">NaN</td>
-<td align="right">0.8009036</td>
+<td align="right">0.5694473</td>
+<td align="right">0.7873048</td>
+<td align="right">0.7873048</td>
+<td align="right">0.7873043</td>
+<td align="right">0.7873461</td>
+<td align="right">0.7873461</td>
 </tr>
 <tr class="even">
-<td align="right">0.0753769</td>
-<td align="right">0.7359356</td>
+<td align="right">0.1055276</td>
+<td align="right">0.7071357</td>
 <td align="right">NaN</td>
-<td align="right">0.7359356</td>
+<td align="right">0.6781591</td>
+<td align="right">0.7071357</td>
+<td align="right">0.7071357</td>
+<td align="right">0.7071356</td>
+<td align="right">0.7064998</td>
+<td align="right">0.7064998</td>
 </tr>
 <tr class="odd">
-<td align="right">0.1256281</td>
-<td align="right">0.6765336</td>
-<td align="right">NaN</td>
-<td align="right">0.6765336</td>
-</tr>
-<tr class="even">
 <td align="right">0.1758794</td>
 <td align="right">0.6368205</td>
 <td align="right">NaN</td>
-<td align="right">0.6368205</td>
-</tr>
-<tr class="odd">
-<td align="right">0.2261307</td>
-<td align="right">0.5829280</td>
-<td align="right">NaN</td>
-<td align="right">0.5829280</td>
-</tr>
-<tr class="even">
-<td align="right">0.2763819</td>
-<td align="right">0.5362122</td>
-<td align="right">NaN</td>
-<td align="right">0.5362122</td>
-</tr>
-<tr class="odd">
-<td align="right">0.3266332</td>
-<td align="right">0.5136169</td>
-<td align="right">NaN</td>
-<td align="right">0.5136169</td>
+<td align="right">0.6331000</td>
+<td align="right">0.6368204</td>
+<td align="right">0.6368204</td>
+<td align="right">0.6368200</td>
+<td align="right">0.6366546</td>
+<td align="right">0.6366546</td>
 </tr>
 <tr class="even">
-<td align="right">0.3768844</td>
-<td align="right">0.4838611</td>
+<td align="right">0.2462312</td>
+<td align="right">0.5640191</td>
 <td align="right">NaN</td>
-<td align="right">0.4838611</td>
+<td align="right">0.5700303</td>
+<td align="right">0.5640189</td>
+<td align="right">0.5640189</td>
+<td align="right">0.5640186</td>
+<td align="right">0.5644068</td>
+<td align="right">0.5644068</td>
 </tr>
 <tr class="odd">
-<td align="right">0.4271357</td>
-<td align="right">0.4670082</td>
+<td align="right">0.3165829</td>
+<td align="right">0.5182795</td>
 <td align="right">NaN</td>
-<td align="right">0.4670082</td>
+<td align="right">0.5208183</td>
+<td align="right">0.5182794</td>
+<td align="right">0.5182794</td>
+<td align="right">0.5182794</td>
+<td align="right">0.5184755</td>
+<td align="right">0.5184755</td>
 </tr>
 <tr class="even">
-<td align="right">0.4773869</td>
-<td align="right">0.4461861</td>
+<td align="right">0.3869347</td>
+<td align="right">0.4786080</td>
 <td align="right">NaN</td>
-<td align="right">0.4461861</td>
+<td align="right">0.4844219</td>
+<td align="right">0.4786080</td>
+<td align="right">0.4786080</td>
+<td align="right">0.4786079</td>
+<td align="right">0.4789822</td>
+<td align="right">0.4789822</td>
 </tr>
 <tr class="odd">
+<td align="right">0.4572864</td>
+<td align="right">0.4555878</td>
+<td align="right">NaN</td>
+<td align="right">0.4579264</td>
+<td align="right">0.4555878</td>
+<td align="right">0.4555878</td>
+<td align="right">0.4555877</td>
+<td align="right">0.4553497</td>
+<td align="right">0.4553497</td>
+</tr>
+<tr class="even">
 <td align="right">0.5276382</td>
+<td align="right">0.4363624</td>
+<td align="right">NaN</td>
+<td align="right">0.4408690</td>
 <td align="right">0.4363622</td>
-<td align="right">NaN</td>
 <td align="right">0.4363622</td>
-</tr>
-<tr class="even">
-<td align="right">0.5778894</td>
-<td align="right">0.4330370</td>
-<td align="right">NaN</td>
-<td align="right">0.4330370</td>
+<td align="right">0.4363621</td>
+<td align="right">0.4362947</td>
+<td align="right">0.4362947</td>
 </tr>
 <tr class="odd">
-<td align="right">0.6281407</td>
-<td align="right">0.4319912</td>
+<td align="right">0.5979900</td>
+<td align="right">0.4315099</td>
 <td align="right">NaN</td>
-<td align="right">0.4319912</td>
+<td align="right">0.4337052</td>
+<td align="right">0.4315099</td>
+<td align="right">0.4315099</td>
+<td align="right">0.4315100</td>
+<td align="right">0.4311112</td>
+<td align="right">0.4311112</td>
 </tr>
 <tr class="even">
-<td align="right">0.6783920</td>
-<td align="right">0.4337456</td>
+<td align="right">0.6683417</td>
+<td align="right">0.4341171</td>
 <td align="right">NaN</td>
-<td align="right">0.4337456</td>
+<td align="right">0.4324081</td>
+<td align="right">0.4341172</td>
+<td align="right">0.4341172</td>
+<td align="right">0.4341170</td>
+<td align="right">0.4342930</td>
+<td align="right">0.4342930</td>
 </tr>
 <tr class="odd">
-<td align="right">0.7286432</td>
-<td align="right">0.4298653</td>
+<td align="right">0.7386935</td>
+<td align="right">0.4266405</td>
 <td align="right">NaN</td>
-<td align="right">0.4298653</td>
+<td align="right">0.4326203</td>
+<td align="right">0.4266404</td>
+<td align="right">0.4266404</td>
+<td align="right">0.4266402</td>
+<td align="right">0.4280218</td>
+<td align="right">0.4280218</td>
 </tr>
 <tr class="even">
-<td align="right">0.7788945</td>
-<td align="right">0.4294117</td>
+<td align="right">0.8090453</td>
+<td align="right">0.4356889</td>
 <td align="right">NaN</td>
-<td align="right">0.4294117</td>
+<td align="right">0.4335869</td>
+<td align="right">0.4356889</td>
+<td align="right">0.4356889</td>
+<td align="right">0.4356889</td>
+<td align="right">0.4349992</td>
+<td align="right">0.4349992</td>
 </tr>
 <tr class="odd">
-<td align="right">0.8291457</td>
-<td align="right">0.4282099</td>
-<td align="right">NaN</td>
-<td align="right">0.4282099</td>
-</tr>
-<tr class="even">
 <td align="right">0.8793970</td>
 <td align="right">0.4376814</td>
 <td align="right">NaN</td>
+<td align="right">0.4330233</td>
 <td align="right">0.4376814</td>
-</tr>
-<tr class="odd">
-<td align="right">0.9296482</td>
-<td align="right">0.4288014</td>
-<td align="right">NaN</td>
-<td align="right">0.4288014</td>
+<td align="right">0.4376814</td>
+<td align="right">0.4376813</td>
+<td align="right">0.4377266</td>
+<td align="right">0.4377266</td>
 </tr>
 <tr class="even">
-<td align="right">0.9798995</td>
-<td align="right">0.4180671</td>
+<td align="right">0.9497488</td>
+<td align="right">0.4280117</td>
 <td align="right">NaN</td>
-<td align="right">0.4180671</td>
+<td align="right">0.4254692</td>
+<td align="right">0.4280116</td>
+<td align="right">0.4280116</td>
+<td align="right">0.4280115</td>
+<td align="right">0.4276654</td>
+<td align="right">0.4276654</td>
 </tr>
 <tr class="odd">
-<td align="right">1.0301508</td>
-<td align="right">0.4118692</td>
+<td align="right">1.0201005</td>
+<td align="right">0.4144693</td>
 <td align="right">NaN</td>
-<td align="right">0.4118692</td>
+<td align="right">0.4121747</td>
+<td align="right">0.4144693</td>
+<td align="right">0.4144693</td>
+<td align="right">0.4144693</td>
+<td align="right">0.4147335</td>
+<td align="right">0.4147335</td>
 </tr>
 <tr class="even">
-<td align="right">1.0804020</td>
-<td align="right">0.4085140</td>
+<td align="right">1.0904523</td>
+<td align="right">0.4017844</td>
 <td align="right">NaN</td>
-<td align="right">0.4085140</td>
+<td align="right">0.3923837</td>
+<td align="right">0.4017844</td>
+<td align="right">0.4017844</td>
+<td align="right">0.4017845</td>
+<td align="right">0.4016601</td>
+<td align="right">0.4016601</td>
 </tr>
 <tr class="odd">
-<td align="right">1.1306533</td>
-<td align="right">0.3723653</td>
+<td align="right">1.1608040</td>
+<td align="right">0.3672819</td>
 <td align="right">NaN</td>
-<td align="right">0.3723653</td>
+<td align="right">0.3637526</td>
+<td align="right">0.3672818</td>
+<td align="right">0.3672818</td>
+<td align="right">0.3672817</td>
+<td align="right">0.3669998</td>
+<td align="right">0.3669998</td>
 </tr>
 <tr class="even">
-<td align="right">1.1809045</td>
-<td align="right">0.3589725</td>
-<td align="right">NaN</td>
-<td align="right">0.3589725</td>
-</tr>
-<tr class="odd">
 <td align="right">1.2311558</td>
 <td align="right">0.3299960</td>
 <td align="right">NaN</td>
+<td align="right">0.3302301</td>
 <td align="right">0.3299960</td>
-</tr>
-<tr class="even">
-<td align="right">1.2814070</td>
-<td align="right">0.3035875</td>
-<td align="right">NaN</td>
-<td align="right">0.3035875</td>
+<td align="right">0.3299960</td>
+<td align="right">0.3299959</td>
+<td align="right">0.3300476</td>
+<td align="right">0.3300476</td>
 </tr>
 <tr class="odd">
-<td align="right">1.3316583</td>
-<td align="right">0.2796031</td>
+<td align="right">1.3015076</td>
+<td align="right">0.2935527</td>
 <td align="right">NaN</td>
-<td align="right">0.2796031</td>
+<td align="right">0.2935988</td>
+<td align="right">0.2935527</td>
+<td align="right">0.2935527</td>
+<td align="right">0.2935526</td>
+<td align="right">0.2932151</td>
+<td align="right">0.2932151</td>
 </tr>
 <tr class="even">
-<td align="right">1.3819095</td>
-<td align="right">0.2481698</td>
+<td align="right">1.3718593</td>
+<td align="right">0.2527414</td>
 <td align="right">NaN</td>
-<td align="right">0.2481698</td>
+<td align="right">0.2557451</td>
+<td align="right">0.2527415</td>
+<td align="right">0.2527415</td>
+<td align="right">0.2527415</td>
+<td align="right">0.2533529</td>
+<td align="right">0.2533529</td>
 </tr>
 <tr class="odd">
-<td align="right">1.4321608</td>
-<td align="right">0.2242356</td>
+<td align="right">1.4422110</td>
+<td align="right">0.2193653</td>
 <td align="right">NaN</td>
-<td align="right">0.2242356</td>
+<td align="right">0.2201038</td>
+<td align="right">0.2193653</td>
+<td align="right">0.2193653</td>
+<td align="right">0.2193652</td>
+<td align="right">0.2193426</td>
+<td align="right">0.2193426</td>
 </tr>
 <tr class="even">
-<td align="right">1.4824121</td>
-<td align="right">0.2044561</td>
+<td align="right">1.5125629</td>
+<td align="right">0.1854102</td>
 <td align="right">NaN</td>
-<td align="right">0.2044561</td>
+<td align="right">0.1873280</td>
+<td align="right">0.1854101</td>
+<td align="right">0.1854101</td>
+<td align="right">0.1854101</td>
+<td align="right">0.1855599</td>
+<td align="right">0.1855599</td>
 </tr>
 <tr class="odd">
-<td align="right">1.5326633</td>
-<td align="right">0.1769245</td>
-<td align="right">NaN</td>
-<td align="right">0.1769245</td>
-</tr>
-<tr class="even">
 <td align="right">1.5829146</td>
 <td align="right">0.1594451</td>
 <td align="right">NaN</td>
+<td align="right">0.1573636</td>
 <td align="right">0.1594451</td>
-</tr>
-<tr class="odd">
-<td align="right">1.6331658</td>
-<td align="right">0.1358936</td>
-<td align="right">NaN</td>
-<td align="right">0.1358936</td>
+<td align="right">0.1594451</td>
+<td align="right">0.1594451</td>
+<td align="right">0.1591008</td>
+<td align="right">0.1591008</td>
 </tr>
 <tr class="even">
-<td align="right">1.6834171</td>
-<td align="right">0.1189256</td>
+<td align="right">1.6532663</td>
+<td align="right">0.1295867</td>
 <td align="right">NaN</td>
-<td align="right">0.1189256</td>
+<td align="right">0.1310772</td>
+<td align="right">0.1295867</td>
+<td align="right">0.1295867</td>
+<td align="right">0.1295867</td>
+<td align="right">0.1295274</td>
+<td align="right">0.1295274</td>
 </tr>
 <tr class="odd">
-<td align="right">1.7336683</td>
-<td align="right">0.1060783</td>
+<td align="right">1.7236181</td>
+<td align="right">0.1085992</td>
 <td align="right">NaN</td>
-<td align="right">0.1060783</td>
+<td align="right">0.1096769</td>
+<td align="right">0.1085992</td>
+<td align="right">0.1085992</td>
+<td align="right">0.1085991</td>
+<td align="right">0.1088532</td>
+<td align="right">0.1088532</td>
 </tr>
 <tr class="even">
-<td align="right">1.7839196</td>
-<td align="right">0.0935772</td>
+<td align="right">1.7939699</td>
+<td align="right">0.0910477</td>
 <td align="right">NaN</td>
-<td align="right">0.0935772</td>
+<td align="right">0.0920858</td>
+<td align="right">0.0910477</td>
+<td align="right">0.0910477</td>
+<td align="right">0.0910477</td>
+<td align="right">0.0912394</td>
+<td align="right">0.0912394</td>
 </tr>
 <tr class="odd">
-<td align="right">1.8341709</td>
-<td align="right">0.0814862</td>
+<td align="right">1.8643216</td>
+<td align="right">0.0747190</td>
 <td align="right">NaN</td>
-<td align="right">0.0814862</td>
+<td align="right">0.0774625</td>
+<td align="right">0.0747190</td>
+<td align="right">0.0747190</td>
+<td align="right">0.0747190</td>
+<td align="right">0.0749482</td>
+<td align="right">0.0749482</td>
 </tr>
 <tr class="even">
-<td align="right">1.8844221</td>
-<td align="right">0.0738023</td>
-<td align="right">NaN</td>
-<td align="right">0.0738023</td>
-</tr>
-<tr class="odd">
-<td align="right">1.9346734</td>
+<td align="right">1.9346733</td>
 <td align="right">0.0644320</td>
 <td align="right">NaN</td>
+<td align="right">0.0658434</td>
 <td align="right">0.0644320</td>
-</tr>
-<tr class="even">
-<td align="right">1.9849246</td>
-<td align="right">0.0579600</td>
-<td align="right">NaN</td>
-<td align="right">0.0579600</td>
+<td align="right">0.0644320</td>
+<td align="right">0.0644320</td>
+<td align="right">0.0643863</td>
+<td align="right">0.0643863</td>
 </tr>
 <tr class="odd">
-<td align="right">2.0351759</td>
-<td align="right">0.0510736</td>
+<td align="right">2.0050251</td>
+<td align="right">0.0548668</td>
 <td align="right">NaN</td>
-<td align="right">0.0510736</td>
+<td align="right">0.0561208</td>
+<td align="right">0.0548668</td>
+<td align="right">0.0548668</td>
+<td align="right">0.0548668</td>
+<td align="right">0.0549509</td>
+<td align="right">0.0549509</td>
 </tr>
 <tr class="even">
-<td align="right">2.0854271</td>
-<td align="right">0.0459573</td>
+<td align="right">2.0753770</td>
+<td align="right">0.0483242</td>
 <td align="right">NaN</td>
-<td align="right">0.0459573</td>
+<td align="right">0.0481506</td>
+<td align="right">0.0483242</td>
+<td align="right">0.0483242</td>
+<td align="right">0.0483242</td>
+<td align="right">0.0483078</td>
+<td align="right">0.0483078</td>
 </tr>
 <tr class="odd">
-<td align="right">2.1356784</td>
-<td align="right">0.0418317</td>
+<td align="right">2.1457286</td>
+<td align="right">0.0417622</td>
 <td align="right">NaN</td>
-<td align="right">0.0418317</td>
+<td align="right">0.0422845</td>
+<td align="right">0.0417622</td>
+<td align="right">0.0417622</td>
+<td align="right">0.0417621</td>
+<td align="right">0.0418193</td>
+<td align="right">0.0418193</td>
 </tr>
 <tr class="even">
-<td align="right">2.1859296</td>
-<td align="right">0.0410304</td>
+<td align="right">2.2160804</td>
+<td align="right">0.0364343</td>
 <td align="right">NaN</td>
-<td align="right">0.0410304</td>
+<td align="right">0.0378252</td>
+<td align="right">0.0364343</td>
+<td align="right">0.0364343</td>
+<td align="right">0.0364343</td>
+<td align="right">0.0364848</td>
+<td align="right">0.0364848</td>
 </tr>
 <tr class="odd">
-<td align="right">2.2361809</td>
-<td align="right">0.0358517</td>
-<td align="right">NaN</td>
-<td align="right">0.0358517</td>
-</tr>
-<tr class="even">
-<td align="right">2.2864322</td>
+<td align="right">2.2864323</td>
 <td align="right">0.0342945</td>
 <td align="right">NaN</td>
+<td align="right">0.0342508</td>
 <td align="right">0.0342945</td>
-</tr>
-<tr class="odd">
-<td align="right">2.3366834</td>
-<td align="right">0.0323741</td>
-<td align="right">NaN</td>
-<td align="right">0.0323741</td>
+<td align="right">0.0342945</td>
+<td align="right">0.0342944</td>
+<td align="right">0.0342812</td>
+<td align="right">0.0342812</td>
 </tr>
 <tr class="even">
-<td align="right">2.3869347</td>
-<td align="right">0.0297551</td>
+<td align="right">2.3567839</td>
+<td align="right">0.0319098</td>
 <td align="right">NaN</td>
-<td align="right">0.0297551</td>
+<td align="right">0.0314653</td>
+<td align="right">0.0319098</td>
+<td align="right">0.0319098</td>
+<td align="right">0.0319098</td>
+<td align="right">0.0318336</td>
+<td align="right">0.0318336</td>
 </tr>
 <tr class="odd">
-<td align="right">2.4371859</td>
-<td align="right">0.0296621</td>
+<td align="right">2.4271357</td>
+<td align="right">0.0299350</td>
 <td align="right">NaN</td>
-<td align="right">0.0296621</td>
+<td align="right">0.0292150</td>
+<td align="right">0.0299350</td>
+<td align="right">0.0299350</td>
+<td align="right">0.0299350</td>
+<td align="right">0.0298547</td>
+<td align="right">0.0298547</td>
 </tr>
 <tr class="even">
-<td align="right">2.4874372</td>
-<td align="right">0.0278581</td>
+<td align="right">2.4974875</td>
+<td align="right">0.0276999</td>
 <td align="right">NaN</td>
-<td align="right">0.0278581</td>
+<td align="right">0.0275424</td>
+<td align="right">0.0276999</td>
+<td align="right">0.0276999</td>
+<td align="right">0.0276999</td>
+<td align="right">0.0276421</td>
+<td align="right">0.0276421</td>
 </tr>
 <tr class="odd">
-<td align="right">2.5376884</td>
-<td align="right">0.0270949</td>
+<td align="right">2.5678391</td>
+<td align="right">0.0269859</td>
 <td align="right">NaN</td>
-<td align="right">0.0270949</td>
+<td align="right">0.0265272</td>
+<td align="right">0.0269859</td>
+<td align="right">0.0269859</td>
+<td align="right">0.0269859</td>
+<td align="right">0.0269832</td>
+<td align="right">0.0269832</td>
 </tr>
 <tr class="even">
-<td align="right">2.5879397</td>
-<td align="right">0.0261524</td>
-<td align="right">NaN</td>
-<td align="right">0.0261524</td>
-</tr>
-<tr class="odd">
 <td align="right">2.6381910</td>
 <td align="right">0.0255748</td>
 <td align="right">NaN</td>
+<td align="right">0.0252025</td>
 <td align="right">0.0255748</td>
-</tr>
-<tr class="even">
-<td align="right">2.6884422</td>
-<td align="right">0.0238352</td>
-<td align="right">NaN</td>
-<td align="right">0.0238352</td>
+<td align="right">0.0255748</td>
+<td align="right">0.0255748</td>
+<td align="right">0.0255706</td>
+<td align="right">0.0255706</td>
 </tr>
 <tr class="odd">
-<td align="right">2.7386935</td>
-<td align="right">0.0229872</td>
+<td align="right">2.7085428</td>
+<td align="right">0.0238882</td>
 <td align="right">NaN</td>
-<td align="right">0.0229872</td>
+<td align="right">0.0238795</td>
+<td align="right">0.0238882</td>
+<td align="right">0.0238882</td>
+<td align="right">0.0238882</td>
+<td align="right">0.0238929</td>
+<td align="right">0.0238929</td>
 </tr>
 <tr class="even">
-<td align="right">2.7889447</td>
-<td align="right">0.0239961</td>
+<td align="right">2.7788944</td>
+<td align="right">0.0237519</td>
 <td align="right">NaN</td>
-<td align="right">0.0239961</td>
+<td align="right">0.0232494</td>
+<td align="right">0.0237519</td>
+<td align="right">0.0237519</td>
+<td align="right">0.0237519</td>
+<td align="right">0.0237675</td>
+<td align="right">0.0237675</td>
 </tr>
 <tr class="odd">
-<td align="right">2.8391960</td>
-<td align="right">0.0221442</td>
+<td align="right">2.8492463</td>
+<td align="right">0.0227718</td>
 <td align="right">NaN</td>
-<td align="right">0.0221442</td>
+<td align="right">0.0230655</td>
+<td align="right">0.0227718</td>
+<td align="right">0.0227718</td>
+<td align="right">0.0227718</td>
+<td align="right">0.0227749</td>
+<td align="right">0.0227749</td>
 </tr>
 <tr class="even">
-<td align="right">2.8894472</td>
-<td align="right">0.0236996</td>
+<td align="right">2.9195981</td>
+<td align="right">0.0231769</td>
 <td align="right">NaN</td>
-<td align="right">0.0236996</td>
+<td align="right">0.0230343</td>
+<td align="right">0.0231769</td>
+<td align="right">0.0231769</td>
+<td align="right">0.0231769</td>
+<td align="right">0.0232638</td>
+<td align="right">0.0232638</td>
 </tr>
 <tr class="odd">
-<td align="right">2.9396985</td>
-<td align="right">0.0228862</td>
-<td align="right">NaN</td>
-<td align="right">0.0228862</td>
-</tr>
-<tr class="even">
 <td align="right">2.9899497</td>
 <td align="right">0.0221606</td>
 <td align="right">NaN</td>
+<td align="right">0.0224712</td>
 <td align="right">0.0221606</td>
-</tr>
-<tr class="odd">
-<td align="right">3.0402010</td>
-<td align="right">0.0214685</td>
-<td align="right">NaN</td>
-<td align="right">0.0214685</td>
+<td align="right">0.0221606</td>
+<td align="right">0.0221607</td>
+<td align="right">0.0222441</td>
+<td align="right">0.0222441</td>
 </tr>
 <tr class="even">
-<td align="right">3.0904523</td>
-<td align="right">0.0224307</td>
+<td align="right">3.0603015</td>
+<td align="right">0.0228210</td>
 <td align="right">NaN</td>
-<td align="right">0.0224307</td>
+<td align="right">0.0219217</td>
+<td align="right">0.0228210</td>
+<td align="right">0.0228210</td>
+<td align="right">0.0228210</td>
+<td align="right">0.0226709</td>
+<td align="right">0.0226709</td>
 </tr>
 <tr class="odd">
-<td align="right">3.1407035</td>
-<td align="right">0.0202754</td>
+<td align="right">3.1306534</td>
+<td align="right">0.0202293</td>
 <td align="right">NaN</td>
-<td align="right">0.0202754</td>
+<td align="right">0.0213619</td>
+<td align="right">0.0202293</td>
+<td align="right">0.0202293</td>
+<td align="right">0.0202293</td>
+<td align="right">0.0202368</td>
+<td align="right">0.0202368</td>
 </tr>
 <tr class="even">
-<td align="right">3.1909548</td>
-<td align="right">0.0209159</td>
+<td align="right">3.2010050</td>
+<td align="right">0.0209242</td>
 <td align="right">NaN</td>
-<td align="right">0.0209159</td>
+<td align="right">0.0211865</td>
+<td align="right">0.0209242</td>
+<td align="right">0.0209242</td>
+<td align="right">0.0209242</td>
+<td align="right">0.0209736</td>
+<td align="right">0.0209736</td>
 </tr>
 <tr class="odd">
-<td align="right">3.2412060</td>
-<td align="right">0.0216138</td>
+<td align="right">3.2713568</td>
+<td align="right">0.0208098</td>
 <td align="right">NaN</td>
-<td align="right">0.0216138</td>
+<td align="right">0.0209442</td>
+<td align="right">0.0208098</td>
+<td align="right">0.0208098</td>
+<td align="right">0.0208098</td>
+<td align="right">0.0208819</td>
+<td align="right">0.0208819</td>
 </tr>
 <tr class="even">
-<td align="right">3.2914573</td>
-<td align="right">0.0208242</td>
-<td align="right">NaN</td>
-<td align="right">0.0208242</td>
-</tr>
-<tr class="odd">
-<td align="right">3.3417085</td>
+<td align="right">3.3417087</td>
 <td align="right">0.0189643</td>
 <td align="right">NaN</td>
+<td align="right">0.0207521</td>
 <td align="right">0.0189643</td>
-</tr>
-<tr class="even">
-<td align="right">3.3919598</td>
-<td align="right">0.0217599</td>
-<td align="right">NaN</td>
-<td align="right">0.0217599</td>
+<td align="right">0.0189643</td>
+<td align="right">0.0189643</td>
+<td align="right">0.0191196</td>
+<td align="right">0.0191196</td>
 </tr>
 <tr class="odd">
-<td align="right">3.4422111</td>
-<td align="right">0.0216501</td>
+<td align="right">3.4120603</td>
+<td align="right">0.0211910</td>
 <td align="right">NaN</td>
-<td align="right">0.0216501</td>
+<td align="right">0.0210935</td>
+<td align="right">0.0211910</td>
+<td align="right">0.0211910</td>
+<td align="right">0.0211909</td>
+<td align="right">0.0213489</td>
+<td align="right">0.0213489</td>
 </tr>
 <tr class="even">
-<td align="right">3.4924623</td>
-<td align="right">0.0211800</td>
+<td align="right">3.4824121</td>
+<td align="right">0.0210251</td>
 <td align="right">NaN</td>
-<td align="right">0.0211800</td>
+<td align="right">0.0209809</td>
+<td align="right">0.0210251</td>
+<td align="right">0.0210251</td>
+<td align="right">0.0210251</td>
+<td align="right">0.0209947</td>
+<td align="right">0.0209947</td>
 </tr>
 <tr class="odd">
-<td align="right">3.5427136</td>
-<td align="right">0.0200888</td>
+<td align="right">3.5527637</td>
+<td align="right">0.0203314</td>
 <td align="right">NaN</td>
-<td align="right">0.0200888</td>
+<td align="right">0.0207411</td>
+<td align="right">0.0203314</td>
+<td align="right">0.0203314</td>
+<td align="right">0.0203314</td>
+<td align="right">0.0202540</td>
+<td align="right">0.0202540</td>
 </tr>
 <tr class="even">
-<td align="right">3.5929648</td>
-<td align="right">0.0217530</td>
+<td align="right">3.6231155</td>
+<td align="right">0.0208459</td>
 <td align="right">NaN</td>
-<td align="right">0.0217530</td>
+<td align="right">0.0206224</td>
+<td align="right">0.0208459</td>
+<td align="right">0.0208459</td>
+<td align="right">0.0208459</td>
+<td align="right">0.0209168</td>
+<td align="right">0.0209168</td>
 </tr>
 <tr class="odd">
-<td align="right">3.6432161</td>
-<td align="right">0.0203427</td>
-<td align="right">NaN</td>
-<td align="right">0.0203427</td>
-</tr>
-<tr class="even">
-<td align="right">3.6934673</td>
+<td align="right">3.6934674</td>
 <td align="right">0.0203483</td>
 <td align="right">NaN</td>
+<td align="right">0.0202520</td>
 <td align="right">0.0203483</td>
-</tr>
-<tr class="odd">
-<td align="right">3.7437186</td>
-<td align="right">0.0200508</td>
-<td align="right">NaN</td>
-<td align="right">0.0200508</td>
+<td align="right">0.0203483</td>
+<td align="right">0.0203483</td>
+<td align="right">0.0203373</td>
+<td align="right">0.0203373</td>
 </tr>
 <tr class="even">
-<td align="right">3.7939698</td>
-<td align="right">0.0203464</td>
+<td align="right">3.7638190</td>
+<td align="right">0.0205136</td>
 <td align="right">NaN</td>
-<td align="right">0.0203464</td>
+<td align="right">0.0200463</td>
+<td align="right">0.0205136</td>
+<td align="right">0.0205136</td>
+<td align="right">0.0205136</td>
+<td align="right">0.0205522</td>
+<td align="right">0.0205522</td>
 </tr>
 <tr class="odd">
-<td align="right">3.8442211</td>
-<td align="right">0.0196089</td>
+<td align="right">3.8341708</td>
+<td align="right">0.0193994</td>
 <td align="right">NaN</td>
-<td align="right">0.0196089</td>
+<td align="right">0.0197578</td>
+<td align="right">0.0193994</td>
+<td align="right">0.0193994</td>
+<td align="right">0.0193994</td>
+<td align="right">0.0194468</td>
+<td align="right">0.0194468</td>
 </tr>
 <tr class="even">
-<td align="right">3.8944724</td>
-<td align="right">0.0181302</td>
+<td align="right">3.9045227</td>
+<td align="right">0.0188916</td>
 <td align="right">NaN</td>
-<td align="right">0.0181302</td>
+<td align="right">0.0195506</td>
+<td align="right">0.0188916</td>
+<td align="right">0.0188916</td>
+<td align="right">0.0188916</td>
+<td align="right">0.0189055</td>
+<td align="right">0.0189055</td>
 </tr>
 <tr class="odd">
-<td align="right">3.9447236</td>
-<td align="right">0.0194599</td>
+<td align="right">3.9748743</td>
+<td align="right">0.0204086</td>
 <td align="right">NaN</td>
-<td align="right">0.0194599</td>
+<td align="right">0.0200201</td>
+<td align="right">0.0204086</td>
+<td align="right">0.0204086</td>
+<td align="right">0.0204086</td>
+<td align="right">0.0203007</td>
+<td align="right">0.0203007</td>
 </tr>
 <tr class="even">
-<td align="right">3.9949749</td>
-<td align="right">0.0203916</td>
-<td align="right">NaN</td>
-<td align="right">0.0203916</td>
-</tr>
-<tr class="odd">
 <td align="right">4.0452261</td>
 <td align="right">0.0207592</td>
 <td align="right">NaN</td>
+<td align="right">0.0204103</td>
 <td align="right">0.0207592</td>
-</tr>
-<tr class="even">
-<td align="right">4.0954774</td>
-<td align="right">0.0208856</td>
-<td align="right">NaN</td>
-<td align="right">0.0208856</td>
+<td align="right">0.0207592</td>
+<td align="right">0.0207592</td>
+<td align="right">0.0207776</td>
+<td align="right">0.0207776</td>
 </tr>
 <tr class="odd">
-<td align="right">4.1457286</td>
-<td align="right">0.0202574</td>
+<td align="right">4.1155777</td>
+<td align="right">0.0197156</td>
 <td align="right">NaN</td>
-<td align="right">0.0202574</td>
+<td align="right">0.0201801</td>
+<td align="right">0.0197156</td>
+<td align="right">0.0197156</td>
+<td align="right">0.0197156</td>
+<td align="right">0.0197681</td>
+<td align="right">0.0197681</td>
 </tr>
 <tr class="even">
-<td align="right">4.1959799</td>
-<td align="right">0.0193621</td>
+<td align="right">4.1859298</td>
+<td align="right">0.0195413</td>
 <td align="right">NaN</td>
-<td align="right">0.0193621</td>
+<td align="right">0.0199606</td>
+<td align="right">0.0195412</td>
+<td align="right">0.0195412</td>
+<td align="right">0.0195412</td>
+<td align="right">0.0195613</td>
+<td align="right">0.0195613</td>
 </tr>
 <tr class="odd">
-<td align="right">4.2462312</td>
-<td align="right">0.0212356</td>
+<td align="right">4.2562814</td>
+<td align="right">0.0207398</td>
 <td align="right">NaN</td>
-<td align="right">0.0212356</td>
+<td align="right">0.0201412</td>
+<td align="right">0.0207398</td>
+<td align="right">0.0207398</td>
+<td align="right">0.0207398</td>
+<td align="right">0.0207392</td>
+<td align="right">0.0207392</td>
 </tr>
 <tr class="even">
-<td align="right">4.2964824</td>
-<td align="right">0.0200355</td>
+<td align="right">4.3266330</td>
+<td align="right">0.0197963</td>
 <td align="right">NaN</td>
-<td align="right">0.0200355</td>
+<td align="right">0.0201330</td>
+<td align="right">0.0197963</td>
+<td align="right">0.0197963</td>
+<td align="right">0.0197963</td>
+<td align="right">0.0197747</td>
+<td align="right">0.0197747</td>
 </tr>
 <tr class="odd">
-<td align="right">4.3467337</td>
-<td align="right">0.0200259</td>
-<td align="right">NaN</td>
-<td align="right">0.0200259</td>
-</tr>
-<tr class="even">
-<td align="right">4.3969849</td>
+<td align="right">4.3969851</td>
 <td align="right">0.0199690</td>
 <td align="right">NaN</td>
+<td align="right">0.0200822</td>
 <td align="right">0.0199690</td>
-</tr>
-<tr class="odd">
-<td align="right">4.4472362</td>
-<td align="right">0.0191482</td>
-<td align="right">NaN</td>
-<td align="right">0.0191482</td>
+<td align="right">0.0199690</td>
+<td align="right">0.0199690</td>
+<td align="right">0.0199235</td>
+<td align="right">0.0199235</td>
 </tr>
 <tr class="even">
-<td align="right">4.4974874</td>
-<td align="right">0.0209235</td>
+<td align="right">4.4673367</td>
+<td align="right">0.0199505</td>
 <td align="right">NaN</td>
-<td align="right">0.0209235</td>
+<td align="right">0.0202356</td>
+<td align="right">0.0199505</td>
+<td align="right">0.0199505</td>
+<td align="right">0.0199505</td>
+<td align="right">0.0199084</td>
+<td align="right">0.0199084</td>
 </tr>
 <tr class="odd">
-<td align="right">4.5477387</td>
-<td align="right">0.0204271</td>
+<td align="right">4.5376883</td>
+<td align="right">0.0214757</td>
 <td align="right">NaN</td>
-<td align="right">0.0204271</td>
+<td align="right">0.0204888</td>
+<td align="right">0.0214757</td>
+<td align="right">0.0214757</td>
+<td align="right">0.0214757</td>
+<td align="right">0.0213867</td>
+<td align="right">0.0213867</td>
 </tr>
 <tr class="even">
-<td align="right">4.5979899</td>
-<td align="right">0.0202642</td>
+<td align="right">4.6080403</td>
+<td align="right">0.0201935</td>
 <td align="right">NaN</td>
-<td align="right">0.0202642</td>
+<td align="right">0.0203624</td>
+<td align="right">0.0201935</td>
+<td align="right">0.0201935</td>
+<td align="right">0.0201935</td>
+<td align="right">0.0201880</td>
+<td align="right">0.0201880</td>
 </tr>
 <tr class="odd">
-<td align="right">4.6482412</td>
-<td align="right">0.0201309</td>
+<td align="right">4.6783919</td>
+<td align="right">0.0212064</td>
 <td align="right">NaN</td>
-<td align="right">0.0201309</td>
+<td align="right">0.0201697</td>
+<td align="right">0.0212064</td>
+<td align="right">0.0212064</td>
+<td align="right">0.0212064</td>
+<td align="right">0.0211177</td>
+<td align="right">0.0211177</td>
 </tr>
 <tr class="even">
-<td align="right">4.6984925</td>
-<td align="right">0.0197643</td>
-<td align="right">NaN</td>
-<td align="right">0.0197643</td>
-</tr>
-<tr class="odd">
-<td align="right">4.7487437</td>
+<td align="right">4.7487435</td>
 <td align="right">0.0195216</td>
 <td align="right">NaN</td>
+<td align="right">0.0198779</td>
 <td align="right">0.0195216</td>
-</tr>
-<tr class="even">
-<td align="right">4.7989950</td>
-<td align="right">0.0197220</td>
-<td align="right">NaN</td>
-<td align="right">0.0197220</td>
+<td align="right">0.0195216</td>
+<td align="right">0.0195216</td>
+<td align="right">0.0195151</td>
+<td align="right">0.0195151</td>
 </tr>
 <tr class="odd">
-<td align="right">4.8492462</td>
-<td align="right">0.0188860</td>
+<td align="right">4.8190956</td>
+<td align="right">0.0205175</td>
 <td align="right">NaN</td>
-<td align="right">0.0188860</td>
+<td align="right">0.0200590</td>
+<td align="right">0.0205175</td>
+<td align="right">0.0205175</td>
+<td align="right">0.0205175</td>
+<td align="right">0.0203096</td>
+<td align="right">0.0203096</td>
 </tr>
 <tr class="even">
-<td align="right">4.8994975</td>
-<td align="right">0.0213063</td>
+<td align="right">4.8894472</td>
+<td align="right">0.0214562</td>
 <td align="right">NaN</td>
-<td align="right">0.0213063</td>
+<td align="right">0.0201341</td>
+<td align="right">0.0214562</td>
+<td align="right">0.0214562</td>
+<td align="right">0.0214562</td>
+<td align="right">0.0213388</td>
+<td align="right">0.0213388</td>
 </tr>
 <tr class="odd">
-<td align="right">4.9497487</td>
-<td align="right">0.0216040</td>
+<td align="right">4.9597988</td>
+<td align="right">0.0210350</td>
 <td align="right">NaN</td>
-<td align="right">0.0216040</td>
+<td align="right">0.0160540</td>
+<td align="right">0.0210350</td>
+<td align="right">0.0210350</td>
+<td align="right">0.0210350</td>
+<td align="right">0.0210256</td>
+<td align="right">0.0210256</td>
 </tr>
 <tr class="even">
-<td align="right">5.0000000</td>
-<td align="right">0.0110248</td>
+<td align="right">5.0301509</td>
+<td align="right">0.0001065</td>
 <td align="right">NaN</td>
-<td align="right">0.0110248</td>
+<td align="right">0.0063106</td>
+<td align="right">0.0001065</td>
+<td align="right">0.0001065</td>
+<td align="right">0.0001065</td>
+<td align="right">0.0001405</td>
+<td align="right">0.0001405</td>
+</tr>
+<tr class="odd">
+<td align="right">5.1005025</td>
+<td align="right">0.0000001</td>
+<td align="right">NaN</td>
+<td align="right">0.0010112</td>
+<td align="right">0.0000001</td>
+<td align="right">0.0000001</td>
+<td align="right">0.0000001</td>
+<td align="right">0.0000006</td>
+<td align="right">0.0000006</td>
+</tr>
+<tr class="even">
+<td align="right">5.1708541</td>
+<td align="right">0.0000007</td>
+<td align="right">NaN</td>
+<td align="right">0.0000669</td>
+<td align="right">0.0000007</td>
+<td align="right">0.0000007</td>
+<td align="right">0.0000007</td>
+<td align="right">0.0000016</td>
+<td align="right">0.0000016</td>
+</tr>
+<tr class="odd">
+<td align="right">5.2412062</td>
+<td align="right">0.0000058</td>
+<td align="right">NaN</td>
+<td align="right">0.0000208</td>
+<td align="right">0.0000058</td>
+<td align="right">0.0000058</td>
+<td align="right">0.0000058</td>
+<td align="right">0.0000082</td>
+<td align="right">0.0000082</td>
+</tr>
+<tr class="even">
+<td align="right">5.3115578</td>
+<td align="right">0.0000186</td>
+<td align="right">NaN</td>
+<td align="right">0.0000228</td>
+<td align="right">0.0000186</td>
+<td align="right">0.0000186</td>
+<td align="right">0.0000186</td>
+<td align="right">0.0000211</td>
+<td align="right">0.0000211</td>
+</tr>
+<tr class="odd">
+<td align="right">5.3819094</td>
+<td align="right">0.0000308</td>
+<td align="right">NaN</td>
+<td align="right">0.0000197</td>
+<td align="right">0.0000308</td>
+<td align="right">0.0000308</td>
+<td align="right">0.0000308</td>
+<td align="right">0.0000287</td>
+<td align="right">0.0000287</td>
+</tr>
+<tr class="even">
+<td align="right">5.4522614</td>
+<td align="right">0.0000158</td>
+<td align="right">NaN</td>
+<td align="right">0.0000137</td>
+<td align="right">0.0000158</td>
+<td align="right">0.0000158</td>
+<td align="right">0.0000158</td>
+<td align="right">0.0000178</td>
+<td align="right">0.0000178</td>
+</tr>
+<tr class="odd">
+<td align="right">5.5226130</td>
+<td align="right">0.0000031</td>
+<td align="right">NaN</td>
+<td align="right">0.0000118</td>
+<td align="right">0.0000031</td>
+<td align="right">0.0000031</td>
+<td align="right">0.0000031</td>
+<td align="right">0.0000049</td>
+<td align="right">0.0000049</td>
+</tr>
+<tr class="even">
+<td align="right">5.5929646</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000131</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">5.6633167</td>
+<td align="right">0.0000038</td>
+<td align="right">NaN</td>
+<td align="right">0.0000198</td>
+<td align="right">0.0000038</td>
+<td align="right">0.0000038</td>
+<td align="right">0.0000038</td>
+<td align="right">0.0000064</td>
+<td align="right">0.0000064</td>
+</tr>
+<tr class="even">
+<td align="right">5.7336683</td>
+<td align="right">0.0000027</td>
+<td align="right">NaN</td>
+<td align="right">0.0000216</td>
+<td align="right">0.0000027</td>
+<td align="right">0.0000027</td>
+<td align="right">0.0000027</td>
+<td align="right">0.0000043</td>
+<td align="right">0.0000043</td>
+</tr>
+<tr class="odd">
+<td align="right">5.8040199</td>
+<td align="right">0.0000393</td>
+<td align="right">NaN</td>
+<td align="right">0.0000167</td>
+<td align="right">0.0000393</td>
+<td align="right">0.0000393</td>
+<td align="right">0.0000393</td>
+<td align="right">0.0000391</td>
+<td align="right">0.0000391</td>
+</tr>
+<tr class="even">
+<td align="right">5.8743720</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000088</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">5.9447236</td>
+<td align="right">0.0000032</td>
+<td align="right">NaN</td>
+<td align="right">0.0000149</td>
+<td align="right">0.0000032</td>
+<td align="right">0.0000032</td>
+<td align="right">0.0000032</td>
+<td align="right">0.0000039</td>
+<td align="right">0.0000039</td>
+</tr>
+<tr class="even">
+<td align="right">6.0150752</td>
+<td align="right">0.0000237</td>
+<td align="right">NaN</td>
+<td align="right">0.0000178</td>
+<td align="right">0.0000237</td>
+<td align="right">0.0000237</td>
+<td align="right">0.0000237</td>
+<td align="right">0.0000243</td>
+<td align="right">0.0000243</td>
+</tr>
+<tr class="odd">
+<td align="right">6.0854273</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000104</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">6.1557789</td>
+<td align="right">0.0000105</td>
+<td align="right">NaN</td>
+<td align="right">0.0000075</td>
+<td align="right">0.0000105</td>
+<td align="right">0.0000105</td>
+<td align="right">0.0000105</td>
+<td align="right">0.0000105</td>
+<td align="right">0.0000105</td>
+</tr>
+<tr class="odd">
+<td align="right">6.2261305</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000043</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">6.2964826</td>
+<td align="right">0.0000011</td>
+<td align="right">NaN</td>
+<td align="right">0.0000061</td>
+<td align="right">0.0000011</td>
+<td align="right">0.0000011</td>
+<td align="right">0.0000011</td>
+<td align="right">0.0000012</td>
+<td align="right">0.0000012</td>
+</tr>
+<tr class="odd">
+<td align="right">6.3668342</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000049</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">6.4371858</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000013</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">6.5075378</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000001</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">6.5778894</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">6.6482410</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000008</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">6.7185931</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000042</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">6.7889447</td>
+<td align="right">0.0000099</td>
+<td align="right">NaN</td>
+<td align="right">0.0000067</td>
+<td align="right">0.0000099</td>
+<td align="right">0.0000099</td>
+<td align="right">0.0000099</td>
+<td align="right">0.0000099</td>
+<td align="right">0.0000099</td>
+</tr>
+<tr class="even">
+<td align="right">6.8592963</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000023</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">6.9296484</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000001</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">7.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
 </tr>
 </tbody>
 </table>
-<p>Plotted for reference:</p>
-<pre><code>## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7ff7fbd427d0&gt;</code></pre>
-<pre><code>## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7ff7fbd427d0&gt;</code></pre>
-<p><img src="thesis_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
+<p>Plotted for reference:
+<img src="thesis_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
 
 </div>
 </div>
