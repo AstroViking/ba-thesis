@@ -2,5 +2,5 @@
 
 The following is an implementation of Kernel Density Estimation using TensorFlow.
 
-```{python, kdeImpl, code=readLines('src/tf-kde/tf-kde/KernelDensityEstimation.py'), echo=FALSE, eval=FALSE}
+```{python, kdeImpl, code=readLines('src/tf-kde/tf_kde/distribution/kernel_density_estimation.py'), echo=TRUE, eval=FALSE}
 ```
