@@ -43,31 +43,12 @@ plt.show()"""
 
 ### Accuracy
 
-```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
+```{python, compareAccuracyBasic, echo = FALSE, fig.cap=""}
 #knitr::include_graphics('../plots/compare...')
 ```
 
 
 ## New implementation against KDEpy
-
-### Runtime
-
-```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
-#knitr::include_graphics('../plots/compare...')
-```
-
-
-```{r, compareRuntimesKDEpyTable, echo=FALSE, eval=TRUE}
-#knitr::kable(py$runtimes, booktabs = TRUE, caption = 'Runtime comparison')
-```
-
-### Accuracy
-
-```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
-#knitr::include_graphics('../plots/compare...')
-```
-
-## New implementation run with GPU support
 
 ### Runtime
 
@@ -83,5 +64,24 @@ plt.show()"""
 ### Accuracy
 
 ```{python, compareAccuracyKDEpy, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
+```
+
+## New implementation run with GPU support
+
+### Runtime
+
+```{python, compareRuntimesGPU, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
+```
+
+
+```{r, compareRuntimesGPUTable, echo=FALSE, eval=TRUE}
+#knitr::kable(py$runtimes, booktabs = TRUE, caption = 'Runtime comparison')
+```
+
+### Accuracy
+
+```{python, compareAccuracyGPU, echo = FALSE, fig.cap=""}
 #knitr::include_graphics('../plots/compare...')
 ```
