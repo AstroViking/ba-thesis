@@ -1,6 +1,3 @@
 library(reticulate)
 conda_create('ba-thesis')
-conda_install('ba-thesis', c('matplotlib', 'tensorflow', 'tensorflow-probability', 'seaborn'))
-conda_install('ba-thesis', c('zfit', 'zfit_physics', 'pdoc'), pip = TRUE)
-conda_install('ba-thesis', '-e src/zfit-benchmarks', pip = TRUE)
 conda_install('ba-thesis', '-e src/tf-kde', pip = TRUE)

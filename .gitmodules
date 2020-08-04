@@ -1,6 +1,3 @@
 [submodule "src/tf-kde"]
 	path = src/tf-kde
 	url = git@github.com:AstroViking/tf-kde.git
-[submodule "src/zfit-benchmarks"]
-	path = src/zfit-benchmarks
-	url = git@github.com:zfit/benchmarks.git
