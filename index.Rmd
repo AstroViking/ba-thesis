@@ -4,7 +4,7 @@ subtitle: "Bachelor Thesis"
 author: ["Marc Steiner"]
 supervisor: ["Jonas Eschle", "Nicola Serra"]
 institute: ["University of Zurich"]
-keywords: ["Kernel Density Estimation", "Python", "TensorFlow"]
+keywords: ["Kernel Density Estimation", "Python", "TensorFlow", "Zfit"]
 site: "bookdown::bookdown_site"
 bibliography: ["citations/papers.bib"]
 link-citations: True
@@ -13,7 +13,7 @@ csl: "citation-styles/aip.csl"
 
 # Abstract {-}
 
-An implementation of a one-dimensional Kernel Density Estimation in TensorFlow is proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python as well to density estimations by smoothed histograms it is shown as competitive and useful in real world applications.
+An implementation of a one-dimensional Kernel Density Estimation in TensorFlow/Zfit is proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python it is shown as competitive and useful in real world applications.
 
 \newpage
 \tableofcontents
