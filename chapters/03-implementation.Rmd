@@ -131,3 +131,5 @@ Using the fact that $\|f^{(j)}\|^2 = (-1)^j \mathbb{E}_f[f^{(2j)}(X)], \space j\
 The improvment compared to the standard Sheather-Jones plug-on method[@sheather1991reliable] consists in the fact that to compute the initial estimation of $\|\widehat{f}_{h,norm}^{(l+2)}\|^2$ is calculated by solving the partial differental equation using the fast cosine transform as described above, eliminating the need to assume normally distributed data for the initial estimate and leading improved performance, especially for density distributions that are far from normal as seen in the next chapter.
 
 The implementation of the algorithm in TensorFlow proposed in this paper was also inspired a lot by the python package KDEpy[@KDEpy] and uses Brent's method[@brent1971algorithm] to find roots implemented in TensorFlow the python package `tf_quant_finance` as well.
+
+One shortcoming of the improved Sheather-Jones algorithm (ISJ) is that with few data points to estimate from, it is not guarenteed to converge. If that happens, one has to use the exact, binned or FFT kernel density estimators as described above.
