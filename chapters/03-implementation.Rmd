@@ -2,19 +2,19 @@
 
 ## Exact Kernel Density Estimation
 
-The implementation of a simple Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper[@googleTFP], a KDE can be constructed by using its MixtureSameFamily Distribution.
+The implementation of a simple Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper[@googleTFP], a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled `data` as follows
 
-```{python}
+```{python, eval=FALSE}
 
 from tensorflow_probability import distributions as tfd
 
 f = lambda x: tfd.Independent(tfd.Normal(loc=x, scale=1.))
-n = x.shape[0].value
+n = data.shape[0].value
 
 kde = tfd.MixtureSameFamily(
     mixture_distribution=tfd.Categorical(
         probs=[1 / n] * n),
-    components_distribution=f(x))
+    components_distribution=f(data))
 ```
 
 Interestingly, due to the smartly capsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a Kernel, if there exists an implementation for it in TensorFlow Probability. If the used Kernel has bounded support, the implementation proposed in this paper allows to specify the support upon instanciation of the class. If the Kernel has infinite support (like a Gaussian kernel i. e.) a practical support estimate is calculated by searching for approximative roots with the Brent's method[@brent1971algorithm] implemented in TensorFlow the python package `tf_quant_finance` by Google. This allows us to speed up the calculation
@@ -85,7 +85,7 @@ $$
 where the two vectors look like this
 
 ```{r, ckFigure, fig.cap="Vectors $\vec{c}$ and $\vec{k}$"}
-knitr::include_graphics('../figures/c_conv_k.png')
+knitr::include_graphics('figures/c_conv_k.png')
 ```
 
 By using the well known convolution theorem we can fourier transform $\vec{c}$ and $\vec{k}$ multiply them and inverse fourier transform them back into real space. 
