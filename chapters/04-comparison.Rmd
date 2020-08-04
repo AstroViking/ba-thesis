@@ -5,33 +5,83 @@ library('reticulate')
 use_condaenv('ba-thesis')
 ```
 
-To compare the different implementations I created a simple test distribution comprised of three gaussian, one uniform and one exponential distribution. The distribution is created by using the TensorFlow Probability package and its Mixture Model.
+To show the efficiency and performance of the Kernel Density Estimation methods implemented with TensorFlow a benchmarking suite was developed. It consists of three parts, a collection of distributions, a collection of methods to compare and a runner module that implements helper methods to execute the methods to test against the different distributions and plot the generated dataset nicely.
 
-## Generation of Test Distribution
+## Benchmark setup
 
-Listing: Test Distribution generation
-```{python, kdeImpl, code=readLines('src/tf-kde/tf_kde/tests/test_distribution.py'), echo=TRUE, eval=FALSE, results='hide'}
+To compare the different implementations multiple popular test distributions mentioned in Wand et al.[@wand1994kernel] were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implmentation proposed in this paper may be used, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.
+
+```{python, distDisplay, echo = FALSE, fig.cap="Distribution used to benchmark", cache=TRUE}
+"""import matplotlib.pyplot as plt
+from tf_kde.benchmark import runner
+
+distributions = [
+    'Gaussian',
+    'Uniform',
+    'Bimodal',
+    'SkewedBimodal',
+    'Claw',
+    'AsymmetricDoubleClaw'
+]
+
+figure, axes = runner.plot_distributions(distributions, [-10, 10], 2)
+plt.show()"""
 ```
 
-## Comparing different methods
+## Basic implementation against Binned and FFT implementations
 
-```{python, kdeImpl, code=readLines('src/tf-kde/tf_kde/tests/comparison.py'), echo=TRUE, eval=TRUE, , results='hide'}
+### Runtime
+
+```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
+```
+
+```{r, compareRuntimeTable, echo=FALSE, eval=TRUE}
+#knitr::kable(py$runtimes, booktabs = TRUE, caption = 'Comparing additional methods')
 ```
 
 
-Running this, leads to the following comparison:
+### Accuracy
 
-```{r, echo=FALSE, eval=TRUE}
-knitr::kable(py$methods, booktabs = TRUE, caption = 'Runtime comparison')
+```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
 ```
 
-```{r, echo=FALSE, eval=TRUE}
-knitr::kable(py$estimations, booktabs = TRUE, caption = 'Accuracy comparison')
+
+## New implementation against KDEpy
+
+### Runtime
+
+```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
 ```
 
-Plotted for reference:
-```{python, echo=FALSE, eval=TRUE}
-import matplotlib.pyplot as plt
-ax = estimations.plot(x='x', y=['basic', 'KDEpy', 'basicTF', 'tfp', 'tfpM', 'tfpMB', 'tfpMFFT'], style=['-', '--', '-.', ':', '--', '-.', '--'])
-plt.show()
+
+```{r, compareRuntimesKDEpyTable, echo=FALSE, eval=TRUE}
+#knitr::kable(py$runtimes, booktabs = TRUE, caption = 'Runtime comparison')
+```
+
+### Accuracy
+
+```{python, compareRuntimesBasic, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
+```
+
+## New implementation run with GPU support
+
+### Runtime
+
+```{python, compareRuntimesKDEpy, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
+```
+
+
+```{r, compareRuntimesKDEpyTable, echo=FALSE, eval=TRUE}
+#knitr::kable(py$runtimes, booktabs = TRUE, caption = 'Runtime comparison')
+```
+
+### Accuracy
+
+```{python, compareAccuracyKDEpy, echo = FALSE, fig.cap=""}
+#knitr::include_graphics('../plots/compare...')
 ```
