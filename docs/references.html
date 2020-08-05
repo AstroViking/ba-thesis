@@ -137,10 +137,26 @@ code span.wa { color: #da4453; } /* Warning */
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>2</b> Current state of the art</a></li>
-<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a></li>
+<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a><ul>
+<li class="chapter" data-level="3.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>3.1</b> Exact Kernel Density Estimation</a></li>
+<li class="chapter" data-level="3.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>3.2</b> Simple and linear Binning</a></li>
+<li class="chapter" data-level="3.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>3.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="3.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>3.4</b> Improved Sheather Jones Algorithm</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a><ul>
-<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#generation-of-test-distribution"><i class="fa fa-check"></i><b>4.1</b> Generation of Test Distribution</a></li>
-<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#comparing-different-methods"><i class="fa fa-check"></i><b>4.2</b> Comparing different methods</a></li>
+<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>4.1</b> Benchmark setup</a></li>
+<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#basic-implementation-against-binned-and-fft-implementations"><i class="fa fa-check"></i><b>4.2</b> Basic implementation against Binned and FFT implementations</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>4.2.1</b> Runtime</a></li>
+<li class="chapter" data-level="4.2.2" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>4.2.2</b> Accuracy</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="comparison.html"><a href="comparison.html#new-implementation-against-kdepy"><i class="fa fa-check"></i><b>4.3</b> New implementation against KDEpy</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>4.3.1</b> Runtime</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>4.3.2</b> Accuracy</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="comparison.html"><a href="comparison.html#new-implementation-run-with-gpu-support"><i class="fa fa-check"></i><b>4.4</b> New implementation run with GPU support</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>4.4.1</b> Runtime</a></li>
+<li class="chapter" data-level="4.4.2" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>4.4.2</b> Accuracy</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -182,6 +198,33 @@ code span.wa { color: #da4453; } /* Warning */
 </div>
 <div>
 <p><sup>6</sup> J. Eschle, A.P. Navarro, R.S. Coutinho, and N. Serra, (2019).</p>
+</div>
+<div>
+<p><sup>7</sup> J.V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton, A. Alemi, M.D. Hoffman, and R.A. Saurous, CoRR <strong>abs/1711.10604</strong>, (2017).</p>
+</div>
+<div>
+<p><sup>8</sup> R.P. Brent, The Computer Journal <strong>14</strong>, 422 (1971).</p>
+</div>
+<div>
+<p><sup>9</sup> T. Odland, Comparison - KDEpy 1.0.5 Documentation (n.d.).</p>
+</div>
+<div>
+<p><sup>10</sup> A. Gramacki, in <em>Nonparametric Kernel Density Estimation and Its Computational Aspects</em> (Springer, 2018), pp. 85–118.</p>
+</div>
+<div>
+<p><sup>11</sup> T. Odland, GitHub Repository (2020).</p>
+</div>
+<div>
+<p><sup>12</sup> Z.I. Botev, J.F. Grotowski, D.P. Kroese, and others, The Annals of Statistics <strong>38</strong>, 2916 (2010).</p>
+</div>
+<div>
+<p><sup>13</sup> D.P. Kroese, T. Taimre, and Z.I. Botev, <em>Handbook of Monte Carlo Methods</em> (John Wiley &amp; Sons, 2013).</p>
+</div>
+<div>
+<p><sup>14</sup> S.J. Sheather and M.C. Jones, Journal of the Royal Statistical Society: Series B (Methodological) <strong>53</strong>, 683 (1991).</p>
+</div>
+<div>
+<p><sup>15</sup> M.P. Wand and M.C. Jones, <em>Kernel Smoothing</em> (Crc Press, 1994).</p>
 </div>
 </div>
 </div>

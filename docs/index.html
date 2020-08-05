@@ -137,10 +137,26 @@ code span.wa { color: #da4453; } /* Warning */
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>2</b> Current state of the art</a></li>
-<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a></li>
+<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a><ul>
+<li class="chapter" data-level="3.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>3.1</b> Exact Kernel Density Estimation</a></li>
+<li class="chapter" data-level="3.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>3.2</b> Simple and linear Binning</a></li>
+<li class="chapter" data-level="3.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>3.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="3.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>3.4</b> Improved Sheather Jones Algorithm</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a><ul>
-<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#generation-of-test-distribution"><i class="fa fa-check"></i><b>4.1</b> Generation of Test Distribution</a></li>
-<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#comparing-different-methods"><i class="fa fa-check"></i><b>4.2</b> Comparing different methods</a></li>
+<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>4.1</b> Benchmark setup</a></li>
+<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#basic-implementation-against-binned-and-fft-implementations"><i class="fa fa-check"></i><b>4.2</b> Basic implementation against Binned and FFT implementations</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>4.2.1</b> Runtime</a></li>
+<li class="chapter" data-level="4.2.2" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>4.2.2</b> Accuracy</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="comparison.html"><a href="comparison.html#new-implementation-against-kdepy"><i class="fa fa-check"></i><b>4.3</b> New implementation against KDEpy</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>4.3.1</b> Runtime</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>4.3.2</b> Accuracy</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="comparison.html"><a href="comparison.html#new-implementation-run-with-gpu-support"><i class="fa fa-check"></i><b>4.4</b> New implementation run with GPU support</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>4.4.1</b> Runtime</a></li>
+<li class="chapter" data-level="4.4.2" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>4.4.2</b> Accuracy</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -168,7 +184,7 @@ code span.wa { color: #da4453; } /* Warning */
 </div>
 <div id="abstract" class="section level1 unnumbered">
 <h1>Abstract</h1>
-<p>An implementation of a one-dimensional Kernel Density Estimation in TensorFlow is proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python as well to density estimations by smoothed histograms it is shown as competitive and useful in real world applications.</p>
+<p>An implementation of a one-dimensional Kernel Density Estimation in TensorFlow/Zfit is proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python it is shown as competitive and useful in real world applications.</p>
 
 
 </div>
