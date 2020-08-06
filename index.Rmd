@@ -1,5 +1,5 @@
 ---
-title: "Efficiency of Univariate Kernel Density Estimation with TensorFlow"
+title: "Performance of Univariate Kernel Density Estimation methods in TensorFlow"
 subtitle: "Bachelor Thesis"
 author: ["Marc Steiner"]
 supervisor: ["Jonas Eschle", "Nicola Serra"]
@@ -13,7 +13,7 @@ csl: "citation-styles/aip.csl"
 
 # Abstract {-}
 
-An implementation of a one-dimensional Kernel Density Estimation in TensorFlow/Zfit is proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python it is shown as competitive and useful in real world applications.
+Multiple implementations of a one-dimensional Kernel Density Estimation in TensorFlow/Zfit are proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python it is shown as competitive and useful in real world applications.
 
 \newpage
 \tableofcontents
