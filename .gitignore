@@ -7,3 +7,6 @@ renv
 *.log
 *.lol
 .DS_Store
+_bookdown_files
+*.toc
+*.aux
