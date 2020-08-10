@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow</title>
-  <meta name="description" content="4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <title>4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
+  <meta name="description" content="4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
   <meta name="generator" content="bookdown 0.19.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <meta property="og:title" content="4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Comparison | Efficiency of Univariate Kernel Density Estimation with TensorFlow" />
+  <meta name="twitter:title" content="4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
   
   
   
@@ -169,7 +169,7 @@ code span.wa { color: #da4453; } /* Warning */
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Efficiency of Univariate Kernel Density Estimation with TensorFlow</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of Univariate Kernel Density Estimation methods in TensorFlow</a>
           </h1>
         </div>
 
@@ -179,15 +179,27 @@ code span.wa { color: #da4453; } /* Warning */
             <section class="normal" id="section-">
 <div id="comparison" class="section level1">
 <h1><span class="header-section-number">4</span> Comparison</h1>
+<pre><code>## /opt/miniconda3/envs/ba-thesis/lib/python3.7/site-packages/zfit/util/execution.py:70: UserWarning: Not running on Linux. Determining available cpus for thread can failand be overestimated. Workaround (only if too many cpus are used):`zfit.run.set_n_cpu(your_cpu_number)`
+##   warnings.warn(&quot;Not running on Linux. Determining available cpus for thread can fail&quot;</code></pre>
 <p>To show the efficiency and performance of the Kernel Density Estimation methods implemented with TensorFlow a benchmarking suite was developed. It consists of three parts, a collection of distributions, a collection of methods to compare and a runner module that implements helper methods to execute the methods to test against the different distributions and plot the generated dataset nicely.</p>
 <div id="benchmark-setup" class="section level2">
 <h2><span class="header-section-number">4.1</span> Benchmark setup</h2>
 <p>To compare the different implementations multiple popular test distributions mentioned in Wand et al.<span class="citation"><sup><a href="#ref-wand1994kernel" role="doc-biblioref">15</a></sup></span> were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implmentation proposed in this paper may be used, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.</p>
+<div class="figure"><span id="fig:distDisplay"></span>
+<img src="benchmark/cpu/distributions.pdf" alt="Distribution used to benchmark"  />
+<p class="caption">
+Figure 4.1: Distribution used to benchmark
+</p>
+</div>
 </div>
 <div id="basic-implementation-against-binned-and-fft-implementations" class="section level2">
 <h2><span class="header-section-number">4.2</span> Basic implementation against Binned and FFT implementations</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="comparison.html#cb4-1"></a>figure, axes <span class="op">=</span> runner.plot_estimations(restricted_estimations, distributions_to_evaluate, <span class="fl">1e3</span>, [<span class="st">&#39;ZfitExact&#39;</span>, <span class="st">&#39;ZfitExactwithAdaptiveBandwidth&#39;</span>, <span class="st">&#39;ZfitBinned&#39;</span>])</span>
+<span id="cb4-2"><a href="comparison.html#cb4-2"></a>figure</span></code></pre></div>
+<p><img src="thesis_files/figure-html/unnamed-chunk-7-1.png" /><!-- --></p>
 <div id="runtime" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Runtime</h3>
+<p><embed src="./benchmark/cpu/distributions.pdf" /><!-- --></p>
 </div>
 <div id="accuracy" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Accuracy</h3>
