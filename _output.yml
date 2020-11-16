@@ -1,5 +1,4 @@
 bookdown::gitbook:
-  highlight: "breezedark"
   config:
     download: ["pdf", "epub"]
 bookdown::pdf_book:
@@ -9,5 +8,6 @@ bookdown::pdf_book:
   keep_tex: False
   template: "templates/eisvogel-m.latex"
   pandoc_args:
-    "--metadata-file=_pdf_options.yml"
+    - "--metadata-file=_pdf_options.yml"
+    - "--highlight=breezedark"
 bookdown::epub_book: default
