@@ -13,3 +13,4 @@ logo: "templates/images/uzh-logo.png"
 titlegraphic: "templates/images/uzh-logo.png"
 highlight-style: "darkbreeze"
 listings: True
+tables: True
