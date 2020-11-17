@@ -35,7 +35,7 @@ To show the efficiency and performance of the different kernel density estimatio
 
 To compare the different implementations multiple popular test distributions mentioned in Wand et al.[@wand1994kernel] were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implmentation proposed in this paper, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.
 
-```{python compareSimpleBinnedFFTISJEstimations, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points"}
+```{python showDistributions, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points"}
 figure, axes = runner.plot_distributions(distributions_to_evaluate, xlim)
 figure
 ```
