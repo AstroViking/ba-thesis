@@ -1,3 +1,23 @@
 # Summary {#summary}
 
-In summary we can conclude that...
+The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime.
+
+In terms of accuracy it is slightly better in most cases and in general comparable to KDEpy.
+
+Additionally it has the benefit of allowing any distribution of the loc-scale family as kernel implemented in TensorFlow Probability[@googleTFP]. At the moment this includes twelve kernels, namely `Cauchy`, `DoublesidedMaxwell`, `Gumbel`, `Laplace`, `LogLogistic`, `LogNormal`, `Logistic`, `LogitNormal`, `Moyal`, `Normal`, `PoissonLogNormalQuadratureCompound`, `SinhArcsinh`.
+
+The proposed implementation restricts itself to the one-dimensional case. So far only KDEpy and Statsmodels implement a multidimensional KDE.
+Generalization to higher dimensionel kernel density estimation is however relatively straightforward to implement, since most TensorFlow API's are dimensionally agnostic.
+
+Feature / Library             scipy       sklearn   statsmodels             KDEpy                     Zfit
+--------------------- ------------- ------------- ------------- ----------------- ------------------------
+Number of kernels                 1             6    7 (6 slow)                 9                       12
+Weighted data points             No            No       Non-FFT               Yes                      Yes
+Automatic bandwidth              NR          None         NR,CV           NR, ISJ                  NR, ISJ
+Multidimensional                 No            No           Yes               Yes              No(planned)
+Supported algorithms          Exact          Tree    Exact, FFT  Exact, Tree, FFT  Exact, Binned, FFT, ISJ
+
+Table: (\#tab:finalComparison) Comparison between KDE implementations (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)
+
+The newly proposed KDE implementation (based on TensorFlow/Zfit) achieves state-of-the-art accuracy as well as efficiency for the one-dimensional case. Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.
+

@@ -17,9 +17,9 @@ kde = tfd.MixtureSameFamily(
     components_distribution=f(data))
 ```
 
-Interestingly, due to the smartly capsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a Kernel, if there exists an implementation for it in TensorFlow Probability. If the used Kernel has bounded support, the implementation proposed in this paper allows to specify the support upon instanciation of the class. If the Kernel has infinite support (like a Gaussian kernel i. e.) a practical support estimate is calculated by searching for approximative roots with the Brent's method[@brent1971algorithm] implemented in TensorFlow the python package `tf_quant_finance` by Google. This allows us to speed up the calculation
+Interestingly, due to the smart encapsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a kernel, if there exists an implementation for it in TensorFlow Probability. If the used Kernel has only bounded support, the implementation proposed in this paper allows to specify the support upon instantiation of the class. If the Kernel has infinite support (like a Gaussian kernel for instance) a practical support estimate is calculated by searching for approximate roots with Brent's method[@brent1971algorithm] implemented for TensorFlow in the python package `tf_quant_finance` by Google. This allows us to speed up the calculation.
 
-However calculating an exact Kernel Density Estimation is not always feasible as this can take a long time with a huge collection of events, especially in high energy physics. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, since most of TensorFlow is actually implemented in C++ and the code is optimized before running. The computational complexity however, remains the same nonetheless.
+However calculating an exact kernel density estimation is not always feasible as this can take a long time with a huge collection of events, especially in high energy physics. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, since most of TensorFlow is actually implemented in C++ and the code is optimized before running. But the computational complexity however, remains the same of course.
 
 \begin{equation}
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
@@ -37,7 +37,7 @@ Given a set of sample points $X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}$ wit
 
 As described in the excellent overview by Artur Gramacki[@gramacki2018fft] simple binning or linear binning can be used, although the last is often preferred since it is more accurate and the difference in computational complexity is negligible.
 
-Simple binning is just the standard process of taking a weighted histogram that is divided by the sum of the sample points weights (normalization). In one dimension simple binning is binary in that it assigns a data points weight ($1$ for an unweighted historgram) either to the bin left or right of itself. Linear binning on the other hand assigns a fraction of the whole weight to both bins on either side, proportional to the closeness of bin and data point in relation to the bin width.
+Simple binning is just the standard process of taking a weighted histogram that is divided by the sum of the sample points weights (normalization). In one dimension simple binning is binary in that it assigns a data points weight ($1$ for an unweighted histogram) either to the grid point (bin) left or right of itself. Linear binning on the other hand assigns a fraction of the whole weight to both grid points (bins) on either side, proportional to the closeness of grid point and data point in relation to the distance between grid points (bin width).
 
 Mathematically linear binning in one dimension can be calculated like this:
 
@@ -46,7 +46,7 @@ c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l < x_k < g_{l+1}}} \frac{g_{k+1}-x_
 (\#eq:linbin)
 \end{equation}
 
-Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the excellent KDEpy package[@KDEpy] which implements a kernel density estimation in native python/cython this can be done without using loops at all. By transforming the data such that every data point $x_k$ can be described by an integral part (corresponding to its nearest left grid point number $l$) plus some fractional part (corresponding to the distance between grid point $g_l$ and data point $x_k$) and applying `tf.math.bincount` twice to the transformed integral part weighting it with the fractional part times the initial weight.
+Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the excellent KDEpy package[@KDEpy] this can be done without using loops at all. By transforming the data such that every data point $x_k$ can be described by an integral part (corresponding to its nearest left grid point number $l$) plus some fractional part (corresponding to the distance between grid point $g_l$ and data point $x_k$) and applying `tf.math.bincount` twice to the transformed integral part weighting it with the fractional part times the initial weight.
 
 The kernel density estimation can then be calculated as a mixture distribution of kernels located at the grid points, weighted with their associated grid count.
 
@@ -77,7 +77,7 @@ If we set $c_l = 0$ for all $l$ not in the set $\{1, ..., N\}$ and notice that $
 
 where the two vectors look like this
 
-```{r, ckFigure, fig.cap="Vectors $\\vec{c}$ and $\\vec{k}$"}
+```{r, ckFigure, fig.cap="Vectors $\\vec{c}$ and $\\vec{k}$", echo=FALSE}
 knitr::include_graphics('figures/c_conv_k.png')
 ```
 
@@ -97,11 +97,13 @@ A critical insight is that the Gaussian kernel density estimator $\widehat{f}_{h
 
 \begin{equation}
 \frac{\partial}{\partial t} \widehat{f}_{h,norm}(x,t) = \frac{1}
-{2} \frac{\partial^2}{\partial x^2} \widehat{f}_{h,norm}(x,t),\space t>0 
+{2} \frac{\partial^2}{\partial x^2} \widehat{f}_{h,norm}(x,t),\text{ } t>0 
 (\#eq:heatpde)
 \end{equation}
 
-with $x \in \mathbb{R}$, $\lim_{x\rightarrow \pm \infty}{\widehat{f}_{h,norm}(x,t) = 0}$ and initial condition $\widehat{f}_{h,norm}(x,0) = \Delta(x)$, where $\Delta(x) = \frac{1}{N} \sum_{k=0}^N \delta_{x_k}(x)$ us the empirical density of the given sample points $X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}$ and $\delta_{x_k}(x)$ is the Dirac measure at $x_k$. This means the kernel density estimator can be obtained by evolving the solution of the partial differential equation \@ref(eq:heatpde) up to time $t$. The key observation is that \@ref(eq:heatpde) can be solved on a finite domain efficiently using the fast cosine transform - an FFT-related transform.[@kroese2013handbook]
+with $x \in \mathbb{R}$, $\lim_{x\rightarrow \pm \infty}{\widehat{f}_{h,norm}(x,t) = 0}$ and initial condition $\widehat{f}_{h,norm}(x,0) = \Delta(x)$, where $\Delta(x) = \frac{1}{N} \sum_{k=0}^N \delta_{x_k}(x)$ is the empirical density of the given sample points $X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}$ and $\delta_{x_k}(x)$ is the Dirac measure at $x_k$. 
+
+This means the kernel density estimator can be obtained by evolving the solution of the partial differential equation \@ref(eq:heatpde) up to time $t$. The key observation is that \@ref(eq:heatpde) can be solved on a finite domain efficiently using the fast cosine transform - an FFT-related transform.[@kroese2013handbook]
 
 The optimal bandwidth is often defined as the one that minimizes the mean integrated square error($MISE$)
 
@@ -118,10 +120,10 @@ t^{\ast} = \Big( \frac{1}{2N\sqrt{\pi} \| f''\|^2}\Big)^{\frac{2}{5}}
 (\#eq:tstar)
 \end{equation}
 
-Using the fact that $\|f^{(j)}\|^2 = (-1)^j \mathbb{E}_f[f^{(2j)}(X)], \space j\geq 1$ and an initial estimation for $\|\widehat{f}_{h,norm}^{(l+2)}\|^2$  for some $l \geq 3$ one can then iteratively get a an estimation for $\|\widehat{f}_{h,norm}^{(2)}\|^2$ which can then be used to estimate $t^{\ast}$ instead of $\|f''\|^2$. According to their handbook $l = 7$ is a suitable value to yield good practical results.
+Using the fact that $\|f^{(j)}\|^2 = (-1)^j \mathbb{E}_f[f^{(2j)}(X)], \text{ } j\geq 1$ and an initial estimation for $\|\widehat{f}_{h,norm}^{(l+2)}\|^2$  for some $l \geq 3$ one can then iteratively get a an estimation for $\|\widehat{f}_{h,norm}^{(2)}\|^2$ which can then be used to estimate $t^{\ast}$ instead of $\|f''\|^2$. According to their handbook $l = 7$ is a suitable value to yield good practical results.
 
-The improvment compared to the standard Sheather-Jones plug-on method[@sheather1991reliable] consists in the fact that to compute the initial estimation of $\|\widehat{f}_{h,norm}^{(l+2)}\|^2$ is calculated by solving the partial differental equation using the fast cosine transform as described above, eliminating the need to assume normally distributed data for the initial estimate and leading improved performance, especially for density distributions that are far from normal as seen in the next chapter.
+The improvment compared to the standard Sheather-Jones plug-on method[@sheather1991reliable] consists in the fact that the initial estimation of $\|\widehat{f}_{h,norm}^{(l+2)}\|^2$ is calculated by solving the partial differental equation using the fast cosine transform as described above, eliminating the need to assume normally distributed data for the initial estimate and leading to improved performance, especially for density distributions that are far from normal as seen in the next chapter.
 
-The implementation of the algorithm in TensorFlow proposed in this paper was also inspired a lot by the python package KDEpy[@KDEpy] and uses Brent's method[@brent1971algorithm] to find roots implemented in TensorFlow the python package `tf_quant_finance` as well.
+The implementation of the algorithm in TensorFlow proposed in this paper was also inspired a lot by the python package KDEpy[@KDEpy] and uses Brent's method[@brent1971algorithm] to find roots, implemented in TensorFlow in the python package `tf_quant_finance`.
 
 One shortcoming of the improved Sheather-Jones algorithm (ISJ) is that with few data points to estimate from, it is not guarenteed to converge. If that happens, one has to use the exact, binned or FFT kernel density estimators as described above.
