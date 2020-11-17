@@ -6,9 +6,9 @@ supervisor: ["Jonas Eschle", "Nicola Serra"]
 institute: ["University of Zurich"]
 keywords: ["Kernel Density Estimation", "Python", "TensorFlow", "Zfit"]
 site: "bookdown::bookdown_site"
-bibliography: ["citations/papers.bib"]
+bibliography: ["citations/papers.json"]
 link-citations: True
-csl: "citation-styles/aip.csl"
+csl: "citation-styles/aps-with-supscript.csl"
 ---
 
 # Abstract {-}
