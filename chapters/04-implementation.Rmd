@@ -55,9 +55,7 @@ This algorithm is implemented as its own class since it does not represent a com
 
 ## Improved Sheather Jones Algorithm
 
-The implementation of the algorithm in TensorFlow proposed in this paper was also inspired by KDEpy[@KDEpy] and uses Brent's method[@brent1971algorithm] to find roots, implemented in TensorFlow in the python package `tf_quant_finance`.
-
-However while in KDEpy the algorithm is only used to calculate the optimal bandwidth, in the new implementation the algorithm can also be used directly to infer the kernel density estimation.
+To find the roots for equation \@ref(eq:hamisegamma2) Brent's method[@brent1971algorithm] was used, which is implemented in TensorFlow in the python package `tf_quant_finance`. For the Discrete Cosine Transform `tf.signal.dct` is used.
 
 ## Source Code
 
