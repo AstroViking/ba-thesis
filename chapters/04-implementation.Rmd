@@ -24,7 +24,27 @@ However calculating an exact kernel density estimation is not always feasible as
 
 ## Simple and linear Binning
 
-Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the KDEpy package[@KDEpy] this can be done without using loops at all. By transforming the data such that every data point $x_k$ can be described by an integral part (corresponding to its nearest left grid point number $l$) plus some fractional part (corresponding to the distance between grid point $g_l$ and data point $x_k$) and applying `tf.math.bincount` twice on the transformed integral part weighting it with the fractional part times the initial weight.
+Simple binning is already implemented in TensorFlow in the function `tf.histogram_fixed_width`.
+
+Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the KDEpy package[@KDEpy] this can be done without using loops at all. 
+
+First, every data point $x_k$  can be described by an integral part $x^{integral}_k$ (equal to its nearest left grid point number $l$ = $x^{integral}_k$) plus some fractional part $x^{fractional}_k$ (corresponding to the additional distance between grid point $g_l$ and data point $x_k$).
+
+Then we can solve the linear binning in the following way.
+
+For data points on the right side of the grid point $g_l$: The fractional parts of the data points are summed if the integral parts equal $l$. 
+
+For data points on the left side of the grid point $g_l$: $1$ minus the fractional parts of the data points are summed if the integral parts equal $l-1$.
+
+Including the weights this looks as follows
+
+\begin{equation}
+c_l = c(g_l) = \sum_{\substack{x^{fractional}_k  \in X^{fractional}\\l = x^{integral}_k}} x^{fractional}_k \cdot w_k + \sum_{\substack{x^{fractional}_k  \in X^{fractional}\\l = x^{integral}_k + 1}} (1-x^{fractional}_k) \cdot w_k
+(\#eq:linbinnoloop)
+\end{equation}
+
+
+Left and right side sums can then be calculated efficiently with the TensorFlow function `tf.math.bincount`.
 
 
 ## Using convolution and the Fast Fourier Transform
