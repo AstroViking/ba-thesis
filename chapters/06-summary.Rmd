@@ -1,13 +1,13 @@
 # Summary {#summary}
 
-The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime.
+The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime for a given accuracy.
 
 In terms of accuracy it is slightly better in most cases and in general comparable to KDEpy.
 
 Additionally it has the benefit of allowing any distribution of the loc-scale family as kernel implemented in TensorFlow Probability[@googleTFP]. At the moment this includes twelve kernels, namely `Cauchy`, `DoublesidedMaxwell`, `Gumbel`, `Laplace`, `LogLogistic`, `LogNormal`, `Logistic`, `LogitNormal`, `Moyal`, `Normal`, `PoissonLogNormalQuadratureCompound`, `SinhArcsinh`.
 
 The proposed implementation restricts itself to the one-dimensional case. So far only KDEpy and Statsmodels implement a multidimensional KDE.
-Generalization to higher dimensionel kernel density estimation is however relatively straightforward to implement, since most TensorFlow API's are dimensionally agnostic.
+Generalization to higher dimensionel kernel density estimation is feasible, although this would require substantially more work due to some different APIs for multi-dimensional data in TensorFlow. In addition one must ensure that the kernels used are multidimensional themselves, which is not the case for many of the TensorFlow Probability specified above.
 
 Feature / Library             scipy       sklearn   statsmodels             KDEpy                     Zfit
 --------------------- ------------- ------------- ------------- ----------------- ------------------------

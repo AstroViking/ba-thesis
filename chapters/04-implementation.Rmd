@@ -19,22 +19,26 @@ kde = tfd.MixtureSameFamily(
 
 Interestingly, due to the smart encapsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a kernel, if there exists an implementation for it in TensorFlow Probability. If the used Kernel has only bounded support, the implementation proposed in this paper allows to specify the support upon instantiation of the class. If the Kernel has infinite support (like a Gaussian kernel for instance) a practical support estimate is calculated by searching for approximate roots with Brent's method[@brent1971algorithm] implemented for TensorFlow in the python package `tf_quant_finance` by Google. This allows us to speed up the calculation.
 
-However calculating an exact kernel density estimation is not always feasible as this can take a long time with a huge collection of events, especially in high energy physics. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, since most of TensorFlow is actually implemented in C++ and the code is optimized before running. But the computational complexity however, remains the same of course.
+However calculating an exact kernel density estimation is not always feasible as this can take a long time with a huge collection of events, especially in high energy physics. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, since most of TensorFlow is actually implemented in C++ and the code is optimized before running. Even if the theoretical computational complexity remains the same.
 
 
 ## Simple and linear Binning
 
-Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the excellent KDEpy package[@KDEpy] this can be done without using loops at all. By transforming the data such that every data point $x_k$ can be described by an integral part (corresponding to its nearest left grid point number $l$) plus some fractional part (corresponding to the distance between grid point $g_l$ and data point $x_k$) and applying `tf.math.bincount` twice on the transformed integral part weighting it with the fractional part times the initial weight.
+Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the KDEpy package[@KDEpy] this can be done without using loops at all. By transforming the data such that every data point $x_k$ can be described by an integral part (corresponding to its nearest left grid point number $l$) plus some fractional part (corresponding to the distance between grid point $g_l$ and data point $x_k$) and applying `tf.math.bincount` twice on the transformed integral part weighting it with the fractional part times the initial weight.
 
 
 ## Using convolution and the Fast Fourier Transform
 
 In TensorFlow one-dimensional convolutions are efficiently implemented already if we use `tf.nn.conv1d`. In benchmarking using this method proved significantly faster than using `tf.signal.rfft` and `tf.signal.irfft` to transform, multiply and inverse transform the vectors, which is implemented as an alternative as well.
 
-This algorithm is implemented as its own class since it does not represent a complete mixture distribution anymore but calculates just the density distribution values at the specified grid points. To still infer values for other points in the range of $x$ `tfp.math.interp_regular_1d_grid` is used which computes a linear interpolation of values between the grid.
+This algorithm is implemented as its own class since it does not represent a complete mixture distribution anymore but calculates just the density distribution values at the specified grid points. To still infer values for other points in the range of $x$ `tfp.math.interp_regular_1d_grid` is used, which computes a linear interpolation of values between the grid.
 
 ## Improved Sheather Jones Algorithm
 
-The implementation of the algorithm in TensorFlow proposed in this paper was also inspired a lot by the python package KDEpy[@KDEpy] and uses Brent's method[@brent1971algorithm] to find roots, implemented in TensorFlow in the python package `tf_quant_finance`.
+The implementation of the algorithm in TensorFlow proposed in this paper was also inspired by KDEpy[@KDEpy] and uses Brent's method[@brent1971algorithm] to find roots, implemented in TensorFlow in the python package `tf_quant_finance`.
 
-However while in KDEpy the algorithm is only used to calculate the optimal bandwidth, in the proposed implementation the algorithm can also be used directly to infer the kernel density estimation.
+However while in KDEpy the algorithm is only used to calculate the optimal bandwidth, in the new implementation the algorithm can also be used directly to infer the kernel density estimation.
+
+## Source Code
+
+The source code of the newly proposed implementation can be found at [https://github.com/AstroViking/tf-kde].

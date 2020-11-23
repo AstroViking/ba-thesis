@@ -24,4 +24,4 @@ Supported algorithms          Exact          Tree    Exact, FFT  Exact, Tree, FF
 
 Table: (\#tab:kdepyComparison) Comparison between KDE implementations by Tommy Odland[@KDEpyDoc] (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)
 
-In the next chapters I will propose a novel implementation for kernel density estimation and compare it to KDEpy directly.
+In the next chapters the a novel implementation for kernel density estimation based is proposed and compared to KDEpy directly.

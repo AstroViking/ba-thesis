@@ -41,13 +41,13 @@ figure
 ```
 ## Basic implementation against Binned and FFT implementations
 
-First we compare the basic exact kernel density estimation implementation against  binned and FFT implementations run on a Macbook Pro 2013 Retina using the CPU.
+First, the exact kernel density estimation implementation is compared against binned and FFT implementations run on a Macbook Pro 2013 Retina using the CPU.
 
 ### Accuracy
 
 For this randomly sampled data for from each test distribution is used. The number of samples per test distribution is 1000. The number of samples is restricted because calculating the exact kernel density estimation for more than 1000 kernels takes a really long time. 
 
-For the binned, FFT and ISJ algorithms we use 256 bins each.
+For the binned, FFT and ISJ algorithms 256 bins each were used.
 
 ```{python compareSimpleBinnedFFTISJEstimations, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points"}
 figure, axes = runner.plot_estimations(restricted_estimations, distributions_to_evaluate, 1e4, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ'])
@@ -70,7 +70,7 @@ figure
 
 ### Runtime
 
-For this we use randomly sampled data for each test distribution in the range of 100 to 1000. The number of samples is restricted because larger datasets would require exponentially longer runtimes for the exact kernel density estimation.
+For this randomly sampled data for each test distribution in the range of 100 to 1000 is used. The number of samples is restricted because larger datasets would require exponentially longer runtimes for the exact kernel density estimation.
 
 
 ```{python compareSimpleBinnedFFTISJRuntimeInstantiation, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton step between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ'"}

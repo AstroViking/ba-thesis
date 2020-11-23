@@ -21,7 +21,7 @@ There exist several methods to combat this complexity.
 The most straightforward way to decrease runtime is by limiting the number of sample points. This can be done by a binning routine, where the values at a smaller number of regular grid points are estimated from the original large number of sample points.
 Given a set of sample points $X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}$ with weights $w_k$ and a set of equally spaced grid points $G = \{g_0, g_1, ..., g_l, ..., g_{n-1}, g_M\}$ where $N < n$ we can assign an estimate (or a count) $c_l$ to each grid point $g_l$ and use the newly found $g_l$'s to calculate the kernel density estimation instead. 
 
-This brings the computational complexity down to $\mathcal{O}(N \cdot m)$. 
+This lowers the computational complexity down to $\mathcal{O}(N \cdot m)$. 
 
 Depending on the number of grid points $N$ the estimate is either more accurate and slower or less accurate and faster. However as we will see in the comparison chapter later as well, even a grid of size $1024$ is enough to capture the true density with high accuracy given a million sample points[@KDEpyDoc].
 
@@ -77,7 +77,9 @@ where the two vectors look like this
 knitr::include_graphics('figures/c_conv_k.png')
 ```
 
-By using the well known convolution theorem we can fourier transform $\vec{c}$ and $\vec{k}$, multiply them and inverse fourier transform them again to get the result of the discrete convolution. 
+By using the well known convolution theorem we can fourier transform $\vec{c}$ and $\vec{k}$, multiply them and inverse fourier transform them again to get the result of the discrete convolution.
+
+However, due to the limitation of evaluating only at the grid points themselves, one needs to interpolate to get values for the estimated distribution at points in between.
 
 
 ## Improved Sheather-Jones Algorithm
