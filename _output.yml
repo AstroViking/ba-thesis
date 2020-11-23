@@ -1,6 +1,9 @@
 bookdown::gitbook:
   config:
     download: ["pdf", "epub"]
+    toc:
+      after: |
+        <li><a href="presentation/index.html" target="_blank">Presentation</a></li>
 bookdown::pdf_book:
   latex_engine: xelatex
   keep_tex: False

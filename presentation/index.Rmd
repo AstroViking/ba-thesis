@@ -1,0 +1,139 @@
+---
+title: "Performance of Univariate Kernel Density Estimation methods in TensorFlow"
+subtitle: ""
+author: "Marc Steiner"
+institute: "University of Zurich"
+date: "2020/11/20 (updated: `r Sys.Date()`)"
+knit: (function(input, ...) {
+    
+    rmarkdown::render(
+      input,
+      output_dir = '../docs/presentation',
+      envir = globalenv()
+    )
+  })
+output:
+  xaringan::moon_reader:
+    lib_dir: ../docs/presentation/libs
+    css: 'xaringan-themer.css'
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(base_color = "#23395b", outfile='../docs/presentation/xaringan-themer.css')
+```
+
+class: inverse, center, middle
+
+# Data collection in high energy physics
+
+---
+
+# Data collection in high energy physics
+
+- Large amount of data
+- ...
+
+---
+# Data collection in high energy physics
+
+## Histograms
+
+- ...
+- ...
+
+---
+class: inverse, center, middle
+
+# Kernel Density Estimation
+
+---
+
+# Kernel Density Estimation
+
+...
+
+---
+
+# Kernel Density Estimation
+
+## Simple and Linear Binning
+
+...
+
+---
+
+# Kernel Density Estimation
+
+## Fast Fourier Transform
+
+---
+
+# Kernel Density Estimation
+
+## Improved Sheather Jones
+
+...
+
+---
+
+class: inverse, center, middle
+
+# Current state of the art
+
+---
+
+# Current state of the art
+
+...
+
+---
+
+class: inverse, center, middle
+
+# Implementation
+
+---
+
+# Implementation
+
+...
+
+---
+
+class: inverse, center, middle
+
+# Comparison
+
+---
+
+# Comparison
+
+...
+
+---
+
+class: inverse, center, middle
+
+# Conclusion
+
+---
+
+# Conclusion
+
+---
+
+class: inverse, center, middle
+
+# Thank you for listening!
+
+
+
