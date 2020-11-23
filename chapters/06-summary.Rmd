@@ -4,18 +4,18 @@ The benchmarking has shown that the new implementation can outperform the de-fac
 
 In terms of accuracy it is slightly better in most cases and in general comparable to KDEpy.
 
-Additionally it has the benefit of allowing any distribution of the loc-scale family as kernel implemented in TensorFlow Probability[@googleTFP]. At the moment this includes twelve kernels, namely `Cauchy`, `DoublesidedMaxwell`, `Gumbel`, `Laplace`, `LogLogistic`, `LogNormal`, `Logistic`, `LogitNormal`, `Moyal`, `Normal`, `PoissonLogNormalQuadratureCompound`, `SinhArcsinh`.
+Additionally it has the benefit of allowing any distribution of the loc-scale family implemented in TensorFlow Probability[@googleTFP] as kernel function. At the moment this includes twelve distributions at the moment, namely `Cauchy`, `DoublesidedMaxwell`, `Gumbel`, `Laplace`, `LogLogistic`, `LogNormal`, `Logistic`, `LogitNormal`, `Moyal`, `Normal`, `PoissonLogNormalQuadratureCompound`, `SinhArcsinh`.
 
 The proposed implementation restricts itself to the one-dimensional case. So far only KDEpy and Statsmodels implement a multidimensional KDE.
 Generalization to higher dimensionel kernel density estimation is feasible, although this would require substantially more work due to some different APIs for multi-dimensional data in TensorFlow. In addition one must ensure that the kernels used are multidimensional themselves, which is not the case for many of the TensorFlow Probability specified above.
 
-Feature / Library             scipy       sklearn   statsmodels             KDEpy                     Zfit
---------------------- ------------- ------------- ------------- ----------------- ------------------------
-Number of kernels                 1             6    7 (6 slow)                 9                       12
-Weighted data points             No            No       Non-FFT               Yes                      Yes
-Automatic bandwidth              NR          None         NR,CV           NR, ISJ                  NR, ISJ
-Multidimensional                 No            No           Yes               Yes              No(planned)
-Supported algorithms          Exact          Tree    Exact, FFT  Exact, Tree, FFT  Exact, Binned, FFT, ISJ
+Feature / Library                      scipy       sklearn   statsmodels             KDEpy                     Zfit
+------------------------------ ------------- ------------- ------------- ----------------- ------------------------
+Number of kernel functions                 1             6    7 (6 slow)                 9                       12
+Weighted data points                      No            No       Non-FFT               Yes                      Yes
+Automatic bandwidth                       NR          None         NR,CV           NR, ISJ                  NR, ISJ
+Multidimensional                          No            No           Yes               Yes              No(planned)
+Supported algorithms                   Exact          Tree    Exact, FFT  Exact, Tree, FFT  Exact, Binned, FFT, ISJ
 
 Table: (\#tab:finalComparison) Comparison between KDE implementations (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)
 

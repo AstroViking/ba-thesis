@@ -9,8 +9,8 @@ An exact Kernel Density Estimation can be calculated as
 (\#eq:kde)
 \end{equation}
 
-where $K(x)$ is called the kernel function, which defines the range and size of influence of a single data point over the estimation. Most typically a simple Gaussian distribution is used as kernel.
-The wider the kernel is, the farther  is the influence of a single data point, this is characterized by the bandwidth paramter $h$. 
+where $K(x)$ is called the kernel function, which defines the range and size of influence of a single data point over the estimation. Most typically a simple Gaussian distribution is used as kernel function.
+The wider the kernel function is, the farther  is the influence of a single data point, this is characterized by the bandwidth paramter $h$. 
 
 The computational complexity of the exact KDE above is $\mathcal{O}(nm)$ where $n$ is the number of sample points to estimate from and $m$ is the number of evaluation points (the points where you want to calculate the estimate).
 
@@ -41,7 +41,7 @@ c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l < x_k < g_{l+1}}} \frac{g_{k+1}-x_
 (\#eq:linbin)
 \end{equation}
 
-The kernel density estimation can then be calculated as a mixture distribution of kernels located at the grid points, weighted with their associated grid count.
+The kernel density estimation can then be calculated as a mixture distribution of kernel functions located at the grid points, weighted with their associated grid count.
 
 \begin{equation}
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{x-g_l}{h}\Big)
@@ -51,7 +51,7 @@ The kernel density estimation can then be calculated as a mixture distribution o
 
 ## Using convolution and the Fast Fourier Transform
 
-Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel and the grid counts calculated by the binning routine given above. 
+Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel function and the grid counts calculated by the binning routine given above. 
 
 By using the fact that a convolution is just a multiplication in Fourier space and only evaluating the KDE at grid points one can reduce the computational complexity down to $\mathcal{O}(\log{N} \cdot N)$.[@gramacki2018fft]
 

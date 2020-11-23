@@ -14,13 +14,13 @@ Additionally it incorporates features of all implementations mentioned before as
 This makes KDEpy the de-facto standard of Kernel Density Estimation in Python.
 
 
-Feature / Library             scipy       sklearn   statsmodels             KDEpy
---------------------- ------------- ------------- ------------- -----------------
-Number of kernels                 1             6    7 (6 slow)                 9
-Weighted data points             No            No       Non-FFT               Yes
-Automatic bandwidth              NR          None         NR,CV           NR, ISJ
-Multidimensional                 No            No           Yes               Yes
-Supported algorithms          Exact          Tree    Exact, FFT  Exact, Tree, FFT
+Feature / Library                      scipy       sklearn   statsmodels             KDEpy
+------------------------------ ------------- ------------- ------------- -----------------
+Number of kernel functions                 1             6    7 (6 slow)                 9
+Weighted data points                      No            No       Non-FFT               Yes
+Automatic bandwidth                       NR          None         NR,CV           NR, ISJ
+Multidimensional                          No            No           Yes               Yes
+Supported algorithms                   Exact          Tree    Exact, FFT  Exact, Tree, FFT
 
 Table: (\#tab:kdepyComparison) Comparison between KDE implementations by Tommy Odland[@KDEpyDoc] (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)
 
