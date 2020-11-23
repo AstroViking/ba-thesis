@@ -4,14 +4,14 @@ There are several options available for computing univariate kernel density esti
 
 The most popular ones are SciPy's `gaussian_kde`[@ScipyStatsGaussian], Statsmodels' `KDEUnivariate`[@KernelDensityEstimation] Scikit-learn's `KernelDensity`  package[@SklearnNeighborsKernelDensity] as well as KDEpy by Tommy Odland[@KDEpy].
 
+The question of the optimal KDE implementation for any situation, is not entirely straightforward, and depends a lot on what your particular goals are. Statsmodels includes a computation based on Fast Fourier Transform (FFT) and normal reference rules for choosing the optimal bandwidth, which Scikit-learns package lacks for instance.
+
 As Jake VanderPlas was able to show in his comparison[@vanderplas2013] Scikit-learn's tree based approach to compute the kernel density estimation was the most efficient in the vast majority of cases in 2013.
-The question of the optimal KDE implementation for any situation, however, is not entirely straightforward, and depends a lot on what your particular goals are.
 
-Statsmodels includes a computation based on Fast Fourier Transform (FFT) and normal reference rules for choosing the optimal bandwidth, which Scikit-learns package lacks for instance.
+However the new implementation proposed by Tommy Odland in 2018 called KDEpy[@KDEpy] was able to outperform all previous implementations (even Scikit-learn's tree based approach) in terms of runtime for a given accuracy by a factor of at least one order of magnitude, using an FFT based approach.
+Additionally it incorporates features of all implementations mentioned before as well as additional kernels and an additional method to calculate the bandwidth using the Improved Sheather Jones (ISJ) algorithm first proposed by Botev et al[@botev2010kernel].
 
-In 2018 Tommy Odland proposed an entirely new implementation called KDEpy[@KDEpy] which incorporates features of all implementations mentioned before as well as additional kernels and an additional method to calculate the bandwidth using the Improved Sheather Jones (ISJ) algorithm first proposed by Botev et al[@botev2010kernel].
-
-He was also able to show that his FFT based computation was able to outperform previous implementations (even Scikit-learn's tree based approach) in terms of runtime for a given accuracy by a factor of at least one order of magnitude, making KDEpy the de-facto standard of Kernel Density Estimation in Python.
+This makes KDEpy the de-facto standard of Kernel Density Estimation in Python.
 
 
 Feature / Library             scipy       sklearn   statsmodels             KDEpy
