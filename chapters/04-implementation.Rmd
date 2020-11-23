@@ -2,7 +2,7 @@
 
 ## Exact Kernel Density Estimation
 
-The implementation of a simple Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper[@googleTFP], a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled `data` as follows
+The implementation of an exact Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper[@googleTFP], a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled `data` as follows
 
 ```{python, eval=FALSE}
 
