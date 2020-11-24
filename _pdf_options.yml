@@ -6,11 +6,11 @@ toc: False
 toc-own-page: True
 lof: True
 lot: True
-lol: True
+lol: False
 thanks: True
 footnotes-pretty: True
 logo: "templates/images/uzh-logo.png"
 titlegraphic: "templates/images/uzh-logo.png"
 highlight-style: "darkbreeze"
-listings: True
+listings: False
 tables: True

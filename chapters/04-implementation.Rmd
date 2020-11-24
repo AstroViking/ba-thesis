@@ -4,7 +4,7 @@
 
 The implementation of an exact Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper[@googleTFP], a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled `data` as follows
 
-```{python, eval=FALSE}
+```{python exactKDE, eval=FALSE}
 
 from tensorflow_probability import distributions as tfd
 

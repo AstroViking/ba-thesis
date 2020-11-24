@@ -73,7 +73,7 @@ If we set $c_l = 0$ for all $l$ not in the set $\{1, ..., N\}$ and notice that $
 
 where the two vectors look like this
 
-```{r, ckFigure, fig.cap="Vectors $\\vec{c}$ and $\\vec{k}$", echo=FALSE}
+```{r, ckFigure, fig.cap="Vectors $\\vec{c}$ and $\\vec{k}$", echo=FALSE, fig.align = 'center', out.width='60%'}
 knitr::include_graphics('figures/c_conv_k.png')
 ```
 
@@ -116,18 +116,18 @@ where $h_j$ is the optimal bandwidth for the $j$-th derivative of $f$.
 Their proposed plug-in method works as follows:
 
 1. Compute $\|\widehat{f}^{(l+2)}\|^2$ by assuming that f is the normal pdf with mean and variance estimated from the sample data
-2. Using $\|\widehat{f}^{(l)}\|^2$ compute $h_{l+1}$
+2. Using $\|\widehat{f}^{(l+2)}\|^2$ compute $h_{l+1}$
 3. Using $h_{l+1}$ compute $\|\widehat{f}^{(l+1)}\|^2$
-4. Repeat steps 2 and 3 to compute $h^{l-1}$ and so on until 
+4. Repeat steps 2 and 3 to compute $h^{l}$, $\|\widehat{f}^{(l)}\|^2$, $h^{l-1}$, $\cdots$ and so on until 
 $\|\widehat{f}^{(2)}\|^2$ is calculated
 5. Use $\|\widehat{f}^{(2)}\|^2$ to compute $h_{AMISE}$
 
 The weakest point of this procedure is the assumption that the true distribution is a Gaussian density function in order to compute $\|\widehat{f}^{(l+2)}\|^2$. This can lead to arbitrarily bad estimates of $h_{AMISE}$, when the true distribution is far from being normal.
 
-Therefore Botev et al took this idea further[@botev2010kernel]. Given the function $\gamma^{[k]}$ such that
+Therefore Botev et al. took this idea further[@botev2010kernel]. Given the function $\gamma^{[k]}$ such that
 
 \begin{equation}
-\gamma^{[h]}(h)=\underbrace{\gamma_{1}\left(\cdots \gamma_{h-1}\left(\gamma_{h}\right.\right.}_{k \text { times }}(h)) \cdots)
+\gamma^{[k]}(h)=\underbrace{\gamma_{1}\left(\cdots \gamma_{k-1}\left(\gamma_{k}\right.\right.}_{k \text { times }}(h)) \cdots)
 (\#eq:gamma)
 \end{equation}
 
