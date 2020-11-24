@@ -1,12 +1,14 @@
 # Summary {#summary}
 
-The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime for a given accuracy.
+The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime and accuracy for large datasets $>10^8$.
 
-In terms of accuracy it is slightly better in most cases and in general comparable to KDEpy.
+For smaller datasets it provides accuracy of the same order of magnitude and may be favorable (faster) in cases where the PDF is built once but evaluated repeatedly. 
+
+Both cases are important in high energy physics.
 
 Additionally it has the benefit of allowing any distribution of the loc-scale family implemented in TensorFlow Probability[@googleTFP] as kernel function. At the moment this includes twelve distributions at the moment, namely `Cauchy`, `DoublesidedMaxwell`, `Gumbel`, `Laplace`, `LogLogistic`, `LogNormal`, `Logistic`, `LogitNormal`, `Moyal`, `Normal`, `PoissonLogNormalQuadratureCompound`, `SinhArcsinh`.
 
-The proposed implementation restricts itself to the one-dimensional case. So far only KDEpy and Statsmodels implement a multidimensional KDE.
+The proposed implementation restricts itself to the one-dimensional case as described in \@ref(introduction-univariate). So far only KDEpy and Statsmodels implement a multidimensional KDE.
 Generalization to higher dimensionel kernel density estimation is feasible, although this would require substantially more work due to some different APIs for multi-dimensional data in TensorFlow. In addition one must ensure that the kernels used are multidimensional themselves, which is not the case for many of the TensorFlow Probability specified above.
 
 Feature / Library                      scipy       sklearn   statsmodels             KDEpy                     Zfit
@@ -19,5 +21,5 @@ Supported algorithms                   Exact          Tree    Exact, FFT  Exact,
 
 Table: (\#tab:finalComparison) Comparison between KDE implementations (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)
 
-The newly proposed KDE implementation (based on TensorFlow/Zfit) achieves state-of-the-art accuracy as well as efficiency for the one-dimensional case. Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.
+The newly proposed KDE implementation (based on TensorFlow and zfit) achieves state-of-the-art accuracy as well as efficiency for large one-dimensional data $>10^8$. Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.
 

@@ -27,6 +27,6 @@ Currently the basic principle of KDE has been implemented in various programming
 
 So far there exists no direct implementation of Kernel Density Estimation in zfit nor TensorFlow, but various implementations in Python. This implementations will be discussed in the third chapter (\@ref(currentState)) before a new implementation of Kernel Density Estimation based on TensorFlow and zfit is proposed. (\@ref(tensorflowImplementation)). Starting with a rather simple implementation, multiple improvements from recent papers are integrated to enhance its efficiency. Efficiency and accuracy of the implementation are then tested by comparing it to other implementations in pure Python(\@ref(comparison)).
 
-## Univariate case
+## Univariate case {#introduction-univariate}
 
 The proposed implementation is limited to the one-dimensional case, since this is the case which is most often used and therefore benefits the most of decreased runtime. It is feasible to extend the implementation to the multi-dimensional case in the future, however this would require more work due to not quite identical APIs to the univariate case. In addition one must ensure that the kernel functions used would be multi-dimensional themselves.

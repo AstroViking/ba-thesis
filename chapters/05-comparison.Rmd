@@ -6,6 +6,12 @@ use_condaenv('ba-thesis')
 ```
 
 ```{python, pythonSetup, echo = FALSE, eval=TRUE}
+import warnings
+warnings.filterwarnings('ignore')
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 from tf_kde.benchmark import runner
 from matplotlib import pyplot as plt
 import pandas as pd
@@ -33,28 +39,32 @@ To show the efficiency and performance of the different kernel density estimatio
 
 ## Benchmark setup
 
-To compare the different implementations multiple popular test distributions mentioned in Wand et al.[@wand1994kernel] were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implmentation proposed in this paper, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.
+To compare the different implementations multiple popular test distributions mentioned in Wand et al.[@wand1994kernel] were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. The data is sampled randomly from each test distribution.
 
-```{python showDistributions, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points"}
+All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implementation proposed in this paper, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.
+
+For all implementations that use binning $2^10 = 1024$ bins were used. This is the default used in KDEpy, a power of $2$ (which is favorable for FFT based algorithms), results in an exact kernel density calculation for the lowest sample size used ($10^3$) but also yields results with high accuracy for the highest sample size used ($10^8$). 
+
+```{python showDistributions, echo=FALSE, eval=TRUE, fig.cap="Distributions used for the comparisons"}
 figure, axes = runner.plot_distributions(distributions_to_evaluate, xlim)
 figure
 ```
-## Basic implementation against Binned and FFT implementations
+## Differences of Exact, Binned, FFT and ISJ implementations 
 
-First, the exact kernel density estimation implementation is compared against binned and FFT implementations run on a Macbook Pro 2013 Retina using the CPU.
+First, the exact kernel density estimation implementation is compared against linearly binned, FFT and ISJ implementations run on a Macbook Pro 2013 Retina using the CPU.
+
+The sample sizes lie in the range of $10^3$ to $10^4$. The number of samples is restricted because calculating the exact kernel density estimation for more than $10^4$ kernels is computationally unfeasible (larger datasets would lead to an exponentially larger runtime).
 
 ### Accuracy
 
-For this randomly sampled data for from each test distribution is used. The number of samples per test distribution is 1000. The number of samples is restricted because calculating the exact kernel density estimation for more than 1000 kernels takes a really long time. 
+Plotted below are the comparisons for sample size of $10^4$.
 
-For the binned, FFT and ISJ algorithms 256 bins each were used.
-
-```{python compareSimpleBinnedFFTISJEstimations, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points"}
+```{python compareSimpleBinnedFFTISJEstimations, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ' with $N=10^4$ sample points"}
 figure, axes = runner.plot_estimations(restricted_estimations, distributions_to_evaluate, 1e4, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ'])
 figure
 ```
 
-Here it becomes obvious that the ISJ approach is especially favorable for complicated spiky distributions like the two bottom ones. We can see this in more detail below. The integrated square error (ISE) is an order of magnitude lower.
+It becomes obvious that the ISJ approach is especially favorable for complicated spiky distributions like the two bottom ones. We can see this in more detail below. Using the ISJ the integrated square error (ISE) is an order of magnitude lower.
 
 ```{python compareSimpleBinnedFFTISJEstimationClaw, echo=FALSE, eval=TRUE, fig.cap="Comparison between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points on distribution 'Claw'"}
 figure, axes = runner.plot_estimation(restricted_estimations, 'Claw', ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ'], 1e4)
@@ -62,7 +72,7 @@ figure
 ```
 
 The calculated integrated square errors for all distributions are as follows:
-```{python compareSimpleBinnedFFTISJErrors, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ' with $N=10^4$ sample points"}
+```{python compareSimpleBinnedFFTISJErrors, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ' with $N=10^4$ sample points"}
 figure, axes = runner.plot_integrated_square_errors(restricted_estimations, distributions_to_evaluate, 1e4, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ'])
 figure
 ```
@@ -70,49 +80,114 @@ figure
 
 ### Runtime
 
-For this randomly sampled data for each test distribution in the range of 100 to 1000 is used. The number of samples is restricted because larger datasets would require exponentially longer runtimes for the exact kernel density estimation.
-
-
-```{python compareSimpleBinnedFFTISJRuntimeInstantiation, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton step between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ'"}
+```{python compareSimpleBinnedFFTISJRuntimeInstantiation, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton step between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ'"}
 figure, axes = runner.plot_runtimes(restricted_runtimes, distributions_to_evaluate, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ'], 'instantiation')
 figure
 ```
 
-```{python compareSimpleBinnedFFTISJRuntimePDF, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the calculation step between the four basic algorithms 'Exact', 'Binned', 'FFT', 'ISJ'"}
+Although the ISJ and the FFT based approach are slower to instantiate, they are significantly faster for larger datasets during the PDF evaluation step.
+
+```{python compareSimpleBinnedFFTISJRuntimePDF, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the evaluation step between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ'"}
 figure, axes = runner.plot_runtimes(restricted_runtimes, distributions_to_evaluate, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ'], 'pdf')
 figure
 ```
 
 
+## Comparison to KDEpy on CPU
 
-## New implementation against KDEpy
+The number of samples per test distribution is in the range of $10^3$ - $10^8$. Larger datasets can be used, since the exact kernel density estimation is not part of the comparison.
 
 ### Accuracy
 
-```{python compareZfitKDEpyEstimations, echo=FALSE, eval=TRUE, fig.cap="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with N=$10^4$ sample points"}
+Plotted below are the comparisons for sample size of $10^4$.
+
+```{python compareZfitKDEpyEstimations, echo=FALSE, eval=TRUE, fig.cap="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points"}
 figure, axes = runner.plot_estimations(unrestricted_estimations, distributions_to_evaluate, 1e4, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
 figure
 ```
 
+The different methods behave the same as the reference implementation in KDEpy, again with the exception of the ISJ algorithm, which works better for spiky distributions.
+
+The integrated square errors below, we can see that they are in the same order of magnitude for all implementations tested, except for the ISJ method on the Claw distribution. Here the $ISE$ is an order of magnitude lower.
+
 ```{python compareZfitKDEpyErrors, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points"}
-figure, axes = runner.plot_integrated_square_errors(unrestricted_estimations, distributions_to_evaluate, 1e6, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
+figure, axes = runner.plot_integrated_square_errors(unrestricted_estimations, distributions_to_evaluate, 1e4, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
+figure
+```
+
+
+Additionally it can be shown that $2^10$ bins capture the underlying distributions with high accuracy even for a sample size of $10^8$.
+
+```{python compareZfitKDEpyEstimations8, echo=FALSE, eval=TRUE, fig.cap="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^8$ sample points"}
+figure, axes = runner.plot_estimations(unrestricted_estimations, distributions_to_evaluate, 1e8, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
 figure
 ```
 
 ### Runtime
 
+During the instantiation step the newly proposed binned, FFT, and ISJ methods are slower than KDEpy's FFT method by one or two orders of magnitude. This is predictable since calculating the TensorFlow graph generates some overhead.
+
 ```{python compareZfitKDEpyRuntimeInstantiation, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy"}
-figure, axes = runner.plot_runtimes(restricted_runtimes, distributions_to_evaluate, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'instantiation')
+figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'instantiation')
 figure
 ```
 
-```{python compareZfitKDEpyRuntimePDF, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the calculation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy"}
-figure, axes = runner.plot_runtimes(restricted_runtimes, distributions_to_evaluate, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'pdf')
+In many practical situtations in high energy physics however, generating the TensorFlow graph and the density distribution has to be done only once and the pdf is evaluated repeatedly. Therefore in such cases the PDF evaluation step is of higher importance. We can see, that once the initial graph is built, evaluating the PDF for different values of $x$ is nearly constant instead increasing exponentially as in the case of KDEpy's FFT method.
+
+```{python compareZfitKDEpyRuntimePDF, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the evaluation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy"}
+figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'pdf')
 figure
 ```
 
-## New implementation run with GPU support
+## Comparison to KDEpy on GPU
+
+The number of samples per test distribution is again in the range of $10^3$ - $10^8$. All computations were executed using two Tesla P100 GPU's on the openSUSE Leap operating system.
 
 ### Accuracy
 
+Plotted below are the comparisons for sample size of $10^4$.
+
+```{python compareZfitKDEpyEstimationsGPU, echo=FALSE, eval=TRUE, fig.cap="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points (run on GPU)"}
+unrestricted_estimations = pd.read_pickle('./benchmark/gpu_linux/unrestricted_estimations.pkl')
+unrestricted_runtimes = pd.read_pickle('./benchmark/gpu_linux/unrestricted_runtimes.pkl')
+
+figure, axes = runner.plot_estimations(unrestricted_estimations, distributions_to_evaluate, 1e4, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
+figure
+```
+
+```{python compareZfitKDEpyErrorsGPU, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points (run on GPU)"}
+figure, axes = runner.plot_integrated_square_errors(unrestricted_estimations, distributions_to_evaluate, 1e4, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
+figure
+```
+
+Looking at the integrated square errors, we see the same behavior as for the comparison on CPU.
+
+```{python compareZfitKDEpyErrorsGPU8, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^8$ sample points (run on GPU)"}
+figure, axes = runner.plot_integrated_square_errors(unrestricted_estimations, distributions_to_evaluate, 1e8, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
+figure
+```
+
+For larger datasets $>10^8$ the accuracy of all the newly proposed methods is higher than for KDEpy's FFT method.
+
 ### Runtime
+
+```{python compareZfitKDEpyRuntimeInstantiationGPU, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)"}
+figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'instantiation')
+figure
+```
+
+The instantiation of the newly proposed implementations runs faster on the GPU than the CPU. This is no surprise as many operations in TensorFlow benefit from the parallel processing on the GPU. For a high number of sample points the newly proposed binned as well as the newly proposed FFT implementation are instantiated nearly as fast as KDEpy's FFT implementation if run on a GPU.
+
+```{python compareZfitKDEpyRuntimePDFGPU, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the evaluation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)"}
+figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'pdf')
+figure
+```
+
+The runtime of the PDF evaluation step does not differ much from the one seen on the CPU. All new methods are evaluated in near constant time.
+
+```{python compareZfitKDEpyRuntimeTotal, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the total calculation (instantiation and evaluation step) between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)"}
+figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'total')
+figure
+```
+
+For larger datasets ($>10^8) even the total runtime (instantiation and PDF evaluation combined) is faster than KDEpy's FFT method.

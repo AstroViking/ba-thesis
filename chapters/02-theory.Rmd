@@ -144,7 +144,7 @@ h_{AMISE} =\xi h_{1}=\xi \gamma^{[1]}\left(h_{2}\right)=\xi \gamma^{[2]}\left(h_
 By setting $h_{AMISE}=h_{l+1}$ and using fixed point iteration to solve the equation
 
 \begin{equation}
-h_{AMISE} = \xi \gamma^{[l]}\left(h_{AMISE}\right) \\
+h_{AMISE} = \xi \gamma^{[l]}(h_{AMISE})
 (\#eq:hamisegamma2)
 \end{equation}
 
