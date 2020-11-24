@@ -1,6 +1,6 @@
 # Summary {#summary}
 
-The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime and accuracy for large datasets $>10^8$.
+The benchmarking has shown that the new implementation can outperform the de-facto state of the art library 'KDEpy' in terms of runtime and accuracy for large datasets ($n \geq 10^8$).
 
 For smaller datasets it provides accuracy of the same order of magnitude and may be favorable (faster) in cases where the PDF is built once but evaluated repeatedly. 
 
