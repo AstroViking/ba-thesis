@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
-  <meta name="description" content="5 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <title>6 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
+  <meta name="description" content="6 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta property="og:title" content="6 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta name="twitter:title" content="6 Summary | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
   
   
   
@@ -135,36 +135,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.3</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>2</b> Current state of the art</a></li>
-<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a>
+<li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>3.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="3.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>3.2</b> Simple and linear Binning</a></li>
-<li class="chapter" data-level="3.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>3.3</b> Using convolution and the Fast Fourier Transform</a></li>
-<li class="chapter" data-level="3.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>3.4</b> Improved Sheather Jones Algorithm</a></li>
+<li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact Kernel Density Estimation</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>2.2</b> Simple and linear binning</a></li>
+<li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a>
+<li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
+<li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>4.1</b> Benchmark setup</a></li>
-<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#basic-implementation-against-binned-and-fft-implementations"><i class="fa fa-check"></i><b>4.2</b> Basic implementation against Binned and FFT implementations</a>
+<li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation-1"><i class="fa fa-check"></i><b>4.1</b> Exact Kernel Density Estimation</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning-1"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
+<li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform-1"><i class="fa fa-check"></i><b>4.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm-1"><i class="fa fa-check"></i><b>4.4</b> Improved Sheather Jones Algorithm</a></li>
+<li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#source-code"><i class="fa fa-check"></i><b>4.5</b> Source Code</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>5</b> Comparison</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>4.2.1</b> Accuracy</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>4.2.2</b> Runtime</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="comparison.html"><a href="comparison.html#new-implementation-against-kdepy"><i class="fa fa-check"></i><b>4.3</b> New implementation against KDEpy</a>
+<li class="chapter" data-level="5.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>5.1</b> Benchmark setup</a></li>
+<li class="chapter" data-level="5.2" data-path="comparison.html"><a href="comparison.html#differences-of-exact-binned-fft-and-isj-implementations"><i class="fa fa-check"></i><b>5.2</b> Differences of Exact, Binned, FFT and ISJ implementations</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>4.3.1</b> Accuracy</a></li>
-<li class="chapter" data-level="4.3.2" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>4.3.2</b> Runtime</a></li>
+<li class="chapter" data-level="5.2.1" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>5.2.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>5.2.2</b> Runtime</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="comparison.html"><a href="comparison.html#new-implementation-run-with-gpu-support"><i class="fa fa-check"></i><b>4.4</b> New implementation run with GPU support</a>
+<li class="chapter" data-level="5.3" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-cpu"><i class="fa fa-check"></i><b>5.3</b> Comparison to KDEpy on CPU</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>4.4.1</b> Accuracy</a></li>
-<li class="chapter" data-level="4.4.2" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>4.4.2</b> Runtime</a></li>
+<li class="chapter" data-level="5.3.1" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>5.3.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.3.2" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>5.3.2</b> Runtime</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-gpu"><i class="fa fa-check"></i><b>5.4</b> Comparison to KDEpy on GPU</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>5.4.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.4.2" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.2</b> Runtime</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
+<li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="presentation/index.html" target="_blank">Presentation</a></li>
+
 </ul>
 
       </nav>
@@ -182,15 +195,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summary" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Summary</h1>
-<p>The benchmarking has shown that the new implementation can outperform the de-facto state of the art library ‘KDEpy’ in terms of runtime.</p>
-<p>In terms of accuracy it is slightly better in most cases and in general comparable to KDEpy.</p>
-<p>Additionally it has the benefit of allowing any distribution of the loc-scale family as kernel implemented in TensorFlow Probability<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">14</a></sup></span>. At the moment this includes twelve kernels, namely <code>Cauchy</code>, <code>DoublesidedMaxwell</code>, <code>Gumbel</code>, <code>Laplace</code>, <code>LogLogistic</code>, <code>LogNormal</code>, <code>Logistic</code>, <code>LogitNormal</code>, <code>Moyal</code>, <code>Normal</code>, <code>PoissonLogNormalQuadratureCompound</code>, <code>SinhArcsinh</code>.</p>
-<p>The proposed implementation restricts itself to the one-dimensional case. So far only KDEpy and Statsmodels implement a multidimensional KDE.
-Generalization to higher dimensionel kernel density estimation is however relatively straightforward to implement, since most TensorFlow API’s are dimensionally agnostic.</p>
+<div id="summary" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Summary</h1>
+<p>The benchmarking has shown that the new implementation can outperform the de-facto state of the art library ‘KDEpy’ in terms of runtime and accuracy for large datasets <span class="math inline">\(&gt;10^8\)</span>.</p>
+<p>For smaller datasets it provides accuracy of the same order of magnitude and may be favorable (faster) in cases where the PDF is built once but evaluated repeatedly.</p>
+<p>Both cases are important in high energy physics.</p>
+<p>Additionally it has the benefit of allowing any distribution of the loc-scale family implemented in TensorFlow Probability<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">17</a></sup></span> as kernel function. At the moment this includes twelve distributions at the moment, namely <code>Cauchy</code>, <code>DoublesidedMaxwell</code>, <code>Gumbel</code>, <code>Laplace</code>, <code>LogLogistic</code>, <code>LogNormal</code>, <code>Logistic</code>, <code>LogitNormal</code>, <code>Moyal</code>, <code>Normal</code>, <code>PoissonLogNormalQuadratureCompound</code>, <code>SinhArcsinh</code>.</p>
+<p>The proposed implementation restricts itself to the one-dimensional case as described in <a href="introduction.html#introduction-univariate">1.4</a>. So far only KDEpy and Statsmodels implement a multidimensional KDE.
+Generalization to higher dimensionel kernel density estimation is feasible, although this would require substantially more work due to some different APIs for multi-dimensional data in TensorFlow. In addition one must ensure that the kernels used are multidimensional themselves, which is not the case for many of the TensorFlow Probability specified above.</p>
 <table>
-<caption><span id="tab:finalComparison">Table 5.1: </span> Comparison between KDE implementations (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)</caption>
+<caption><span id="tab:finalComparison">Table 6.1: </span> Comparison between KDE implementations (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)</caption>
 <thead>
 <tr class="header">
 <th align="left">Feature / Library</th>
@@ -203,7 +217,7 @@ Generalization to higher dimensionel kernel density estimation is however relati
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Number of kernels</td>
+<td align="left">Number of kernel functions</td>
 <td align="right">1</td>
 <td align="right">6</td>
 <td align="right">7 (6 slow)</td>
@@ -244,7 +258,7 @@ Generalization to higher dimensionel kernel density estimation is however relati
 </tr>
 </tbody>
 </table>
-<p>The newly proposed KDE implementation (based on TensorFlow/Zfit) achieves state-of-the-art accuracy as well as efficiency for the one-dimensional case. Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.</p>
+<p>The newly proposed KDE implementation (based on TensorFlow and zfit) achieves state-of-the-art accuracy as well as efficiency for large one-dimensional data <span class="math inline">\(&gt;10^8\)</span>. Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.</p>
 
 </div>
             </section>
@@ -284,7 +298,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/05-summary.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/06-summary.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -292,7 +306,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/05-summary.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/06-summary.Rmd",
 "text": null
 },
 "download": ["thesis.pdf", "thesis.epub"],
