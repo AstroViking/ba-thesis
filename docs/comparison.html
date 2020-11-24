@@ -201,10 +201,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="benchmark-setup" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Benchmark setup</h2>
 <p>To compare the different implementations multiple popular test distributions mentioned in Wand et al.<span class="citation"><sup><a href="references.html#ref-wand1994kernel" role="doc-biblioref">11</a></sup></span> were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. The data is sampled randomly from each test distribution.</p>
-<p>All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implementation proposed in this paper, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.</p>
+<p>All comparisons were made using a standard Gaussian kernel function. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implementation proposed in this paper, the Gaussian kernel function is the most used one and provides best reference to compare different implementations against each other.</p>
 <p>For all implementations that use binning <span class="math inline">\(2^10 = 1024\)</span> bins were used. This is the default used in KDEpy, a power of <span class="math inline">\(2\)</span> (which is favorable for FFT based algorithms), results in an exact kernel density calculation for the lowest sample size used (<span class="math inline">\(10^3\)</span>) but also yields results with high accuracy for the highest sample size used (<span class="math inline">\(10^8\)</span>).</p>
-<div class="figure"><span id="fig:showDistributions"></span>
-<img src="thesis_files/figure-html/showDistributions-1.png" alt="Distributions used for the comparisons" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:showDistributions"></span>
+<img src="thesis_files/figure-html/showDistributions-1.png" alt="Distributions used for the comparisons" width="80%" />
 <p class="caption">
 Figure 5.1: Distributions used for the comparisons
 </p>
@@ -217,19 +217,18 @@ Figure 5.1: Distributions used for the comparisons
 <div id="accuracy" class="section level3" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> Accuracy</h3>
 <p>Plotted below are the comparisons for sample size of <span class="math inline">\(10^4\)</span>.</p>
-<div class="figure"><span id="fig:compareSimpleBinnedFFTISJEstimations"></span>
-<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJEstimations-1.png" alt="Comparison between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ' with $N=10^4$ sample points" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJEstimations"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJEstimations-1.png" alt="Comparison between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ' with $n=10^4$ sample points" width="80%" />
 <p class="caption">
-Figure 5.2: Comparison between the four algorithms ‘Exact,’ ‘Binned,’ ‘FFT’ and ‘ISJ’ with <span class="math inline">\(N=10^4\)</span> sample points
+Figure 5.2: Comparison between the four algorithms ‘Exact,’ ‘Binned,’ ‘FFT’ and ‘ISJ’ with <span class="math inline">\(n=10^4\)</span> sample points
 </p>
 </div>
 <p>It becomes obvious that the ISJ approach is especially favorable for complicated spiky distributions like the two bottom ones. We can see this in more detail below. Using the ISJ the integrated square error (ISE) is an order of magnitude lower.</p>
-<pre><code>## &lt;Figure size 700x500 with 1 Axes&gt;</code></pre>
-The calculated integrated square errors for all distributions are as follows:
-<div class="figure"><span id="fig:compareSimpleBinnedFFTISJErrors"></span>
-<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJErrors-1.png" alt="Integrated square errors (ISE) for the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ' with $N=10^4$ sample points" width="672" />
+<p>The calculated integrated square errors for all distributions are as follows:</p>
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJErrors"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJErrors-1.png" alt="Integrated square errors (ISE) for the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ' with $n=10^4$ sample points" width="80%" />
 <p class="caption">
-Figure 5.3: Integrated square errors (ISE) for the four algorithms ‘Exact,’ ‘Binned,’ ‘FFT’ and ‘ISJ’ with <span class="math inline">\(N=10^4\)</span> sample points
+Figure 5.3: Integrated square errors (ISE) for the four algorithms ‘Exact,’ ‘Binned,’ ‘FFT’ and ‘ISJ’ with <span class="math inline">\(n=10^4\)</span> sample points
 </p>
 </div>
 </div>
@@ -242,8 +241,8 @@ Figure 5.4: Runtime difference of the instantiaton step between the four algorit
 </p>
 </div>
 <p>Although the ISJ and the FFT based approach are slower to instantiate, they are significantly faster for larger datasets during the PDF evaluation step.</p>
-<div class="figure"><span id="fig:compareSimpleBinnedFFTISJRuntimePDF"></span>
-<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJRuntimePDF-1.png" alt="Runtime difference of the evaluation step between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ'" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJRuntimePDF"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJRuntimePDF-1.png" alt="Runtime difference of the evaluation step between the four algorithms 'Exact', 'Binned', 'FFT' and 'ISJ'" width="80%" />
 <p class="caption">
 Figure 5.5: Runtime difference of the evaluation step between the four algorithms ‘Exact,’ ‘Binned,’ ‘FFT’ and ‘ISJ’
 </p>
@@ -256,40 +255,40 @@ Figure 5.5: Runtime difference of the evaluation step between the four algorithm
 <div id="accuracy-1" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Accuracy</h3>
 <p>Plotted below are the comparisons for sample size of <span class="math inline">\(10^4\)</span>.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyEstimations"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyEstimations-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyEstimations"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyEstimations-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^4$ sample points" width="80%" />
 <p class="caption">
-Figure 5.6: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(N=10^4\)</span> sample points
+Figure 5.6: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^4\)</span> sample points
 </p>
 </div>
 <p>The different methods behave the same as the reference implementation in KDEpy, again with the exception of the ISJ algorithm, which works better for spiky distributions.</p>
 <p>The integrated square errors below, we can see that they are in the same order of magnitude for all implementations tested, except for the ISJ method on the Claw distribution. Here the <span class="math inline">\(ISE\)</span> is an order of magnitude lower.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyErrors"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyErrors-1.png" alt="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyErrors"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyErrors-1.png" alt="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^4$ sample points" width="80%" />
 <p class="caption">
-Figure 5.7: Integrated square errors (ISE) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(N=10^4\)</span> sample points
+Figure 5.7: Integrated square errors (ISE) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^4\)</span> sample points
 </p>
 </div>
-<p>Additionally it can be shown that <span class="math inline">\(2^10\)</span> bins capture the underlying distributions with high accuracy even for a sample size of <span class="math inline">\(10^8\)</span>.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyEstimations8"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyEstimations8-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^8$ sample points" width="672" />
+<p>Additionally it can be shown that <span class="math inline">\(2^{10}\)</span> bins capture the underlying distributions with high accuracy even for a sample size of <span class="math inline">\(10^8\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyEstimations8"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyEstimations8-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^8$ sample points" width="80%" />
 <p class="caption">
-Figure 5.8: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(N=10^8\)</span> sample points
+Figure 5.8: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^8\)</span> sample points
 </p>
 </div>
 </div>
 <div id="runtime-1" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> Runtime</h3>
 <p>During the instantiation step the newly proposed binned, FFT, and ISJ methods are slower than KDEpy’s FFT method by one or two orders of magnitude. This is predictable since calculating the TensorFlow graph generates some overhead.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyRuntimeInstantiation"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeInstantiation-1.png" alt="Runtime difference of the instantiaton step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimeInstantiation"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeInstantiation-1.png" alt="Runtime difference of the instantiaton step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy" width="80%" />
 <p class="caption">
 Figure 5.9: Runtime difference of the instantiaton step between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy
 </p>
 </div>
-<p>In many practical situtations in high energy physics however, generating the TensorFlow graph and the density distribution has to be done only once and the pdf is evaluated repeatedly. Therefore in such cases the PDF evaluation step is of higher importance. We can see, that once the initial graph is built, evaluating the PDF for different values of <span class="math inline">\(x\)</span> is nearly constant instead increasing exponentially as in the case of KDEpy’s FFT method.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyRuntimePDF"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyRuntimePDF-1.png" alt="Runtime difference of the evaluation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy" width="672" />
+<p>In many practical situtations in high energy physics however, generating the TensorFlow graph and the density distribution has to be done only once and the PDF is evaluated repeatedly. Therefore in such cases the PDF evaluation step is of higher importance. We can see, that once the initial graph is built, evaluating the PDF for different values of <span class="math inline">\(x\)</span> is nearly constant instead increasing exponentially as in the case of KDEpy’s FFT method.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimePDF"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimePDF-1.png" alt="Runtime difference of the evaluation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy" width="80%" />
 <p class="caption">
 Figure 5.10: Runtime difference of the evaluation step between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy
 </p>
@@ -302,26 +301,26 @@ Figure 5.10: Runtime difference of the evaluation step between the newly propose
 <div id="accuracy-2" class="section level3" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Accuracy</h3>
 <p>Plotted below are the comparisons for sample size of <span class="math inline">\(10^4\)</span>.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyEstimationsGPU"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyEstimationsGPU-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points (run on GPU)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyEstimationsGPU"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyEstimationsGPU-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^4$ sample points (run on GPU)" width="80%" />
 <p class="caption">
-Figure 5.11: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(N=10^4\)</span> sample points (run on GPU)
+Figure 5.11: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^4\)</span> sample points (run on GPU)
 </p>
 </div>
-<div class="figure"><span id="fig:compareZfitKDEpyErrorsGPU"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyErrorsGPU-1.png" alt="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^4$ sample points (run on GPU)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyErrorsGPU"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyErrorsGPU-1.png" alt="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^4$ sample points (run on GPU)" width="80%" />
 <p class="caption">
-Figure 5.12: Integrated square errors (ISE) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(N=10^4\)</span> sample points (run on GPU)
+Figure 5.12: Integrated square errors (ISE) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^4\)</span> sample points (run on GPU)
 </p>
 </div>
 <p>Looking at the integrated square errors, we see the same behavior as for the comparison on CPU.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyErrorsGPU8"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyErrorsGPU8-1.png" alt="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $N=10^8$ sample points (run on GPU)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyErrorsGPU8"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyErrorsGPU8-1.png" alt="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^8$ sample points (run on GPU)" width="80%" />
 <p class="caption">
-Figure 5.13: Integrated square errors (ISE) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(N=10^8\)</span> sample points (run on GPU)
+Figure 5.13: Integrated square errors (ISE) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^8\)</span> sample points (run on GPU)
 </p>
 </div>
-<p>For larger datasets <span class="math inline">\(&gt;10^8\)</span> the accuracy of all the newly proposed methods is higher than for KDEpy’s FFT method.</p>
+<p>For larger datasets (<span class="math inline">\(n \geq 10^8\)</span>) the accuracy of all the newly proposed methods is higher than for KDEpy’s FFT method.</p>
 </div>
 <div id="runtime-2" class="section level3" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Runtime</h3>
@@ -332,20 +331,20 @@ Figure 5.14: Runtime difference of the instantiaton step between the newly propo
 </p>
 </div>
 <p>The instantiation of the newly proposed implementations runs faster on the GPU than the CPU. This is no surprise as many operations in TensorFlow benefit from the parallel processing on the GPU. For a high number of sample points the newly proposed binned as well as the newly proposed FFT implementation are instantiated nearly as fast as KDEpy’s FFT implementation if run on a GPU.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyRuntimePDFGPU"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyRuntimePDFGPU-1.png" alt="Runtime difference of the evaluation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimePDFGPU"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimePDFGPU-1.png" alt="Runtime difference of the evaluation step between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="80%" />
 <p class="caption">
 Figure 5.15: Runtime difference of the evaluation step between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy (run on GPU)
 </p>
 </div>
 <p>The runtime of the PDF evaluation step does not differ much from the one seen on the CPU. All new methods are evaluated in near constant time.</p>
-<div class="figure"><span id="fig:compareZfitKDEpyRuntimeTotal"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeTotal-1.png" alt="Runtime difference of the total calculation (instantiation and evaluation step) between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimeTotal"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeTotal-1.png" alt="Runtime difference of the total calculation (instantiation and evaluation step) between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="80%" />
 <p class="caption">
 Figure 5.16: Runtime difference of the total calculation (instantiation and evaluation step) between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy (run on GPU)
 </p>
 </div>
-<p>For larger datasets ($&gt;10^8) even the total runtime (instantiation and PDF evaluation combined) is faster than KDEpy’s FFT method.</p>
+<p>For larger datasets (<span class="math inline">\(n \geq 10^8\)</span>) even the total runtime (instantiation and PDF evaluation combined) is faster than KDEpy’s FFT method.</p>
 
 </div>
 </div>

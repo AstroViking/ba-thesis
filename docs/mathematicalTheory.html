@@ -248,8 +248,8 @@ c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l &lt; x_k &lt; g_{l+1}}} \frac{g_{k
 \tag{2.6}
 \end{equation}\]</span></p>
 <p>where the two vectors look like this</p>
-<div class="figure"><span id="fig:ckFigure"></span>
-<img src="figures/c_conv_k.png" alt="Vectors $\vec{c}$ and $\vec{k}$" width="723" />
+<div class="figure" style="text-align: center"><span id="fig:ckFigure"></span>
+<img src="figures/c_conv_k.png" alt="Vectors $\vec{c}$ and $\vec{k}$" width="60%" />
 <p class="caption">
 Figure 2.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class="math inline">\(\vec{k}\)</span>
 </p>
@@ -281,16 +281,16 @@ h_j=\left(\frac{1+1 / 2^{j+1 / 2}}{3} \frac{1 \times 3 \times 5 \times \cdots \t
 <p>Their proposed plug-in method works as follows:</p>
 <ol style="list-style-type: decimal">
 <li>Compute <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span> by assuming that f is the normal pdf with mean and variance estimated from the sample data</li>
-<li>Using <span class="math inline">\(\|\widehat{f}^{(l)}\|^2\)</span> compute <span class="math inline">\(h_{l+1}\)</span></li>
+<li>Using <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span> compute <span class="math inline">\(h_{l+1}\)</span></li>
 <li>Using <span class="math inline">\(h_{l+1}\)</span> compute <span class="math inline">\(\|\widehat{f}^{(l+1)}\|^2\)</span></li>
-<li>Repeat steps 2 and 3 to compute <span class="math inline">\(h^{l-1}\)</span> and so on until
+<li>Repeat steps 2 and 3 to compute <span class="math inline">\(h^{l}\)</span>, <span class="math inline">\(\|\widehat{f}^{(l)}\|^2\)</span>, <span class="math inline">\(h^{l-1}\)</span>, <span class="math inline">\(\cdots\)</span> and so on until
 <span class="math inline">\(\|\widehat{f}^{(2)}\|^2\)</span> is calculated</li>
 <li>Use <span class="math inline">\(\|\widehat{f}^{(2)}\|^2\)</span> to compute <span class="math inline">\(h_{AMISE}\)</span></li>
 </ol>
 <p>The weakest point of this procedure is the assumption that the true distribution is a Gaussian density function in order to compute <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span>. This can lead to arbitrarily bad estimates of <span class="math inline">\(h_{AMISE}\)</span>, when the true distribution is far from being normal.</p>
-<p>Therefore Botev et al took this idea further<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">9</a></sup></span>. Given the function <span class="math inline">\(\gamma^{[k]}\)</span> such that</p>
+<p>Therefore Botev et al. took this idea further<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">9</a></sup></span>. Given the function <span class="math inline">\(\gamma^{[k]}\)</span> such that</p>
 <p><span class="math display" id="eq:gamma">\[\begin{equation}
-\gamma^{[h]}(h)=\underbrace{\gamma_{1}\left(\cdots \gamma_{h-1}\left(\gamma_{h}\right.\right.}_{k \text { times }}(h)) \cdots)
+\gamma^{[k]}(h)=\underbrace{\gamma_{1}\left(\cdots \gamma_{k-1}\left(\gamma_{k}\right.\right.}_{k \text { times }}(h)) \cdots)
 \tag{2.10}
 \end{equation}\]</span></p>
 <p><span class="math inline">\(h_{AMISE}\)</span> can be calculated as</p>

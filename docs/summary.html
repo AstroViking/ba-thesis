@@ -200,9 +200,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The benchmarking has shown that the new implementation can outperform the de-facto state of the art library ‘KDEpy’ in terms of runtime and accuracy for large datasets <span class="math inline">\(&gt;10^8\)</span>.</p>
 <p>For smaller datasets it provides accuracy of the same order of magnitude and may be favorable (faster) in cases where the PDF is built once but evaluated repeatedly.</p>
 <p>Both cases are important in high energy physics.</p>
-<p>Additionally it has the benefit of allowing any distribution of the loc-scale family implemented in TensorFlow Probability<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">17</a></sup></span> as kernel function. At the moment this includes twelve distributions at the moment, namely <code>Cauchy</code>, <code>DoublesidedMaxwell</code>, <code>Gumbel</code>, <code>Laplace</code>, <code>LogLogistic</code>, <code>LogNormal</code>, <code>Logistic</code>, <code>LogitNormal</code>, <code>Moyal</code>, <code>Normal</code>, <code>PoissonLogNormalQuadratureCompound</code>, <code>SinhArcsinh</code>.</p>
-<p>The proposed implementation restricts itself to the one-dimensional case as described in <a href="introduction.html#introduction-univariate">1.4</a>. So far only KDEpy and Statsmodels implement a multidimensional KDE.
-Generalization to higher dimensionel kernel density estimation is feasible, although this would require substantially more work due to some different APIs for multi-dimensional data in TensorFlow. In addition one must ensure that the kernels used are multidimensional themselves, which is not the case for many of the TensorFlow Probability specified above.</p>
+<p>Additionally it has the benefit of allowing any distribution of the loc-scale family that follows the Distribution contract of TensorFlow Probability<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">17</a></sup></span> as kernel function. This includes twelve distributions at the moment, namely <code>Cauchy</code>, <code>DoublesidedMaxwell</code>, <code>Gumbel</code>, <code>Laplace</code>, <code>LogLogistic</code>, <code>LogNormal</code>, <code>Logistic</code>, <code>LogitNormal</code>, <code>Moyal</code>, <code>Normal</code>, <code>PoissonLogNormalQuadratureCompound</code>, <code>SinhArcsinh</code>.</p>
+<p>The proposed implementation restricts itself to the one-dimensional case as described in section <a href="introduction.html#introduction-univariate">1.4</a>. So far only KDEpy and Statsmodels implement a multidimensional KDE.
+Generalization to higher dimensionel kernel density estimation is feasible, although this would require substantially more work due to some different APIs for multi-dimensional data in TensorFlow. In addition one must ensure that the kernels used are multidimensional themselves, which is not the case for many of the TensorFlow Probability distributions specified above.</p>
 <table>
 <caption><span id="tab:finalComparison">Table 6.1: </span> Comparison between KDE implementations (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.)</caption>
 <thead>
@@ -258,7 +258,7 @@ Generalization to higher dimensionel kernel density estimation is feasible, alth
 </tr>
 </tbody>
 </table>
-<p>The newly proposed KDE implementation (based on TensorFlow and zfit) achieves state-of-the-art accuracy as well as efficiency for large one-dimensional data <span class="math inline">\(&gt;10^8\)</span>. Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.</p>
+<p>The newly proposed KDE implementation (based on TensorFlow and zfit) achieves state-of-the-art accuracy as well as efficiency for large one-dimensional data (<span class="math inline">\(n \geq 10^8\)</span>). Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.</p>
 
 </div>
             </section>
