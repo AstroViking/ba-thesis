@@ -197,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="summary" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Summary</h1>
-<p>The benchmarking has shown that the new implementation can outperform the de-facto state of the art library ‘KDEpy’ in terms of runtime and accuracy for large datasets <span class="math inline">\(&gt;10^8\)</span>.</p>
+<p>The benchmarking has shown that the new implementation can outperform the de-facto state of the art library ‘KDEpy’ in terms of runtime and accuracy for large datasets (<span class="math inline">\(n \geq 10^8\)</span>).</p>
 <p>For smaller datasets it provides accuracy of the same order of magnitude and may be favorable (faster) in cases where the PDF is built once but evaluated repeatedly.</p>
 <p>Both cases are important in high energy physics.</p>
 <p>Additionally it has the benefit of allowing any distribution of the loc-scale family that follows the Distribution contract of TensorFlow Probability<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">17</a></sup></span> as kernel function. This includes twelve distributions at the moment, namely <code>Cauchy</code>, <code>DoublesidedMaxwell</code>, <code>Gumbel</code>, <code>Laplace</code>, <code>LogLogistic</code>, <code>LogNormal</code>, <code>Logistic</code>, <code>LogitNormal</code>, <code>Moyal</code>, <code>Normal</code>, <code>PoissonLogNormalQuadratureCompound</code>, <code>SinhArcsinh</code>.</p>
