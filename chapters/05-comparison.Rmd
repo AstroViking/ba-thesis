@@ -165,8 +165,8 @@ figure
 
 Looking at the integrated square errors, we see the same behavior as for the comparison on CPU.
 
-```{python compareZfitKDEpyErrorsGPU8, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy with $n=10^8$ sample points (run on GPU)", fig.align='center', out.width='100%'}
-figure, axes = runner.plot_integrated_square_errors(unrestricted_estimations, distributions_to_evaluate, 1e8, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
+```{python compareZfitKDEpyErrorsGPU8, echo=FALSE, eval=TRUE, fig.cap="Integrated square errors (ISE) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy", fig.align='center', out.width='100%'}
+figure, axes = runner.plot_integrated_square_errors(unrestricted_estimations, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'])
 figure
 ```
 
