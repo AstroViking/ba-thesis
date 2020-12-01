@@ -2,7 +2,7 @@
 title: "Performance of Univariate Kernel Density Estimation methods in TensorFlow"
 subtitle: "Bachelor Thesis"
 author: ["Marc Steiner"]
-supervisor: ["Jonas Eschle", "Nicola Serra"]
+supervisor: ["Jonas Eschle", "Prof. Dr. Nicola Serra"]
 institute: ["University of Zurich"]
 keywords: ["Kernel Density Estimation", "Python", "TensorFlow", "Zfit"]
 site: "bookdown::bookdown_site"
@@ -10,6 +10,17 @@ bibliography: ["citations/papers.json"]
 link-citations: True
 csl: "citation-styles/aps-with-supscript.csl"
 ---
+
+# Acknowledgements {-}
+
+I am grateful to Prof. Dr. Nicola Serra, for giving me the opportunity to complete my bachelor thesis under his domain.
+
+I would also like to thank my supervisor Jonas Eschle, which advised me a lot during the research, implementation and writing. He provided both technical and emotional guidance and helped me fulfill my potential.
+
+Finally, I would like to thank my girlfriend Christa Schläppi, who unconditionally supported me through every challenge in the last year and acted as a sounding board for all the intelligent as well as not so intelligent ideas I had.
+
+\newpage
+
 
 # Abstract {-}
 
