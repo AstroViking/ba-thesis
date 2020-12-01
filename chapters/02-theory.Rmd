@@ -201,5 +201,5 @@ r(i, \tilde{n}-1)=\exp(\frac{x_{\tilde{n}-1}-x_{\tilde{n}}}{h})(r(i, \tilde{n})+
 (\#eq:kdepolyexprrec)
 \end{equation}
 
-Using this recursion one can then calculate the Kernel Density Estimation with a single single forward
-and a single backward pass over the ordered set of all $x_{\tilde{n}}$ leading to a computational complexity of $\mathcal{O}((\alpha+1)(n+m))$ where $\alpha$ is the order of the polynom, $n$ is the number of sample points and $m$ is the number of evaluation points.
+Using this recursion one can then calculate the Kernel Density Estimation with a single forward
+and a single backward pass over the ordered set of all $x_{\tilde{n}}$ leading to a computational complexity of $\mathcal{O}((\alpha+1)(n+m))$ where $\alpha$ is the order of the polynom, $n$ is the number of sample points and $m$ is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact Kernel Density Estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already pretty fast for the exact computation.
