@@ -4,7 +4,7 @@
 
 The purpose of this thesis is to propose four novel implementations of Univariate Kernel Density Estimation based on TensorFlow[@martinabadiTensorFlowLargeScaleMachine2015], TensorFlow Probability[@googleTFP] and zfit[@eschle2019zfit], which incorporate insights from recent papers to decrease the computational complexity and therefore runtime. The newly proposed implementations are then compared to the state of the art of Kernel Density Estimation in Python and shown to be competitive. By leveraging TensorFlow's graph based computation, the newly proposed methods to calculate a Kernel Density Estimate can benefit from parallelization and efficient computation on CPU/GPU.
 
-First the mathematical theory will be summarized in chapter \@ref(mathematicalTheory), before currently existing implementations of Kernel Density Estimations(KDE) in Python are discussed in chapter \@ref(currentState). In chapter \@ref(tensorflowImplementation) the five novel KDE implementations are proposed, which are then compared against the current state of the art in chapter \@ref(comparison). The findings are then summarized in chapter \@ref(summary).
+First the mathematical theory will be summarized in chapter \@ref(mathematicalTheory), before currently existing implementations of Kernel Density Estimations(KDE) in Python are discussed in chapter \@ref(currentState). In chapter \@ref(tensorflowImplementation) the four novel KDE implementations are proposed, which are then compared against the current state of the art in chapter \@ref(comparison). The findings are then summarized in chapter \@ref(summary).
 
 
 ## Kernel Density Estimation
