@@ -14,7 +14,7 @@ The larger the bandwidth parameter $h$ the larger is the range of influence of a
 
 The computational complexity of the exact KDE above is given by $\mathcal{O}(nm)$ where $n$ is the number of sample points to estimate from and $m$ is the number of evaluation points (the points where you want to calculate the estimate). There exist several approximative methods to decrease this complexity and therefore decrease the runtime as well.
 
-## Binning
+## Binning {#binningTheory}
 
 The most straightforward way to decrease the computational complexity is by limiting the number of sample points. This can be done by a binning routine, where the values at a smaller number of regular grid points are estimated from the original larger number of sample points.
 Given a set of sample points $X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}$ with weights $w_k$ and a set of equally spaced grid points $G = \{g_0, g_1, ..., g_l, ..., g_{n-1}, g_N\}$ where $N < n$ we can assign an estimate (or a count) $c_l$ to each grid point $g_l$ and use the newly found $g_l$ to calculate the kernel density estimation instead. 
@@ -51,7 +51,7 @@ c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l < x_k < g_{l+1}}} \frac{g_{k+1}-x_
 where $c_l$ is the value for grid point $g_l$ depending on sample points $x_k$ and their associated weights $w_k$.
 
 
-## Using convolution and the Fast Fourier Transform
+## Using convolution and the Fast Fourier Transform {#fftTheory}
 
 Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel function and the grid counts (bin counts) calculated by the binning routine given above.
 
@@ -84,7 +84,7 @@ By using the well known convolution theorem we can fourier transform $\vec{c}$ a
 However, due to the limitation of evaluating only at the grid points themselves, one needs to interpolate to get values for the estimated distribution at points in between.
 
 
-## Improved Sheather-Jones Algorithm
+## Improved Sheather-Jones Algorithm {#isjTheory}
 
 A different take on Kernel Density Estimators is described in the paper 'Kernel density estimation by diffusion' by Botev et al.[@botev2010kernel] The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the 'Handbook of Monte Carlo Methods'[@kroese2013handbook] by the original paper authors. However the general idea is briefly sketched below.
 
@@ -153,7 +153,7 @@ This eliminates the need to assume normally distributed data for the initial est
 
 The optimal bandwidth $h_{AMISE}$ can then either be used for other kernel density estimation methods (like the FFT-approach discussed above) or also to compute the kernel density estimation directly using another Discrete Cosine Transform.
 
-## Using specialized kernel functions and their series expansion
+## Using specialized kernel functions and their series expansion {#hofmeyrTheory}
 
 Lastly there is an interesting approach described by Hofmeyr[@hofmeyrFastExactEvaluation2019] that uses special kernels of the form $K(x) := poly(|x|) \cdot exp(−|x|)$ where $poly(|x|)$ denotes a polynomial of finite degree.
 
