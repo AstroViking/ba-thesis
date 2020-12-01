@@ -133,23 +133,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.3</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel Density Estimation</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>2.2</b> Simple and linear binning</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binning"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#linear-binning"><i class="fa fa-check"></i><b>2.2.2</b> Linear binning</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-specialized-kernel-functions-and-their-series-expansion"><i class="fa fa-check"></i><b>2.5</b> Using specialized kernel functions and their series expansion</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
 <li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation-1"><i class="fa fa-check"></i><b>4.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning-1"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
 <li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform-1"><i class="fa fa-check"></i><b>4.3</b> Using convolution and the Fast Fourier Transform</a></li>
 <li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm-1"><i class="fa fa-check"></i><b>4.4</b> Improved Sheather Jones Algorithm</a></li>
 <li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#source-code"><i class="fa fa-check"></i><b>4.5</b> Source Code</a></li>
@@ -199,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">4</span> Implementation</h1>
 <div id="exact-kernel-density-estimation-1" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Exact Kernel Density Estimation</h2>
-<p>The implementation of an exact Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">17</a></sup></span>, a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled <code>data</code> as follows</p>
+<p>The implementation of an exact Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">2</a></sup></span>, a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled <code>data</code> as follows</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="tensorflowImplementation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow_probability <span class="im">import</span> distributions <span class="im">as</span> tfd</span>
 <span id="cb1-2"><a href="tensorflowImplementation.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="tensorflowImplementation.html#cb1-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: tfd.Independent(tfd.Normal(loc<span class="op">=</span>x, scale<span class="op">=</span><span class="fl">1.</span>))</span>
@@ -209,13 +214,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="tensorflowImplementation.html#cb1-7" aria-hidden="true" tabindex="-1"></a>    mixture_distribution<span class="op">=</span>tfd.Categorical(</span>
 <span id="cb1-8"><a href="tensorflowImplementation.html#cb1-8" aria-hidden="true" tabindex="-1"></a>        probs<span class="op">=</span>[<span class="dv">1</span> <span class="op">/</span> n] <span class="op">*</span> n),</span>
 <span id="cb1-9"><a href="tensorflowImplementation.html#cb1-9" aria-hidden="true" tabindex="-1"></a>    components_distribution<span class="op">=</span>f(data))</span></code></pre></div>
-<p>Interestingly, due to the smart encapsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a kernel as long as it follows the Distribution contract in TensorFlow Probability. If the used Kernel has only bounded support, the implementation proposed in this paper allows to specify the support upon instantiation of the class. If the Kernel has infinite support (like a Gaussian kernel for instance) a practical support estimate is calculated by searching for approximate roots with Brent’s method<span class="citation"><sup><a href="references.html#ref-brent1971algorithm" role="doc-biblioref">18</a></sup></span> implemented for TensorFlow in the python package <code>tf_quant_finance</code> by Google. This allows us to speed up the calculation.</p>
+<p>Interestingly, due to the smart encapsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a kernel as long as it follows the Distribution contract in TensorFlow Probability. If the used Kernel has only bounded support, the implementation proposed in this paper allows to specify the support upon instantiation of the class. If the Kernel has infinite support (like a Gaussian kernel for instance) a practical support estimate is calculated by searching for approximate roots with Brent’s method<span class="citation"><sup><a href="references.html#ref-brent1971algorithm" role="doc-biblioref">20</a></sup></span> implemented for TensorFlow in the python package <code>tf_quant_finance</code> by Google. This allows us to speed up the calculation.</p>
 <p>However calculating an exact kernel density estimation is not always feasible as this can take a long time with a huge collection of data points, especially in high energy physics. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, since most of TensorFlow is actually implemented in C++ and the code is optimized before running. Even if the theoretical computational complexity remains the same.</p>
 </div>
-<div id="simple-and-linear-binning-1" class="section level2" number="4.2">
+<div id="simple-and-linear-binning" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Simple and linear Binning</h2>
 <p>Simple binning is already implemented in TensorFlow in the function <code>tf.histogram_fixed_width</code>.</p>
-<p>Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the KDEpy package<span class="citation"><sup><a href="references.html#ref-KDEpy" role="doc-biblioref">15</a></sup></span> this can be done without using loops at all.</p>
+<p>Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the KDEpy package<span class="citation"><sup><a href="references.html#ref-KDEpy" role="doc-biblioref">18</a></sup></span> this can be done without using loops at all.</p>
 <p>First, every data point <span class="math inline">\(x_k\)</span> can be described by an integral part <span class="math inline">\(x^{integral}_k\)</span> (equal to its nearest left grid point number <span class="math inline">\(l\)</span> = <span class="math inline">\(x^{integral}_k\)</span>) plus some fractional part <span class="math inline">\(x^{fractional}_k\)</span> (corresponding to the additional distance between grid point <span class="math inline">\(g_l\)</span> and data point <span class="math inline">\(x_k\)</span>).</p>
 <p>Then we can solve the linear binning in the following way.</p>
 <p>For data points on the right side of the grid point <span class="math inline">\(g_l\)</span>: The fractional parts of the data points are summed if the integral parts equal <span class="math inline">\(l\)</span>.</p>
@@ -234,7 +239,7 @@ c_l = c(g_l) = \sum_{\substack{x^{fractional}_k  \in X^{fractional}\\l = x^{inte
 </div>
 <div id="improved-sheather-jones-algorithm-1" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Improved Sheather Jones Algorithm</h2>
-<p>To find the roots for equation <a href="mathematicalTheory.html#eq:hamisegamma2">(2.12)</a> Brent’s method<span class="citation"><sup><a href="references.html#ref-brent1971algorithm" role="doc-biblioref">18</a></sup></span> was used, which is implemented in TensorFlow in the python package <code>tf_quant_finance</code>. For the Discrete Cosine Transform <code>tf.signal.dct</code> is used.</p>
+<p>To find the roots for equation <a href="mathematicalTheory.html#eq:hamisegamma2">(2.12)</a> Brent’s method<span class="citation"><sup><a href="references.html#ref-brent1971algorithm" role="doc-biblioref">20</a></sup></span> was used, which is implemented in TensorFlow in the python package <code>tf_quant_finance</code>. For the Discrete Cosine Transform <code>tf.signal.dct</code> is used.</p>
 </div>
 <div id="source-code" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> Source Code</h2>

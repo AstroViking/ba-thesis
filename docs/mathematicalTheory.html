@@ -133,23 +133,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.3</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel Density Estimation</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>2.2</b> Simple and linear binning</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binning"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#linear-binning"><i class="fa fa-check"></i><b>2.2.2</b> Linear binning</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-specialized-kernel-functions-and-their-series-expansion"><i class="fa fa-check"></i><b>2.5</b> Using specialized kernel functions and their series expansion</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
 <li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation-1"><i class="fa fa-check"></i><b>4.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning-1"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
 <li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform-1"><i class="fa fa-check"></i><b>4.3</b> Using convolution and the Fast Fourier Transform</a></li>
 <li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm-1"><i class="fa fa-check"></i><b>4.4</b> Improved Sheather Jones Algorithm</a></li>
 <li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#source-code"><i class="fa fa-check"></i><b>4.5</b> Source Code</a></li>
@@ -199,44 +204,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">2</span> Theory</h1>
 <div id="exact-kernel-density-estimation" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Exact Kernel Density Estimation</h2>
-<p>An exact Kernel Density Estimation can be calculated as</p>
+<p>Given a set of <span class="math inline">\(n\)</span> sample points <span class="math inline">\(x_k\)</span> (<span class="math inline">\(k = 1,\cdots,n\)</span>), an exact Kernel Density Estimation <span class="math inline">\(\widehat{f}_h(x)\)</span> can be calculated as</p>
 <p><span class="math display" id="eq:kde">\[\begin{equation}
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
 \tag{2.1}
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(K(x)\)</span> is called the kernel function, which defines the range and size of influence of a single data point over the estimation. Most typically a simple Gaussian distribution is used as kernel function.
-The wider the kernel function is, the farther is the influence of a single data point, this is characterized by the bandwidth paramter <span class="math inline">\(h\)</span>.</p>
-<p>The computational complexity of the exact KDE above is <span class="math inline">\(\mathcal{O}(nm)\)</span> where <span class="math inline">\(n\)</span> is the number of sample points to estimate from and <span class="math inline">\(m\)</span> is the number of evaluation points (the points where you want to calculate the estimate).</p>
-<p>There exist several methods to combat this complexity.</p>
+<p>where <span class="math inline">\(K(x)\)</span> is called the kernel function, <span class="math inline">\(h\)</span> is the bandwidth of the kernel and <span class="math inline">\(x\)</span> is the value for which the estimate is calculated. The kernel function defines the shape and size of influence of a single data point over the estimation, whereas the bandwidth defines the range of influence. Most typically a simple Gaussian distribution (<span class="math inline">\(K(x) :=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}x^2}\)</span>) is used as kernel function.
+The larger the bandwidth parameter <span class="math inline">\(h\)</span> the larger is the range of influence of a single data point on the estimated distribution.</p>
+<p>The computational complexity of the exact KDE above is given by <span class="math inline">\(\mathcal{O}(nm)\)</span> where <span class="math inline">\(n\)</span> is the number of sample points to estimate from and <span class="math inline">\(m\)</span> is the number of evaluation points (the points where you want to calculate the estimate). There exist several approximative methods to decrease this complexity and therefore decrease the runtime as well.</p>
 </div>
-<div id="simple-and-linear-binning" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Simple and linear binning</h2>
-<p>The most straightforward way to decrease runtime is by limiting the number of sample points. This can be done by a binning routine, where the values at a smaller number of regular grid points are estimated from the original large number of sample points.
-Given a set of sample points <span class="math inline">\(X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}\)</span> with weights <span class="math inline">\(w_k\)</span> and a set of equally spaced grid points <span class="math inline">\(G = \{g_0, g_1, ..., g_l, ..., g_{n-1}, g_M\}\)</span> where <span class="math inline">\(N &lt; n\)</span> we can assign an estimate (or a count) <span class="math inline">\(c_l\)</span> to each grid point <span class="math inline">\(g_l\)</span> and use the newly found <span class="math inline">\(g_l\)</span>’s to calculate the kernel density estimation instead.</p>
-<p>This lowers the computational complexity down to <span class="math inline">\(\mathcal{O}(N \cdot m)\)</span>.</p>
-<p>Depending on the number of grid points <span class="math inline">\(N\)</span> the estimate is either more accurate and slower or less accurate and faster. However as we will see in the comparison chapter later as well, even a grid of size <span class="math inline">\(1024\)</span> is enough to capture the true density with high accuracy given a million sample points<span class="citation"><sup><a href="references.html#ref-KDEpyDoc" role="doc-biblioref">7</a></sup></span>.</p>
-<p>As described in the extensive overview by Artur Gramacki<span class="citation"><sup><a href="references.html#ref-gramacki2018fft" role="doc-biblioref">8</a></sup></span> simple binning or linear binning can be used, although the last is often preferred since it is more accurate and the difference in computational complexity is negligible.</p>
-<p>Simple binning is just the standard process of taking a weighted histogram that is divided by the sum of the sample points weights (normalization). In one dimension simple binning is binary in that it assigns a sample point’s weight (<span class="math inline">\(w_k = 1\)</span> for an unweighted histogram) either to the grid point (bin) left or right of itself.</p>
-<p><span class="math display" id="eq:simplebin">\[\begin{equation}
-c_l = c(g_l) = \sum_{\substack{x_k \in X\\\frac{g_l + g_{l-1}}{2} &lt; x_k &lt; \frac{g_{l+1} + g_l}{2}}} w_k
+<div id="binning" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Binning</h2>
+<p>The most straightforward way to decrease the computational complexity is by limiting the number of sample points. This can be done by a binning routine, where the values at a smaller number of regular grid points are estimated from the original larger number of sample points.
+Given a set of sample points <span class="math inline">\(X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}\)</span> with weights <span class="math inline">\(w_k\)</span> and a set of equally spaced grid points <span class="math inline">\(G = \{g_0, g_1, ..., g_l, ..., g_{n-1}, g_N\}\)</span> where <span class="math inline">\(N &lt; n\)</span> we can assign an estimate (or a count) <span class="math inline">\(c_l\)</span> to each grid point <span class="math inline">\(g_l\)</span> and use the newly found <span class="math inline">\(g_l\)</span> to calculate the kernel density estimation instead.</p>
+<p><span class="math display" id="eq:kdebin">\[\begin{equation}
+\widehat{f}_h(x) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{x-g_l}{h}\Big)
 \tag{2.2}
 \end{equation}\]</span></p>
+<p>This lowers the computational complexity down to <span class="math inline">\(\mathcal{O}(N \cdot m)\)</span>. Depending on the number of grid points <span class="math inline">\(N\)</span> there is tradeoff between accuracy and speed. However as we will see in the comparison chapter later as well, even for ten million sample points, a grid of size <span class="math inline">\(1024\)</span> is enough to capture the true density with high accuracy<span class="citation"><sup><a href="references.html#ref-KDEpyDoc" role="doc-biblioref">9</a></sup></span>. As described in the extensive overview by Artur Gramacki<span class="citation"><sup><a href="references.html#ref-gramacki2018fft" role="doc-biblioref">10</a></sup></span> simple binning or linear binning can be used, although the last is often preferred since it is more accurate and the difference in computational complexity is negligible.</p>
+<div id="simple-binning" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Simple binning</h3>
+<p>Simple binning is just the standard process of taking a weighted histogram and then normalizing it by dividing each bin by the sum of the sample points weights. In one dimension simple binning is binary in that it assigns a sample point’s weight (<span class="math inline">\(w_k = 1\)</span> for an unweighted histogram) either to the grid point (bin) left or right of itself.</p>
+<p><span class="math display" id="eq:simplebin">\[\begin{equation}
+c_l = c(g_l) = \sum_{\substack{x_k \in X\\\frac{g_l + g_{l-1}}{2} &lt; x_k &lt; \frac{g_{l+1} + g_l}{2}}} w_k
+\tag{2.3}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(c_l\)</span> is the value for grid point <span class="math inline">\(g_l\)</span> depending on sample points <span class="math inline">\(x_k\)</span> and their associated weights <span class="math inline">\(w_k\)</span>.</p>
+</div>
+<div id="linear-binning" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Linear binning</h3>
 <p>Linear binning on the other hand assigns a fraction of the whole weight to both grid points (bins) on either side, proportional to the closeness of grid point and data point in relation to the distance between grid points (bin width).</p>
 <p><span class="math display" id="eq:linbin">\[\begin{equation}
 c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l &lt; x_k &lt; g_{l+1}}} \frac{g_{k+1}-x_k}{g_{l+1} - g_l} \cdot w_k + \sum_{\substack{x_k \in X\\g_{l-1} &lt; x_k &lt; g_l}} \frac{x_k - g_{l-1}}{g_{l+1} - g_l} \cdot w_k
-\tag{2.3}
-\end{equation}\]</span></p>
-<p>The kernel density estimation can then be calculated as a mixture distribution of kernel functions located at the grid points, weighted with their associated grid count.</p>
-<p><span class="math display" id="eq:kdebin">\[\begin{equation}
-\widehat{f}_h(x) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{x-g_l}{h}\Big)
 \tag{2.4}
 \end{equation}\]</span></p>
+<p>where <span class="math inline">\(c_l\)</span> is the value for grid point <span class="math inline">\(g_l\)</span> depending on sample points <span class="math inline">\(x_k\)</span> and their associated weights <span class="math inline">\(w_k\)</span>.</p>
+</div>
 </div>
 <div id="using-convolution-and-the-fast-fourier-transform" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Using convolution and the Fast Fourier Transform</h2>
-<p>Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel function and the grid counts calculated by the binning routine given above.</p>
-<p>By using the fact that a convolution is just a multiplication in Fourier space and only evaluating the KDE at grid points one can reduce the computational complexity down to <span class="math inline">\(\mathcal{O}(\log{N} \cdot N)\)</span>.<span class="citation"><sup><a href="references.html#ref-gramacki2018fft" role="doc-biblioref">8</a></sup></span></p>
-<p>Using the equation <a href="mathematicalTheory.html#eq:kdebin">(2.4)</a> from above only evaluated at grid points gives us</p>
+<p>Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel function and the grid counts (bin counts) calculated by the binning routine given above.</p>
+<p>By using the fact that a convolution is just a multiplication in Fourier space and only evaluating the KDE at grid points one can reduce the computational complexity down to <span class="math inline">\(\mathcal{O}(\log{N} \cdot N)\)</span>.<span class="citation"><sup><a href="references.html#ref-gramacki2018fft" role="doc-biblioref">10</a></sup></span></p>
+<p>Using the equation <a href="mathematicalTheory.html#eq:kdebin">(2.2)</a> from above only evaluated at grid points gives us</p>
 <p><span class="math display" id="eq:binkdegrid">\[\begin{equation}
 \widehat{f}_h(g_j) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{g_j-g_l}{h}\Big) = \frac{1}{nh} \sum_{l=1}^N k_{j-l} \cdot c_l
 \tag{2.5}
@@ -259,28 +268,28 @@ Figure 2.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class
 </div>
 <div id="improved-sheather-jones-algorithm" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Improved Sheather-Jones Algorithm</h2>
-<p>A different take on Kernel Density Estimators is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">9</a></sup></span> The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth.</p>
-<p>A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="references.html#ref-kroese2013handbook" role="doc-biblioref">10</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
-<p>The optimal bandwidth is often defined as the one that minimizes the mean integrated square error(<span class="math inline">\(MISE\)</span>)</p>
+<p>A different take on Kernel Density Estimators is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">11</a></sup></span> The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="references.html#ref-kroese2013handbook" role="doc-biblioref">12</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
+<p>The optimal bandwidth is often defined as the one that minimizes the mean integrated square error (<span class="math inline">\(MISE\)</span>), which is given by the expectation value <span class="math inline">\(\mathbb{E}_f\)</span> of the integrated square error between the Kernel Density Estimation <span class="math inline">\(\widehat{f}_{h,norm}(x)\)</span> and the true probability density function <span class="math inline">\(f(x)\)</span>.</p>
 <p><span class="math display" id="eq:mise">\[\begin{equation}
-MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x,h) - f(x)]^2 dx
+MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x) - f(x)]^2 dx
 \tag{2.7}
 \end{equation}\]</span></p>
 <p>To find the optimal bandwidth it is useful to look at the second order derivative <span class="math inline">\(f^{(2)}\)</span> of the unknown distribution as it indicates how many peaks the distribution has and how steep they are. For a distribution with many narrow peaks close together a smaller bandwidth leads to better result since the peaks do not get smeared together to a single peak for instance.</p>
-<p>As derived by Wand and Jones an asymptotically optimal bandwidth <span class="math inline">\(h_{AMISE}\)</span> which minimizes a first-order asymptotic appoximation of the <span class="math inline">\(MISE\)</span> of the bandwidth is then given by<span class="citation"><sup><a href="references.html#ref-wand1994kernel" role="doc-biblioref">11</a></sup></span></p>
+<p>As derived by Wand and Jones an asymptotically optimal bandwidth <span class="math inline">\(h_{AMISE}\)</span> which minimizes a first-order asymptotic approximation of the <span class="math inline">\(MISE\)</span> is then given by<span class="citation"><sup><a href="references.html#ref-wand1994kernel" role="doc-biblioref">13</a></sup></span></p>
 <p><span class="math display" id="eq:hamise">\[\begin{equation}
-h_{AMISE}(x,h) = \Big( \frac{1}{2N\sqrt{\pi} \| f^{(2)}(x,h)\|^2}\Big)^{\frac{1}{5}}
+h_{AMISE}(x) = \Big( \frac{1}{2N\sqrt{\pi} \| f^{(2)}(x)\|^2}\Big)^{\frac{1}{5}}
 \tag{2.8}
 \end{equation}\]</span></p>
+<p>where <span class="math inline">\(N\)</span> is the number of sample points (or grid points if binning is used).</p>
 <p>As Sheather and Jones showed, this second order derivative can be estimated, starting from an even higher order derivative <span class="math inline">\(\|f^{(l+2)}\|^2\)</span> by using the fact that <span class="math inline">\(\|f^{(j)}\|^2 = (-1)^j \mathbb{E}_f[f^{(2j)}(X)], \text{ } j\geq 1\)</span></p>
 <p><span class="math display" id="eq:hj">\[\begin{equation}
 h_j=\left(\frac{1+1 / 2^{j+1 / 2}}{3} \frac{1 \times 3 \times 5 \times \cdots \times(2 j-1)}{N \sqrt{\pi / 2}\left\|f^{(j+1)}\right\|^{2}}\right)^{1 /(3+2 j)} = \gamma_j(h_{j+1})
 \tag{2.9}
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(h_j\)</span> is the optimal bandwidth for the <span class="math inline">\(j\)</span>-th derivative of <span class="math inline">\(f\)</span>.</p>
+<p>where <span class="math inline">\(h_j\)</span> is the optimal bandwidth for the <span class="math inline">\(j\)</span>-th derivative of <span class="math inline">\(f\)</span> and the function <span class="math inline">\(\gamma_j\)</span> defines the dependency of <span class="math inline">\(h_j\)</span> on <span class="math inline">\(h_{j+1}\)</span></p>
 <p>Their proposed plug-in method works as follows:</p>
 <ol style="list-style-type: decimal">
-<li>Compute <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span> by assuming that f is the normal pdf with mean and variance estimated from the sample data</li>
+<li>Compute <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span> by assuming that <span class="math inline">\(f\)</span> is the normal pdf with mean and variance estimated from the sample data</li>
 <li>Using <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span> compute <span class="math inline">\(h_{l+1}\)</span></li>
 <li>Using <span class="math inline">\(h_{l+1}\)</span> compute <span class="math inline">\(\|\widehat{f}^{(l+1)}\|^2\)</span></li>
 <li>Repeat steps 2 and 3 to compute <span class="math inline">\(h^{l}\)</span>, <span class="math inline">\(\|\widehat{f}^{(l)}\|^2\)</span>, <span class="math inline">\(h^{l-1}\)</span>, <span class="math inline">\(\cdots\)</span> and so on until
@@ -288,29 +297,63 @@ h_j=\left(\frac{1+1 / 2^{j+1 / 2}}{3} \frac{1 \times 3 \times 5 \times \cdots \t
 <li>Use <span class="math inline">\(\|\widehat{f}^{(2)}\|^2\)</span> to compute <span class="math inline">\(h_{AMISE}\)</span></li>
 </ol>
 <p>The weakest point of this procedure is the assumption that the true distribution is a Gaussian density function in order to compute <span class="math inline">\(\|\widehat{f}^{(l+2)}\|^2\)</span>. This can lead to arbitrarily bad estimates of <span class="math inline">\(h_{AMISE}\)</span>, when the true distribution is far from being normal.</p>
-<p>Therefore Botev et al. took this idea further<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">9</a></sup></span>. Given the function <span class="math inline">\(\gamma^{[k]}\)</span> such that</p>
+<p>Therefore Botev et al. took this idea further<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">11</a></sup></span>. Given the function <span class="math inline">\(\gamma^{[k]}\)</span> such that</p>
 <p><span class="math display" id="eq:gamma">\[\begin{equation}
 \gamma^{[k]}(h)=\underbrace{\gamma_{1}\left(\cdots \gamma_{k-1}\left(\gamma_{k}\right.\right.}_{k \text { times }}(h)) \cdots)
 \tag{2.10}
 \end{equation}\]</span></p>
 <p><span class="math inline">\(h_{AMISE}\)</span> can be calculated as</p>
 <p><span class="math display" id="eq:hamisegamma">\[\begin{equation}
-\begin{array}{l}
-h_{AMISE} =\xi h_{1}=\xi \gamma^{[1]}\left(h_{2}\right)=\xi \gamma^{[2]}\left(h_{3}\right)=\cdots=\xi \gamma^{[l]}\left(h_{l+1}\right) \\
-\xi=\left(\frac{6 \sqrt{2}-3}{7}\right)^{2 / 5} \approx 0.90
-\end{array}
+h_{AMISE} = h_{1}=\gamma^{[1]}(h_{2})= \gamma^{[2]}(h_{3})=\cdots=\gamma^{[l]}(h_{l+1})
 \tag{2.11}
 \end{equation}\]</span></p>
 <p>By setting <span class="math inline">\(h_{AMISE}=h_{l+1}\)</span> and using fixed point iteration to solve the equation</p>
 <p><span class="math display" id="eq:hamisegamma2">\[\begin{equation}
-h_{AMISE} = \xi \gamma^{[l]}(h_{AMISE})
+h_{AMISE} = \gamma^{[l]}(h_{AMISE})
 \tag{2.12}
 \end{equation}\]</span></p>
 <p>the optimal bandwidth <span class="math inline">\(h_{AMISE}\)</span> can be found directly.</p>
-<p>This eliminates the need to assume normally distributed data for the initial estimate and leads to improved performance, especially for density distributions that are far from normal as seen in the next chapter.</p>
-<p>According to their paper increasing <span class="math inline">\(l\)</span> beyond <span class="math inline">\(l=5\)</span> does not increase the accuracy in any practically meaningful way.
-The computation is especially efficient if <span class="math inline">\(\gamma^{[5]}\)</span> is computed using the Discrete Cosine Transform - an FFT related transformation.</p>
+<p>This eliminates the need to assume normally distributed data for the initial estimate and leads to improved performance, especially for density distributions that are far from normal as seen in the next chapter. According to their paper increasing <span class="math inline">\(l\)</span> beyond <span class="math inline">\(l=5\)</span> does not increase the accuracy in any practically meaningful way. The computation is especially efficient if <span class="math inline">\(\gamma^{[5]}\)</span> is computed using the Discrete Cosine Transform - an FFT related transformation.</p>
 <p>The optimal bandwidth <span class="math inline">\(h_{AMISE}\)</span> can then either be used for other kernel density estimation methods (like the FFT-approach discussed above) or also to compute the kernel density estimation directly using another Discrete Cosine Transform.</p>
+</div>
+<div id="using-specialized-kernel-functions-and-their-series-expansion" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Using specialized kernel functions and their series expansion</h2>
+<p>Lastly there is an interesting approach described by Hofmeyr<span class="citation"><sup><a href="references.html#ref-hofmeyrFastExactEvaluation2019" role="doc-biblioref">14</a></sup></span> that uses special kernels of the form <span class="math inline">\(K(x) := poly(|x|) \cdot exp(−|x|)\)</span> where <span class="math inline">\(poly(|x|)\)</span> denotes a polynomial of finite degree.</p>
+<p>Given the kernel with a polynom of order <span class="math inline">\(\alpha\)</span></p>
+<p><span class="math display" id="eq:polyexpkernel">\[\begin{equation}
+K(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
+\tag{2.13}
+\end{equation}\]</span></p>
+<p>the kernel density estimation is given by (equation <a href="mathematicalTheory.html#eq:kde">(2.1)</a>)</p>
+<p><span class="math display" id="eq:kdepolyexp">\[\begin{equation}
+\widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^{n}\sum_{j=0}^{\alpha} (\frac{|x-x_k|}{h})^{j} \cdot e^{(-\frac{|x-x_k|}{h})}
+\tag{2.14}
+\end{equation}\]</span></p>
+<p>Hofmeyr showed that the above kernel density estimator can be rewritten as
+<span class="math display" id="eq:kdepolyexplr">\[\begin{equation}
+\widehat{f}_h(x) = \sum_{j=0}^{\alpha}\sum_{i=0}^{j} {j \choose i}(\exp (\frac{x_{(\tilde{n}(x))}-x}{h}) x^{j-i} \ell (i, \tilde{n}(x))+\exp (\frac{x-x_{(n(x))}}{h})(-x)^{j-i} r(i, \tilde{n}(x)))
+\tag{2.15}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\tilde{n}(x)\)</span> is defined to be the number of sample points less than or equal to <span class="math inline">\(x\)</span> (<span class="math inline">\(\tilde{n}(x) = \sum_{k=1}^{n} \delta_{x_{k}}((-\infty, x])\)</span>, where <span class="math inline">\(\delta_{x_{k}}(\cdot)\)</span> is the Dirac measure of <span class="math inline">\(x_k\)</span>) and <span class="math inline">\(\ell(i, \tilde{n})\)</span> and <span class="math inline">\(r(i, \tilde{n})\)</span> are given by</p>
+<p><span class="math display" id="eq:kdepolyexpl">\[\begin{equation}
+\ell(i, \tilde{n})=\sum_{k=1}^{\tilde{n}}(-x_{k})^{i} \exp (\frac{x_{k}-x_{\tilde{n}}}{h})
+\tag{2.16}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:kdepolyexpr">\[\begin{equation}
+r(i, \tilde{n})=\sum_{k=\tilde{n}+1}^{\tilde{n}}(x_{k})^{i} \exp (\frac{x_{\tilde{n}} - x_{k}}{h})
+\tag{2.17}
+\end{equation}\]</span></p>
+<p>Or put differently, all values of <span class="math inline">\(\widehat{f}_h(x)\)</span> can be specified as linear combinations of terms in <span class="math inline">\(\bigcup_{i, \tilde{n}}\{\ell(i, \tilde{n}), r(i, \tilde{n})\}\)</span>. Finally, the critical insight lies in the fact that <span class="math inline">\(\ell(i, \tilde{n})\)</span> and <span class="math inline">\(r(i, \tilde{n})\}\)</span> can be computed recursively as follows</p>
+<p><span class="math display" id="eq:kdepolyexplrec">\[\begin{equation}
+\ell(i, \tilde{n}+1)=\exp(\frac{x_{\tilde{n}}-x_{\tilde{n}+1}}{h}) \ell(i, \tilde{n})+(-x_{\tilde{n}+1})^{i}
+\tag{2.18}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:kdepolyexprrec">\[\begin{equation}
+r(i, \tilde{n}-1)=\exp(\frac{x_{\tilde{n}-1}-x_{\tilde{n}}}{h})(r(i, \tilde{n})+(x_{\tilde{n}})^{i})
+\tag{2.19}
+\end{equation}\]</span></p>
+<p>Using this recursion one can then calculate the Kernel Density Estimation with a single forward
+and a single backward pass over the ordered set of all <span class="math inline">\(x_{\tilde{n}}\)</span> leading to a computational complexity of <span class="math inline">\(\mathcal{O}((\alpha+1)(n+m))\)</span> where <span class="math inline">\(\alpha\)</span> is the order of the polynom, <span class="math inline">\(n\)</span> is the number of sample points and <span class="math inline">\(m\)</span> is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact Kernel Density Estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already pretty fast for the exact computation.</p>
 
 </div>
 </div>

@@ -133,23 +133,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.3</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel Density Estimation</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>2.2</b> Simple and linear binning</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binning"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#linear-binning"><i class="fa fa-check"></i><b>2.2.2</b> Linear binning</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#using-specialized-kernel-functions-and-their-series-expansion"><i class="fa fa-check"></i><b>2.5</b> Using specialized kernel functions and their series expansion</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
 <li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation-1"><i class="fa fa-check"></i><b>4.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning-1"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>4.2</b> Simple and linear Binning</a></li>
 <li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform-1"><i class="fa fa-check"></i><b>4.3</b> Using convolution and the Fast Fourier Transform</a></li>
 <li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm-1"><i class="fa fa-check"></i><b>4.4</b> Improved Sheather Jones Algorithm</a></li>
 <li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#source-code"><i class="fa fa-check"></i><b>4.5</b> Source Code</a></li>
@@ -199,59 +204,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>References</h1>
 
 <div id="refs" class="references csl-bib-body">
-<div id="ref-cern" class="csl-entry">
-<div class="csl-left-margin"><sup>1</sup> </div><div class="csl-right-inline"><em>Processing: What to Record? - CERN Accelerating Science</em>, <a href="https://home.cern/science/computing/processing-what-record">https://home.cern/science/computing/processing-what-record</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-rosenblatt1956remarks" class="csl-entry">
-<div class="csl-left-margin"><sup>2</sup> </div><div class="csl-right-inline">M. Rosenblatt, <em>Remarks on Some Nonparametric Estimates of a Density Function</em>, Ann. Math. Statist. <strong>27</strong>, 832 (1956).</div>
-</div>
-<div id="ref-duong2001" class="csl-entry">
-<div class="csl-left-margin"><sup>3</sup> </div><div class="csl-right-inline">T. Duong, <em>Kernel Density Estimation in Python</em>, <a href="https://www.mvstat.net/tduong/research/seminars/seminar-2001-05/">https://www.mvstat.net/tduong/research/seminars/seminar-2001-05/</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-lerner2013" class="csl-entry">
-<div class="csl-left-margin"><sup>4</sup> </div><div class="csl-right-inline">M. Lerner, <em>Kernel Density Estimation in Python</em>, <a href="https://mglerner.github.io/posts/histograms-and-kernel-density-estimation-kde-2.html">https://mglerner.github.io/posts/histograms-and-kernel-density-estimation-kde-2.html</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-cranmer2000kernel" class="csl-entry">
-<div class="csl-left-margin"><sup>5</sup> </div><div class="csl-right-inline">K. Cranmer, <em>Kernel Estimation in High-Energy Physics</em>, Computer Physics Communications <strong>136</strong>, 198 (2001).</div>
-</div>
-<div id="ref-eschle2019zfit" class="csl-entry">
-<div class="csl-left-margin"><sup>6</sup> </div><div class="csl-right-inline">J. Eschle, A. Puig Navarro, R. Silva Coutinho, and N. Serra, <em>Zfit: Scalable Pythonic Fitting</em>, SoftwareX <strong>11</strong>, 100508 (2020).</div>
-</div>
-<div id="ref-KDEpyDoc" class="csl-entry">
-<div class="csl-left-margin"><sup>7</sup> </div><div class="csl-right-inline">T. Odland, <em>Comparison | KDEpy</em>, <a href="https://kdepy.readthedocs.io/en/latest/comparison.html">https://kdepy.readthedocs.io/en/latest/comparison.html</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-gramacki2018fft" class="csl-entry">
-<div class="csl-left-margin"><sup>8</sup> </div><div class="csl-right-inline">A. Gramacki, <em>FFT-Based Algorithms for Kernel Density Estimation and Bandwidth Selection</em>, in <em>Nonparametric Kernel Density Estimation and Its Computational Aspects</em> (Springer, 2018), pp. 85–118.</div>
-</div>
-<div id="ref-botev2010kernel" class="csl-entry">
-<div class="csl-left-margin"><sup>9</sup> </div><div class="csl-right-inline">Z. I. Botev, J. F. Grotowski, D. P. Kroese, and others, <em>Kernel Density Estimation via Diffusion</em>, The Annals of Statistics <strong>38</strong>, 2916 (2010).</div>
-</div>
-<div id="ref-kroese2013handbook" class="csl-entry">
-<div class="csl-left-margin"><sup>10</sup> </div><div class="csl-right-inline">D. P. Kroese, T. Taimre, and Z. I. Botev, <em>Handbook of Monte Carlo Methods</em>, Vol. 706 (John Wiley &amp; Sons, 2013).</div>
-</div>
-<div id="ref-wand1994kernel" class="csl-entry">
-<div class="csl-left-margin"><sup>11</sup> </div><div class="csl-right-inline">M. P. Wand and M. C. Jones, <em>Kernel Smoothing</em> (Crc Press, 1994).</div>
-</div>
-<div id="ref-ScipyStatsGaussian" class="csl-entry">
-<div class="csl-left-margin"><sup>12</sup> </div><div class="csl-right-inline"><em>Scipy.stats.gaussian_kde — SciPy V1.5.4 Reference Guide</em>, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-KernelDensityEstimation" class="csl-entry">
-<div class="csl-left-margin"><sup>13</sup> </div><div class="csl-right-inline"><em>Kernel Density Estimation — Statsmodels</em>, <a href="https://www.statsmodels.org/devel/examples/notebooks/generated/kernel_density.html">https://www.statsmodels.org/devel/examples/notebooks/generated/kernel_density.html</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-SklearnNeighborsKernelDensity" class="csl-entry">
-<div class="csl-left-margin"><sup>14</sup> </div><div class="csl-right-inline"><em>Sklearn.neighbors.KernelDensity — Scikit-Learn 0.23.2 Documentation</em>, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html">https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-KDEpy" class="csl-entry">
-<div class="csl-left-margin"><sup>15</sup> </div><div class="csl-right-inline">T. Odland, <em>KDEpy</em>, <a href="https://github.com/tommyod/KDEpy">https://github.com/tommyod/KDEpy</a> (accessed Nov. 16, 2020).</div>
-</div>
-<div id="ref-vanderplas2013" class="csl-entry">
-<div class="csl-left-margin"><sup>16</sup> </div><div class="csl-right-inline">J. VanderPlas, <em>Kernel Density Estimation in Python</em>, <a href="https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/">https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/</a> (accessed Nov. 16, 2020).</div>
+<div id="ref-martinabadiTensorFlowLargeScaleMachine2015" class="csl-entry">
+<div class="csl-left-margin"><sup>1</sup> </div><div class="csl-right-inline">Martín Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Y. Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Mané, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viégas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng, <em>TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems</em> (2015).</div>
 </div>
 <div id="ref-googleTFP" class="csl-entry">
-<div class="csl-left-margin"><sup>17</sup> </div><div class="csl-right-inline">J. V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton, A. Alemi, M. D. Hoffman, and R. A. Saurous, <em>TensorFlow Distributions</em>, CoRR <strong>abs/1711.10604</strong>, (2017).</div>
+<div class="csl-left-margin"><sup>2</sup> </div><div class="csl-right-inline">J. V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton, A. Alemi, M. D. Hoffman, and R. A. Saurous, <em>TensorFlow Distributions</em>, CoRR <strong>abs/1711.10604</strong>, (2017).</div>
+</div>
+<div id="ref-eschle2019zfit" class="csl-entry">
+<div class="csl-left-margin"><sup>3</sup> </div><div class="csl-right-inline">J. Eschle, A. Puig Navarro, R. Silva Coutinho, and N. Serra, <em>Zfit: Scalable Pythonic Fitting</em>, SoftwareX <strong>11</strong>, 100508 (2020).</div>
+</div>
+<div id="ref-cern" class="csl-entry">
+<div class="csl-left-margin"><sup>4</sup> </div><div class="csl-right-inline"><em>Processing: What to Record? - CERN Accelerating Science</em>, <a href="https://home.cern/science/computing/processing-what-record">https://home.cern/science/computing/processing-what-record</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-rosenblatt1956remarks" class="csl-entry">
+<div class="csl-left-margin"><sup>5</sup> </div><div class="csl-right-inline">M. Rosenblatt, <em>Remarks on Some Nonparametric Estimates of a Density Function</em>, Ann. Math. Statist. <strong>27</strong>, 832 (1956).</div>
+</div>
+<div id="ref-duong2001" class="csl-entry">
+<div class="csl-left-margin"><sup>6</sup> </div><div class="csl-right-inline">T. Duong, <em>Kernel Density Estimation in Python</em>, <a href="https://www.mvstat.net/tduong/research/seminars/seminar-2001-05/">https://www.mvstat.net/tduong/research/seminars/seminar-2001-05/</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-lerner2013" class="csl-entry">
+<div class="csl-left-margin"><sup>7</sup> </div><div class="csl-right-inline">M. Lerner, <em>Kernel Density Estimation in Python</em>, <a href="https://mglerner.github.io/posts/histograms-and-kernel-density-estimation-kde-2.html">https://mglerner.github.io/posts/histograms-and-kernel-density-estimation-kde-2.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-cranmer2000kernel" class="csl-entry">
+<div class="csl-left-margin"><sup>8</sup> </div><div class="csl-right-inline">K. Cranmer, <em>Kernel Estimation in High-Energy Physics</em>, Computer Physics Communications <strong>136</strong>, 198 (2001).</div>
+</div>
+<div id="ref-KDEpyDoc" class="csl-entry">
+<div class="csl-left-margin"><sup>9</sup> </div><div class="csl-right-inline">T. Odland, <em>Comparison | KDEpy</em>, <a href="https://kdepy.readthedocs.io/en/latest/comparison.html">https://kdepy.readthedocs.io/en/latest/comparison.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-gramacki2018fft" class="csl-entry">
+<div class="csl-left-margin"><sup>10</sup> </div><div class="csl-right-inline">A. Gramacki, <em>FFT-Based Algorithms for Kernel Density Estimation and Bandwidth Selection</em>, in <em>Nonparametric Kernel Density Estimation and Its Computational Aspects</em> (Springer, 2018), pp. 85–118.</div>
+</div>
+<div id="ref-botev2010kernel" class="csl-entry">
+<div class="csl-left-margin"><sup>11</sup> </div><div class="csl-right-inline">Z. I. Botev, J. F. Grotowski, D. P. Kroese, and others, <em>Kernel Density Estimation via Diffusion</em>, The Annals of Statistics <strong>38</strong>, 2916 (2010).</div>
+</div>
+<div id="ref-kroese2013handbook" class="csl-entry">
+<div class="csl-left-margin"><sup>12</sup> </div><div class="csl-right-inline">D. P. Kroese, T. Taimre, and Z. I. Botev, <em>Handbook of Monte Carlo Methods</em>, Vol. 706 (John Wiley &amp; Sons, 2013).</div>
+</div>
+<div id="ref-wand1994kernel" class="csl-entry">
+<div class="csl-left-margin"><sup>13</sup> </div><div class="csl-right-inline">M. P. Wand and M. C. Jones, <em>Kernel Smoothing</em> (Crc Press, 1994).</div>
+</div>
+<div id="ref-hofmeyrFastExactEvaluation2019" class="csl-entry">
+<div class="csl-left-margin"><sup>14</sup> </div><div class="csl-right-inline">D. Hofmeyr, <em>Fast Exact Evaluation of Univariate Kernel Sums</em>, IEEE Trans. Pattern Anal. Mach. Intell. 1 (2019).</div>
+</div>
+<div id="ref-ScipyStatsGaussian" class="csl-entry">
+<div class="csl-left-margin"><sup>15</sup> </div><div class="csl-right-inline"><em>Scipy.stats.gaussian_kde — SciPy V1.5.4 Reference Guide</em>, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-KernelDensityEstimation" class="csl-entry">
+<div class="csl-left-margin"><sup>16</sup> </div><div class="csl-right-inline"><em>Kernel Density Estimation — Statsmodels</em>, <a href="https://www.statsmodels.org/devel/examples/notebooks/generated/kernel_density.html">https://www.statsmodels.org/devel/examples/notebooks/generated/kernel_density.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-SklearnNeighborsKernelDensity" class="csl-entry">
+<div class="csl-left-margin"><sup>17</sup> </div><div class="csl-right-inline"><em>Sklearn.neighbors.KernelDensity — Scikit-Learn 0.23.2 Documentation</em>, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html">https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-KDEpy" class="csl-entry">
+<div class="csl-left-margin"><sup>18</sup> </div><div class="csl-right-inline">T. Odland, <em>KDEpy</em>, <a href="https://github.com/tommyod/KDEpy">https://github.com/tommyod/KDEpy</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-vanderplas2013" class="csl-entry">
+<div class="csl-left-margin"><sup>19</sup> </div><div class="csl-right-inline">J. VanderPlas, <em>Kernel Density Estimation in Python</em>, <a href="https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/">https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/</a> (accessed Nov. 16, 2020).</div>
 </div>
 <div id="ref-brent1971algorithm" class="csl-entry">
-<div class="csl-left-margin"><sup>18</sup> </div><div class="csl-right-inline">R. P. Brent, <em>An Algorithm with Guaranteed Convergence for Finding a Zero of a Function</em>, The Computer Journal <strong>14</strong>, 422 (1971).</div>
+<div class="csl-left-margin"><sup>20</sup> </div><div class="csl-right-inline">R. P. Brent, <em>An Algorithm with Guaranteed Convergence for Finding a Zero of a Function</em>, The Computer Journal <strong>14</strong>, 422 (1971).</div>
 </div>
 </div>
 </div>
