@@ -88,7 +88,7 @@ However, due to the limitation of evaluating only at the grid points themselves,
 
 A different take on Kernel Density Estimators is described in the paper 'Kernel density estimation by diffusion' by Botev et al.[@botev2010kernel] The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the 'Handbook of Monte Carlo Methods'[@kroese2013handbook] by the original paper authors. However the general idea is briefly sketched below.
 
-The optimal bandwidth is often defined as the one that minimizes the mean integrated square error ($MISE$), which is given by the expectation value $\mathbb{E}_f$ of the integrated square error between the Kernel Density Estimation $\widehat{f}_{h,norm}(x)$ and the true probability density function $f(x)$.
+The optimal bandwidth is often defined as the one that minimizes the mean integrated squared error ($MISE$) between the Kernel Density Estimation $\widehat{f}_{h,norm}(x)$ and the true probability density function $f(x)$, where $\mathbb{E}_f$ denotes the expected value with respect to the sample which was used to calculate the KDE.
 
 \begin{equation}
 MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x) - f(x)]^2 dx
