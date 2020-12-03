@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Theory | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
-  <meta name="description" content="2 Theory | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <title>2 Theory | Performance of univariate kernel density estimation methods in TensorFlow</title>
+  <meta name="description" content="2 Theory | Performance of univariate kernel density estimation methods in TensorFlow" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Theory | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta property="og:title" content="2 Theory | Performance of univariate kernel density estimation methods in TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Theory | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta name="twitter:title" content="2 Theory | Performance of univariate kernel density estimation methods in TensorFlow" />
   
   
   
@@ -130,18 +130,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="" data-path="abstract.html"><a href="abstract.html"><i class="fa fa-check"></i>Abstract</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel Density Estimation</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> kernel density estimation</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact Kernel Density Estimation</a></li>
+<li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact kernel density estimation</a></li>
 <li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binningTheory"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
@@ -155,35 +153,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#advantages-of-using-zfit-tensorflow"><i class="fa fa-check"></i><b>4.1</b> Advantages of using zfit TensorFlow</a></li>
-<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-univariate-kernel-density-estimation"><i class="fa fa-check"></i><b>4.2</b> Exact univariate Kernel Density Estimation</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-univariate-kernel-density-estimation"><i class="fa fa-check"></i><b>4.2</b> Exact univariate kernel density estimation</a></li>
 <li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#binned-method"><i class="fa fa-check"></i><b>4.3</b> Binned method</a></li>
 <li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#fft-based-method"><i class="fa fa-check"></i><b>4.4</b> FFT based method</a></li>
-<li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#isj-based-method"><i class="fa fa-check"></i><b>4.5</b> ISJ based method</a></li>
-<li class="chapter" data-level="4.6" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#specialized-kernel-method"><i class="fa fa-check"></i><b>4.6</b> Specialized kernel method</a></li>
+<li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#isjMethod"><i class="fa fa-check"></i><b>4.5</b> ISJ based method</a></li>
+<li class="chapter" data-level="4.6" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#hofmeyrMethod"><i class="fa fa-check"></i><b>4.6</b> Specialized kernel method</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>5</b> Comparison</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>5.1</b> Benchmark setup</a></li>
-<li class="chapter" data-level="5.2" data-path="comparison.html"><a href="comparison.html#differences-of-exact-binned-fft-and-isj-implementations"><i class="fa fa-check"></i><b>5.2</b> Differences of Exact, Binned, FFT and ISJ implementations</a>
+<li class="chapter" data-level="5.2" data-path="comparison.html"><a href="comparison.html#differences-of-exact-binned-fft-isj-and-hofmeyr-implementations"><i class="fa fa-check"></i><b>5.2</b> Differences of Exact, Binned, FFT, ISJ and Hofmeyr implementations</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>5.2.1</b> Accuracy</a></li>
 <li class="chapter" data-level="5.2.2" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>5.2.2</b> Runtime</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-cpu"><i class="fa fa-check"></i><b>5.3</b> Comparison to KDEpy on CPU</a>
+<li class="chapter" data-level="5.3" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy"><i class="fa fa-check"></i><b>5.3</b> Comparison to KDEpy</a>
 <ul>
 <li class="chapter" data-level="5.3.1" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>5.3.1</b> Accuracy</a></li>
 <li class="chapter" data-level="5.3.2" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>5.3.2</b> Runtime</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-gpu"><i class="fa fa-check"></i><b>5.4</b> Comparison to KDEpy on GPU</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>5.4.1</b> Accuracy</a></li>
-<li class="chapter" data-level="5.4.2" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.2</b> Runtime</a></li>
+<li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.1</b> Runtime</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
-<li class="chapter" data-level="7" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>7</b> Appendix</a>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="appendix.html"><a href="appendix.html#source-code"><i class="fa fa-check"></i><b>7.1</b> Source Code</a></li>
+<li class="chapter" data-level="6.1" data-path="appendix.html"><a href="appendix.html#source-code"><i class="fa fa-check"></i><b>6.1</b> Source Code</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -198,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of Univariate Kernel Density Estimation methods in TensorFlow</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of univariate kernel density estimation methods in TensorFlow</a>
           </h1>
         </div>
 
@@ -209,8 +206,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="mathematicalTheory" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Theory</h1>
 <div id="exact-kernel-density-estimation" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Exact Kernel Density Estimation</h2>
-<p>Given a set of <span class="math inline">\(n\)</span> sample points <span class="math inline">\(x_k\)</span> (<span class="math inline">\(k = 1,\cdots,n\)</span>), an exact Kernel Density Estimation <span class="math inline">\(\widehat{f}_h(x)\)</span> can be calculated as</p>
+<h2><span class="header-section-number">2.1</span> Exact kernel density estimation</h2>
+<p>Given a set of <span class="math inline">\(n\)</span> sample points <span class="math inline">\(x_k\)</span> (<span class="math inline">\(k = 1,\cdots,n\)</span>), an exact kernel density estimation <span class="math inline">\(\widehat{f}_h(x)\)</span> can be calculated as</p>
 <p><span class="math display" id="eq:kde">\[\begin{equation}
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
 \tag{2.1}
@@ -249,7 +246,7 @@ c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l &lt; x_k &lt; g_{l+1}}} \frac{g_{k
 </div>
 <div id="fftTheory" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Using convolution and the Fast Fourier Transform</h2>
-<p>Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel function and the grid counts (bin counts) calculated by the binning routine given above.</p>
+<p>Another technique to speed up the computation is rewriting the kernel density estimation as convolution operation between the kernel function and the grid counts (bin counts) calculated by the binning routine given above.</p>
 <p>By using the fact that a convolution is just a multiplication in Fourier space and only evaluating the KDE at grid points one can reduce the computational complexity down to <span class="math inline">\(\mathcal{O}(\log{N} \cdot N)\)</span>.<span class="citation"><sup><a href="references.html#ref-gramacki2018fft" role="doc-biblioref">11</a></sup></span></p>
 <p>Using the equation <a href="mathematicalTheory.html#eq:kdebin">(2.2)</a> from above only evaluated at grid points gives us</p>
 <p><span class="math display" id="eq:binkdegrid">\[\begin{equation}
@@ -274,8 +271,8 @@ Figure 2.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class
 </div>
 <div id="isjTheory" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Improved Sheather-Jones Algorithm</h2>
-<p>A different take on Kernel Density Estimators is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">12</a></sup></span> The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="references.html#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
-<p>The optimal bandwidth is often defined as the one that minimizes the mean integrated square error (<span class="math inline">\(MISE\)</span>), which is given by the expectation value <span class="math inline">\(\mathbb{E}_f\)</span> of the integrated square error between the Kernel Density Estimation <span class="math inline">\(\widehat{f}_{h,norm}(x)\)</span> and the true probability density function <span class="math inline">\(f(x)\)</span>.</p>
+<p>A different take on kernel density estimators is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">12</a></sup></span> The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="references.html#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
+<p>The optimal bandwidth is often defined as the one that minimizes the mean integrated squared error (<span class="math inline">\(MISE\)</span>) between the kernel density estimation <span class="math inline">\(\widehat{f}_{h,norm}(x)\)</span> and the true probability density function <span class="math inline">\(f(x)\)</span>, where <span class="math inline">\(\mathbb{E}_f\)</span> denotes the expected value with respect to the sample which was used to calculate the KDE.</p>
 <p><span class="math display" id="eq:mise">\[\begin{equation}
 MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x) - f(x)]^2 dx
 \tag{2.7}
@@ -324,10 +321,10 @@ h_{AMISE} = \gamma^{[l]}(h_{AMISE})
 </div>
 <div id="hofmeyrTheory" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Using specialized kernel functions and their series expansion</h2>
-<p>Lastly there is an interesting approach described by Hofmeyr<span class="citation"><sup><a href="references.html#ref-hofmeyrFastExactEvaluation2019" role="doc-biblioref">15</a></sup></span> that uses special kernels of the form <span class="math inline">\(K(x) := poly(|x|) \cdot exp(−|x|)\)</span> where <span class="math inline">\(poly(|x|)\)</span> denotes a polynomial of finite degree.</p>
+<p>Lastly there is an interesting approach described by Hofmeyr<span class="citation"><sup><a href="references.html#ref-hofmeyrFastExactEvaluation2019" role="doc-biblioref">15</a></sup></span> that uses special kernel functions of the form <span class="math inline">\(K(x) := poly(|x|) \cdot exp(−|x|)\)</span> where <span class="math inline">\(poly(|x|)\)</span> denotes a polynomial of finite degree.</p>
 <p>Given the kernel with a polynom of order <span class="math inline">\(\alpha\)</span></p>
 <p><span class="math display" id="eq:polyexpkernel">\[\begin{equation}
-K(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
+K_{\alpha}(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
 \tag{2.13}
 \end{equation}\]</span></p>
 <p>the kernel density estimation is given by (equation <a href="mathematicalTheory.html#eq:kde">(2.1)</a>)</p>
@@ -335,6 +332,7 @@ K(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^{n}\sum_{j=0}^{\alpha} (\frac{|x-x_k|}{h})^{j} \cdot e^{(-\frac{|x-x_k|}{h})}
 \tag{2.14}
 \end{equation}\]</span></p>
+<p>where as usual <span class="math inline">\(n\)</span> is the number of samples and <span class="math inline">\(h\)</span> is the bandwidth parameter.</p>
 <p>Hofmeyr showed that the above kernel density estimator can be rewritten as
 <span class="math display" id="eq:kdepolyexplr">\[\begin{equation}
 \widehat{f}_h(x) = \sum_{j=0}^{\alpha}\sum_{i=0}^{j} {j \choose i}(\exp (\frac{x_{(\tilde{n}(x))}-x}{h}) x^{j-i} \ell (i, \tilde{n}(x))+\exp (\frac{x-x_{(n(x))}}{h})(-x)^{j-i} r(i, \tilde{n}(x)))
@@ -358,8 +356,8 @@ r(i, \tilde{n})=\sum_{k=\tilde{n}+1}^{\tilde{n}}(x_{k})^{i} \exp (\frac{x_{\tild
 r(i, \tilde{n}-1)=\exp(\frac{x_{\tilde{n}-1}-x_{\tilde{n}}}{h})(r(i, \tilde{n})+(x_{\tilde{n}})^{i})
 \tag{2.19}
 \end{equation}\]</span></p>
-<p>Using this recursion one can then calculate the Kernel Density Estimation with a single forward
-and a single backward pass over the ordered set of all <span class="math inline">\(x_{\tilde{n}}\)</span> leading to a computational complexity of <span class="math inline">\(\mathcal{O}((\alpha+1)(n+m))\)</span> where <span class="math inline">\(\alpha\)</span> is the order of the polynom, <span class="math inline">\(n\)</span> is the number of sample points and <span class="math inline">\(m\)</span> is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact Kernel Density Estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already pretty fast for the exact computation.</p>
+<p>Using this recursion one can then calculate the kernel density estimation with a single forward
+and a single backward pass over the ordered set of all <span class="math inline">\(x_{\tilde{n}}\)</span> leading to a computational complexity of <span class="math inline">\(\mathcal{O}((\alpha+1)(n+m))\)</span> where <span class="math inline">\(\alpha\)</span> is the order of the polynom, <span class="math inline">\(n\)</span> is the number of sample points and <span class="math inline">\(m\)</span> is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact kernel density estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already a significant runtime reduction for the exact estimate.</p>
 
 </div>
 </div>
