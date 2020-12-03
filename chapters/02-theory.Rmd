@@ -155,12 +155,12 @@ The optimal bandwidth $h_{AMISE}$ can then either be used for other kernel densi
 
 ## Using specialized kernel functions and their series expansion {#hofmeyrTheory}
 
-Lastly there is an interesting approach described by Hofmeyr[@hofmeyrFastExactEvaluation2019] that uses special kernels of the form $K(x) := poly(|x|) \cdot exp(−|x|)$ where $poly(|x|)$ denotes a polynomial of finite degree.
+Lastly there is an interesting approach described by Hofmeyr[@hofmeyrFastExactEvaluation2019] that uses special kernel functions of the form $K(x) := poly(|x|) \cdot exp(−|x|)$ where $poly(|x|)$ denotes a polynomial of finite degree.
 
 Given the kernel with a polynom of order $\alpha$
 
 \begin{equation}
-K(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
+K_\alpha(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
 (\#eq:polyexpkernel)
 \end{equation}
 
@@ -170,6 +170,8 @@ the kernel density estimation is given by (equation \@ref(eq:kde))
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^{n}\sum_{j=0}^{\alpha} (\frac{|x-x_k|}{h})^{j} \cdot e^{(-\frac{|x-x_k|}{h})}
 (\#eq:kdepolyexp)
 \end{equation}
+
+where as usual $n$ is the number of samples and $h$ is the bandwidth parameter.
 
 Hofmeyr showed that the above kernel density estimator can be rewritten as 
 \begin{equation}
@@ -202,4 +204,4 @@ r(i, \tilde{n}-1)=\exp(\frac{x_{\tilde{n}-1}-x_{\tilde{n}}}{h})(r(i, \tilde{n})+
 \end{equation}
 
 Using this recursion one can then calculate the Kernel Density Estimation with a single forward
-and a single backward pass over the ordered set of all $x_{\tilde{n}}$ leading to a computational complexity of $\mathcal{O}((\alpha+1)(n+m))$ where $\alpha$ is the order of the polynom, $n$ is the number of sample points and $m$ is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact Kernel Density Estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already pretty fast for the exact computation.
+and a single backward pass over the ordered set of all $x_{\tilde{n}}$ leading to a computational complexity of $\mathcal{O}((\alpha+1)(n+m))$ where $\alpha$ is the order of the polynom, $n$ is the number of sample points and $m$ is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact Kernel Density Estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already a significant runtime reduction for the exact estimate.

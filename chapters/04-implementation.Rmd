@@ -82,7 +82,7 @@ The binned method `ZfitBinned` is implemented in the same class definition as `Z
 The KDE method called `ZfitFFT`, which uses the FFT based method (discussed in section \@ref(fftTheory)), is implemented as a `zfit.pdf.BasePdf` class. It is not based on TensorFlow Probability as there is it does not use a `MixtureDistribution` but instead calculates the estimate for the given grid points directly. To still infer values for other points in the range of $x$ `tfp.math.interp_regular_1d_grid` is used, which computes a linear interpolation of values between the grid. In TensorFlow one-dimensional discrete convolutions are efficiently implemented already if we use `tf.nn.conv1d`. In benchmarking using this method to calculate the estimate proved significantly faster than using `tf.signal.rfft` and `tf.signal.irfft` to transform, multiply and inverse transform the vectors, which is implemented as an alternative option as well.
 
 
-## ISJ based method
+## ISJ based method {#isjMethod}
 
 The method called `ZfitISJ` is also implemented as a `zfit.pdf.BasePdf` class. After using simple or linear binning to calculate the grid counts, the estimate for the grid points is calculated using the improved Sheather Jones method (discussed in section \@ref(isjTheory)).
 
@@ -90,12 +90,12 @@ The method called `ZfitISJ` is also implemented as a `zfit.pdf.BasePdf` class. A
 To find the roots for $\gamma^l$ in equation \@ref(eq:hamisegamma2) Brent's method[@brent1971algorithm] implemented `tf_quant_finance` is used again. To avoid loops the iterative function $\gamma^l$ is statically unrolled for $l = 5$, since higher values would not lead to any practical differences according to the paper authors. For the Discrete Cosine Transform `tf.signal.dct` is used.
 
 
-## Specialized kernel method
+## Specialized kernel method {#hofmeyrMethod}
 
 The method called `ZfitHofmeyr` is again implemented as a `zfit.pdf.BasePdf` class. It uses specialized kernels of the form $poly(x)\cdot\exp(x)$ (as discussed in \@ref(hofmeyrTheory)).
 
-However due to the recursive nature of the method, an implementation in TensorFlow directly displayed the same performance as using an exact Kernel Density Estimation based on a mixture distribution. This is due to the fact, that recursive functions of this type can not be vectorized and have to be implemented using loops. Implementing the recursion using NumPy and `tf.numpy_function` (which wraps a NumPy based function to create a single TensorFlow op) was an order of magnitude faster, but also slower than all approximative methods given above.
+However due to the recursive nature of the method, an implementation in TensorFlow directly displayed the same poor performance as using an exact Kernel Density Estimation based on a mixture distribution. This is due to the fact, that recursive functions of this type can not be vectorized and have to be implemented using loops, which are ill-advised for TensorFlow due to its graph based paradigm. Implementing the recursion using NumPy and `tf.numpy_function` (which wraps a NumPy based Python function to create a single TensorFlow operation) was an order of magnitude faster, but still slower than all approximative methods discussed before.
 
-Finally, implementing the method in C++ directly as a custom TensorFlow operation named `tf.hofmeyr_kde` yielded the competitive execution runtime expected from theory. The code for the C++ based implementations is based on the C++ code used for the author's own R package FKSUM[@hofmeyrFastKernelSmoothing2020]. 
+Finally, implementing the method in C++ directly as a custom TensorFlow operation appropriately named `tf.hofmeyr_kde` yielded the competitive execution runtime expected from theory. The code for the C++ based implementation is based on the C++ code used for the author's own R package FKSUM[@hofmeyrFastKernelSmoothing2020]. 
 
-So far the custom TensorFlow operation is only implemented as a proof of concept and poses severe limitations. Its C++ library has to be compiled for every platform specifically and it currently does not compute its own gradient and therefore does not support TensorFlow's automatic differentiation. It also is implemented only for CPU and does therefore not benefit of using the GPU.
+So far the custom TensorFlow operation is only implemented as a proof of concept and poses severe limitations. Its C++ library has to be compiled for every platform specifically and it currently does not compute its own gradient and therefore does not support TensorFlow's automatic differentiation. It is also implemented only for the CPU and does therefore not benefit of using the GPU.
