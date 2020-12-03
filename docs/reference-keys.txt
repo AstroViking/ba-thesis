@@ -69,4 +69,3 @@ runtime-1
 comparison-to-kdepy-on-gpu
 runtime-2
 summary
-source-code
