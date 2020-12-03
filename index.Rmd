@@ -28,3 +28,4 @@ Kernel density estimation is a non-parametric density estimation and often used 
 
 \newpage
 \tableofcontents
+\newpage
