@@ -1,8 +1,8 @@
 # Theory {#mathematicalTheory}
 
-## Exact Kernel Density Estimation
+## Exact kernel density estimation
 
-Given a set of $n$ sample points $x_k$ ($k = 1,\cdots,n$), an exact Kernel Density Estimation $\widehat{f}_h(x)$ can be calculated as
+Given a set of $n$ sample points $x_k$ ($k = 1,\cdots,n$), an exact kernel density estimation $\widehat{f}_h(x)$ can be calculated as
 
 \begin{equation}
 \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
@@ -53,7 +53,7 @@ where $c_l$ is the value for grid point $g_l$ depending on sample points $x_k$ a
 
 ## Using convolution and the Fast Fourier Transform {#fftTheory}
 
-Another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel function and the grid counts (bin counts) calculated by the binning routine given above.
+Another technique to speed up the computation is rewriting the kernel density estimation as convolution operation between the kernel function and the grid counts (bin counts) calculated by the binning routine given above.
 
 By using the fact that a convolution is just a multiplication in Fourier space and only evaluating the KDE at grid points one can reduce the computational complexity down to $\mathcal{O}(\log{N} \cdot N)$.[@gramacki2018fft]
 
@@ -86,9 +86,9 @@ However, due to the limitation of evaluating only at the grid points themselves,
 
 ## Improved Sheather-Jones Algorithm {#isjTheory}
 
-A different take on Kernel Density Estimators is described in the paper 'Kernel density estimation by diffusion' by Botev et al.[@botev2010kernel] The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the 'Handbook of Monte Carlo Methods'[@kroese2013handbook] by the original paper authors. However the general idea is briefly sketched below.
+A different take on kernel density estimators is described in the paper 'Kernel density estimation by diffusion' by Botev et al.[@botev2010kernel] The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the 'Handbook of Monte Carlo Methods'[@kroese2013handbook] by the original paper authors. However the general idea is briefly sketched below.
 
-The optimal bandwidth is often defined as the one that minimizes the mean integrated squared error ($MISE$) between the Kernel Density Estimation $\widehat{f}_{h,norm}(x)$ and the true probability density function $f(x)$, where $\mathbb{E}_f$ denotes the expected value with respect to the sample which was used to calculate the KDE.
+The optimal bandwidth is often defined as the one that minimizes the mean integrated squared error ($MISE$) between the kernel density estimation $\widehat{f}_{h,norm}(x)$ and the true probability density function $f(x)$, where $\mathbb{E}_f$ denotes the expected value with respect to the sample which was used to calculate the KDE.
 
 \begin{equation}
 MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x) - f(x)]^2 dx
@@ -203,5 +203,5 @@ r(i, \tilde{n}-1)=\exp(\frac{x_{\tilde{n}-1}-x_{\tilde{n}}}{h})(r(i, \tilde{n})+
 (\#eq:kdepolyexprrec)
 \end{equation}
 
-Using this recursion one can then calculate the Kernel Density Estimation with a single forward
-and a single backward pass over the ordered set of all $x_{\tilde{n}}$ leading to a computational complexity of $\mathcal{O}((\alpha+1)(n+m))$ where $\alpha$ is the order of the polynom, $n$ is the number of sample points and $m$ is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact Kernel Density Estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already a significant runtime reduction for the exact estimate.
+Using this recursion one can then calculate the kernel density estimation with a single forward
+and a single backward pass over the ordered set of all $x_{\tilde{n}}$ leading to a computational complexity of $\mathcal{O}((\alpha+1)(n+m))$ where $\alpha$ is the order of the polynom, $n$ is the number of sample points and $m$ is the number of evaluation points. What is important to note here is that this is the only method that defines a computational gain for an exact kernel density estimation. Although we can also use binning to approximate it and reduce the computational complexity even further, it is already a significant runtime reduction for the exact estimate.

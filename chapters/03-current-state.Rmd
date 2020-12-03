@@ -1,6 +1,6 @@
 # Current state of the art {#currentState}
 
-To get a sense of what the current state of Kernel Density Estimation in Python is, we will look at several current implementations and their distinctions. This will lead to an understanding of their different properties and allow us to compare and classify the new methods proposed in the next chapter inside Python's ecosystem.
+To get a sense of what the current state of kernel density estimation in Python is, we will look at several current implementations and their distinctions. This will lead to an understanding of their different properties and allow us to compare and classify the new methods proposed in the next chapter inside Python's ecosystem.
 
 The most popular KDe implementations in Python are SciPy's `gaussian_kde`[@ScipyStatsGaussian], Statsmodels' `KDEUnivariate`[@KernelDensityEstimation] Scikit-learn's `KernelDensity`  package[@SklearnNeighborsKernelDensity] as well as KDEpy by Tommy Odland[@KDEpy].
 
@@ -8,7 +8,7 @@ The question of the optimal KDE implementation for any situation is not entirely
 
 However the new implementation proposed by Tommy Odland in 2018 called KDEpy[@KDEpy] was able to outperform all previous implementations (even Scikit-learn's tree based approach) in terms of runtime for a given accuracy by a factor of at least one order of magnitude, using an FFT based approach. Additionally it incorporates features of all implementations mentioned before as well as additional kernels and an additional method to calculate the bandwidth using the Improved Sheather Jones (ISJ) algorithm first proposed by Botev et al[@botev2010kernel], which was discussed in the previous chapter.
 
-This makes KDEpy the de-facto standard of Kernel Density Estimation in Python.
+This makes KDEpy the de-facto standard of kernel density estimation in Python.
 
 
 Feature / Library                      scipy       sklearn   statsmodels             KDEpy
