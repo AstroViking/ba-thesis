@@ -15,7 +15,7 @@ csl: "citation-styles/aps-with-supscript.csl"
 
 I am grateful to Prof. Dr. Nicola Serra, for giving me the opportunity to complete my bachelor thesis under his domain.
 
-I would also like to thank my supervisor Jonas Eschle, which advised me a lot during the research, implementation and writing. He provided both technical and emotional guidance and helped me fulfill my potential.
+I would also like to thank my supervisor Jonas Eschle, which advised me a lot concerning research, implementation and writing. He provided both technical and emotional guidance and helped me fulfill my potential.
 
 Finally, I would like to thank my girlfriend Christa Schläppi, who unconditionally supported me through every challenge in the last year and acted as a sounding board for all the intelligent as well as not so intelligent ideas I had.
 
@@ -24,8 +24,7 @@ Finally, I would like to thank my girlfriend Christa Schläppi, who unconditiona
 
 # Abstract {-}
 
-Multiple implementations of a one-dimensional kernel density estimation based on TensorFlow and Zfit are proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python it is shown as competitive and useful in real world applications. The newly proposed KDE implementation achieves state-of-the-art accuracy as well as efficiency for large one-dimensional data ($n \geq 10^8$) and may also provide runtime benefits for cases where the probability density estimate needs to be computed once but evaluated repeatedly.
-Furthermore it is designed to be run on parallel on multiple machines/GPUs. It is therefore optimally suited for very large datasets, as the ones produced in experimental high energy physics.
+Kernel Density Estimation is a non-parametric density estimation and often used in statistical inference as done in High Energy Physics using frameworks like zfit. Multiple implementations of univariate Kernel Density Estimation based on TensorFlow, a just-in-time compiled mathematical Python library for CPU and GPU, and zfit are proposed. Starting from the exact algorithm, several optimizations from recent papers are introduced. These include linear binning, Fourier Transformed Kernels, Improved Sheather-Jones and Hofmeyr with specialized kernels. Their accuracy and efficiency is compared to existing implementations in Python and shown to be competitive. The newly proposed Kernel Density Estimation implementation achieves state-of-the-art accuracy as well as efficiency, especially for large number of kernels ($n \geq 10^8$).
 
 \newpage
 \tableofcontents
