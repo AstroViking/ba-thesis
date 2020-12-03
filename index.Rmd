@@ -4,7 +4,7 @@ subtitle: "Bachelor Thesis"
 author: ["Marc Steiner"]
 supervisor: ["Jonas Eschle", "Prof. Dr. Nicola Serra"]
 institute: ["University of Zurich"]
-keywords: ["kernel density estimation", "Python", "TensorFlow", "Zfit"]
+keywords: ["Kernel density estimation", "Python", "TensorFlow", "Zfit"]
 site: "bookdown::bookdown_site"
 bibliography: ["citations/papers.json"]
 link-citations: True
@@ -24,7 +24,7 @@ Finally, I would like to thank my girlfriend Christa Schläppi, who unconditiona
 
 # Abstract {-}
 
-Kernel Density Estimation is a non-parametric density estimation and often used in statistical inference as done in High Energy Physics using frameworks like zfit. Multiple implementations of univariate Kernel Density Estimation based on TensorFlow, a just-in-time compiled mathematical Python library for CPU and GPU, and zfit are proposed. Starting from the exact algorithm, several optimizations from recent papers are introduced. These include linear binning, Fourier Transformed Kernels, Improved Sheather-Jones and Hofmeyr with specialized kernels. Their accuracy and efficiency is compared to existing implementations in Python and shown to be competitive. The newly proposed Kernel Density Estimation implementation achieves state-of-the-art accuracy as well as efficiency, especially for large number of kernels ($n \geq 10^8$).
+Kernel density estimation is a non-parametric density estimation and often used in statistical inference as done in High Energy Physics using frameworks like zfit. Multiple implementations of univariate kernel density estimation based on TensorFlow, a just-in-time compiled mathematical Python library for CPU and GPU, and zfit are proposed. Starting from the exact algorithm, several optimizations from recent papers are introduced. These include linear binning, Fourier Transformed Kernels, Improved Sheather-Jones and Hofmeyr with specialized kernels. Their accuracy and efficiency is compared to existing implementations in Python and shown to be competitive. The newly proposed kernel density estimation implementation achieves state-of-the-art accuracy as well as efficiency, especially for large number of kernels ($n \geq 10^8$).
 
 \newpage
 \tableofcontents
