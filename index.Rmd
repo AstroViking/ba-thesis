@@ -11,7 +11,7 @@ link-citations: True
 csl: "citation-styles/aps-with-supscript.csl"
 ---
 
-# Acknowledgements {-}
+# Acknowledgements {.unlisted .unnumbered}
 
 I am grateful to Prof. Dr. Nicola Serra, for giving me the opportunity to complete my bachelor thesis under his domain.
 
@@ -22,7 +22,7 @@ Finally, I would like to thank my girlfriend Christa Schläppi, who unconditiona
 \newpage
 
 
-# Abstract {-}
+# Abstract {.unlisted .unnumbered}
 
 Kernel density estimation is a non-parametric density estimation and often used in statistical inference as done in High Energy Physics using frameworks like zfit. Multiple implementations of univariate kernel density estimation based on TensorFlow, a just-in-time compiled mathematical Python library for CPU and GPU, and zfit are proposed. Starting from the exact algorithm, several optimizations from recent papers are introduced. These include linear binning, Fourier Transformed Kernels, Improved Sheather-Jones and Hofmeyr with specialized kernels. Their accuracy and efficiency is compared to existing implementations in Python and shown to be competitive. The newly proposed kernel density estimation implementation achieves state-of-the-art accuracy as well as efficiency, especially for large number of kernels ($n \geq 10^8$).
 
