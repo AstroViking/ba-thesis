@@ -160,7 +160,7 @@ Lastly there is an interesting approach described by Hofmeyr[@hofmeyrFastExactEv
 Given the kernel with a polynom of order $\alpha$
 
 \begin{equation}
-K_\alpha(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
+K_{\alpha}(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|}
 (\#eq:polyexpkernel)
 \end{equation}
 
