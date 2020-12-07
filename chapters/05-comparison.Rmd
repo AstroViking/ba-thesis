@@ -89,7 +89,7 @@ For other type of distributions the exact, linearly binned and FFT based method 
 
 The runtime comparisons are split in an instantiation and an evaluation phase. In the instantiation phase everything is prepared for evaluation at different values of $x$, depending on the method used more or less calculation happens during this phase. In the evaluation phase the kernel density estimate is calculated and returned for the evaluation points.
 
-```{python compareSimpleBinnedFFTISJRuntimeInstantiation, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton phase between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'"}
+```{python compareSimpleBinnedFFTISJRuntimeInstantiation, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton phase between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'", fig.align='center', out.width='100%'}
 figure, axes = runner.plot_runtimes(restricted_runtimes, distributions_to_evaluate, ['ZfitExact', 'ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'ZfitHofmeyrK1withCpp'], 'instantiation')
 figure
 ```
@@ -154,7 +154,7 @@ Now we compare the new methods against KDEpy while leveraging TensorFlow's capab
 
 ### Runtime
 
-```{python compareZfitKDEpyRuntimeInstantiationGPU, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)"}
+```{python compareZfitKDEpyRuntimeInstantiationGPU, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the instantiaton phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)", fig.align='center', out.width='100%'}
 unrestricted_runtimes = pd.read_pickle('./benchmark/gpu_linux/unrestricted_runtimes.pkl')
 figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'instantiation')
 figure
