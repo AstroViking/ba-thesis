@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> kernel density estimation</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel density estimation</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
@@ -152,7 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
 <li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#advantages-of-using-zfit-tensorflow"><i class="fa fa-check"></i><b>4.1</b> Advantages of using zfit TensorFlow</a></li>
+<li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#advantages-of-using-zfit-and-tensorflow"><i class="fa fa-check"></i><b>4.1</b> Advantages of using zfit and TensorFlow</a></li>
 <li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-univariate-kernel-density-estimation"><i class="fa fa-check"></i><b>4.2</b> Exact univariate kernel density estimation</a></li>
 <li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#binned-method"><i class="fa fa-check"></i><b>4.3</b> Binned method</a></li>
 <li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#fft-based-method"><i class="fa fa-check"></i><b>4.4</b> FFT based method</a></li>
@@ -176,6 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.1</b> Runtime</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="comparison.html"><a href="comparison.html#findings"><i class="fa fa-check"></i><b>5.5</b> Findings</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
@@ -261,9 +262,9 @@ c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l &lt; x_k &lt; g_{l+1}}} \frac{g_{k
 \end{equation}\]</span></p>
 <p>where the two vectors look like this</p>
 <div class="figure" style="text-align: center"><span id="fig:ckFigure"></span>
-<img src="figures/c_conv_k.png" alt="Vectors $\vec{c}$ and $\vec{k}$" width="60%" />
+<img src="figures/c_conv_k.png" alt="Vectors $\vec{c}$ and $\vec{k}$ used for the convolution" width="60%" />
 <p class="caption">
-Figure 2.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class="math inline">\(\vec{k}\)</span>
+Figure 2.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class="math inline">\(\vec{k}\)</span> used for the convolution
 </p>
 </div>
 <p>By using the well known convolution theorem we can fourier transform <span class="math inline">\(\vec{c}\)</span> and <span class="math inline">\(\vec{k}\)</span>, multiply them and inverse fourier transform them again to get the result of the discrete convolution.</p>
@@ -271,7 +272,7 @@ Figure 2.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class
 </div>
 <div id="isjTheory" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Improved Sheather-Jones Algorithm</h2>
-<p>A different take on kernel density estimators is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">12</a></sup></span> The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="references.html#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
+<p>A different take on KDEs is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="references.html#ref-botev2010kernel" role="doc-biblioref">12</a></sup></span> The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth. A more detailed and extensive explanation of the algorithm as well as an implementation in Matlab is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="references.html#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
 <p>The optimal bandwidth is often defined as the one that minimizes the mean integrated squared error (<span class="math inline">\(MISE\)</span>) between the kernel density estimation <span class="math inline">\(\widehat{f}_{h,norm}(x)\)</span> and the true probability density function <span class="math inline">\(f(x)\)</span>, where <span class="math inline">\(\mathbb{E}_f\)</span> denotes the expected value with respect to the sample which was used to calculate the KDE.</p>
 <p><span class="math display" id="eq:mise">\[\begin{equation}
 MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x) - f(x)]^2 dx

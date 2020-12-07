@@ -26,12 +26,10 @@ fig:compareSimpleBinnedFFTISJEstimationClaw
 fig:compareSimpleBinnedFFTISJErrors
 fig:compareSimpleBinnedFFTISJRuntimeInstantiation
 fig:compareSimpleBinnedFFTISJRuntimePDF
-fig:compareSimpleBinnedFFTISJRuntimeTotal
 fig:compareZfitKDEpyEstimations
 fig:compareZfitKDEpyErrors
 fig:compareZfitKDEpyRuntimeInstantiation
 fig:compareZfitKDEpyRuntimePDF
-fig:compareZfitRuntimePDFwithoutKDEpy
 fig:compareZfitKDEpyRuntimeInstantiationGPU
 fig:compareZfitKDEpyRuntimePDFGPU
 fig:compareZfitRuntimePDFGPUwithoutKDEpy
@@ -52,7 +50,7 @@ isjTheory
 hofmeyrTheory
 currentState
 tensorflowImplementation
-advantages-of-using-zfit-tensorflow
+advantages-of-using-zfit-and-tensorflow
 exact-univariate-kernel-density-estimation
 binned-method
 fft-based-method
@@ -68,4 +66,5 @@ accuracy-1
 runtime-1
 comparison-to-kdepy-on-gpu
 runtime-2
+findings
 summary
