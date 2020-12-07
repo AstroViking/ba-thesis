@@ -1,0 +1,26 @@
+.pull-left2 {
+    float: left;
+    width: 57%;
+}
+
+.pull-right2 {
+    float: right;
+    width: 39%;
+}
+
+.align-bottom {
+    position: absolute;
+    bottom: 10%;
+    width: 85%;
+}
+
+.total-center {
+    left: 50%;
+    top: 50%;
+    margin: 0;
+    position: absolute;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+}
