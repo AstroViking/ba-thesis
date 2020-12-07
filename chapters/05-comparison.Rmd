@@ -174,7 +174,7 @@ figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_eval
 figure
 ```
 
-Looking at the evaluation runtimes of only the new methods, we can see that the differences are minimal (figure \@ref(fig:compareZfitRuntimePDFGPUwithoutKDEpy)). The binned method does not substantially increase for larger sample sizes, as was seen while running the methods on the CPU (figure \@ref(fig:compareZfitRuntimePDFwithoutKDEpy)).
+Looking at the evaluation runtimes of only the new methods, we can see that the differences are minimal (figure \@ref(fig:compareZfitRuntimePDFGPUwithoutKDEpy)) and all evaluation runtimes are of the same order of magnitude.
 
 ```{python compareZfitKDEpyRuntimeTotal, echo=FALSE, eval=TRUE, fig.cap="Runtime difference of the total calculation (instantiation and evaluation phase) between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)", fig.align='center', out.width='100%'}
 figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'total')
