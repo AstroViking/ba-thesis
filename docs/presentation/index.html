@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
+    <title>Performance of univariate kernel density estimation methods in TensorFlow</title>
     <meta charset="utf-8" />
     <meta name="author" content="Marc Steiner" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
-    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <meta name="date" content="2020-12-07" />
+    <script src="libs/header-attrs-2.5/header-attrs.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Performance of Univariate Kernel Density Estimation methods in TensorFlow
+# Performance of univariate kernel density estimation methods in TensorFlow
 ### Marc Steiner
 ### University of Zurich
-### 2020/11/20 (updated: 2020-11-24)
+### 2020-12-07
 
 ---
+
+
 
 
 
@@ -25,22 +29,58 @@ class: center, middle, inverse, title-slide
 
 class: inverse, center, middle
 
-# Data collection in high energy physics
+# Experimental data and interpretation
+
+???
+
+- Suppose we have measured data experimentally
+- How probable are certain types of events?
 
 ---
 
-# Data collection in high energy physics
+# Parametric fitting
 
-- Large amount of data
-- ...
+.total-center[
+Parametric function: 
+
+`\begin{equation*}
+y = f(x,a,b,c) 
+\end{equation*}`
+
+Least squares:
+
+`\begin{equation*}
+\min_{a, b, c}\{\sum_{k=1}^{n}(f(x_i, a, b, c) - y_i)^2 \}
+\end{equation*}`
+]
+
+???
+
+- Parametric fitting (y=f(a,b,c, x), find a, b, c)
+- What if parametric fitting is not applicable? (CERN: Huge data, complex interactions)
+- Non-parametric fitting
 
 ---
-# Data collection in high energy physics
+# Histograms
 
-## Histograms
+.align-bottom[
+![Bin count defines height of histogram](figures/datapoints.gif)
+]
 
-- ...
-- ...
+???
+
+- Divide into equal sized bins
+
+---
+# Histograms
+
+.align-bottom[
+![Creating equal sized bins](figures/histogram.gif)
+]
+
+???
+
+- Bin count defines height of histogramm
 
 ---
 class: inverse, center, middle
@@ -51,13 +91,33 @@ class: inverse, center, middle
 
 # Kernel Density Estimation
 
-...
+... !TODO: KDE animation
+
+???
+
 
 ---
 
 # Kernel Density Estimation
 
-## Simple and Linear Binning
+.total-center[
+`\begin{equation*}
+\widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
+\end{equation*}`
+]
+
+???
+
+- `\(f\)` is the real distribution we want to approximate
+- `\(\widehat{f}_h(x)\)` is the kernel density estimator
+- `\(h\)` is the bandwidth parameter, which controls how wide the kernels are spread
+- `\(n\)` is the number of samples
+
+---
+
+# Kernel Density Estimation
+
+## Linear Binning
 
 ...
 
@@ -77,13 +137,9 @@ class: inverse, center, middle
 
 ---
 
-class: inverse, center, middle
+# Kernel Density Estimation
 
-# Current state of the art
-
----
-
-# Current state of the art
+## Hofmeyr
 
 ...
 
@@ -95,9 +151,96 @@ class: inverse, center, middle
 
 ---
 
-# Implementation
+# TensorFlow
 
-...
+Addition in Python:
+
+.pull-left2[
+
+```python
+a = 3
+b = 5
+c = a + b
+
+print(c)
+```
+
+```
+## 8
+```
+]
+
+---
+
+# TensorFlow
+
+Addition in TensorFlow:
+
+.pull-left2[
+
+```python
+import tensorflow as tf
+tf.compat.v1.disable_eager_execution()
+  
+a = tf.constant(3, dtype=tf.int32) 
+b = tf.constant(5, dtype=tf.int32) 
+c = tf.add(a, b) 
+
+print(c)
+  
+```
+
+```
+## Tensor("Add:0", shape=(), dtype=int32)
+```
+
+```python
+session = tf.compat.v1.Session()
+session.run(c)
+```
+
+```
+## 8
+```
+
+```python
+session.close()
+```
+]
+
+.pull-right2[
+![TensorFlow graph](figures/tensorflow-graph.png)
+]
+
+---
+
+# Zfit
+
+.pull-left2[
+![](figures/zfit-logo.png)
+]
+
+.pull-right2[
+![Zfit workflow](figures/zfit-workflow.png)
+]
+
+---
+
+# New methods
+
+Four new proposed methods:
+
+- `ZfitBinned`: linear binning
+
+
+- `ZfitFFT`: Fast Fourier Transformation
+
+
+- `ZfitISJ`: Improved Sheather-Jones algorithm by Botev et al.
+
+
+- `ZfitHofmeyr`: Specialized kernel functions ($poly(x)\cdot\exp(x)$) by Hofmeyr
+
 
 ---
 
@@ -107,9 +250,87 @@ class: inverse, center, middle
 
 ---
 
-# Comparison
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/showDistributions-1.png" alt="Test distributions used" width="74.375%" /&gt;
+&lt;p class="caption"&gt;Test distributions used&lt;/p&gt;
+&lt;/div&gt;
 
-...
+???
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/compareZfitKDEpyEstimations-1.png" alt="KDE using different methods (10'000 samples)" width="85%" /&gt;
+&lt;p class="caption"&gt;KDE using different methods (10'000 samples)&lt;/p&gt;
+&lt;/div&gt;
+
+???
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/compareZfitKDEpyErrors-1.png" alt="Integrated square errors (10'000 samples)" width="85%" /&gt;
+&lt;p class="caption"&gt;Integrated square errors (10'000 samples)&lt;/p&gt;
+&lt;/div&gt;
+
+???
+
+
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/compareZfitKDEpyRuntimeInstantiationGPU-1.png" alt="Instantiation runtimes" width="85%" /&gt;
+&lt;p class="caption"&gt;Instantiation runtimes&lt;/p&gt;
+&lt;/div&gt;
+
+???
+
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/compareZfitKDEpyRuntimePDFGPU-1.png" alt="Evaluation runtimes" width="85%" /&gt;
+&lt;p class="caption"&gt;Evaluation runtimes&lt;/p&gt;
+&lt;/div&gt;
+
+???
+
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/compareZfitRuntimePDFGPUwithoutKDEpy-1.png" alt="Evaluation runtimes (without KDEpy)" width="85%" /&gt;
+&lt;p class="caption"&gt;Evaluation runtimes (without KDEpy)&lt;/p&gt;
+&lt;/div&gt;
+
+???
+
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/Users/rocky/Documents/ba-thesis/docs/presentation/index_files/figure-html/compareZfitKDEpyRuntimeTotal-1.png" alt="Total runtimes" width="85%" /&gt;
+&lt;p class="caption"&gt;Total runtimes&lt;/p&gt;
+&lt;/div&gt;
+
+???
+
+
+---
+
+# Findings
+
+1. `ZfitHofmeyr`: Difficult to implement efficiently in TensorFlow due to recursion
+
+
+2. Most performant implementations for evaluation: `ZfitFFT`, `ZfitISJ`
+
+
+3. Most accurate method for spiky non-normal distributions:`ZfitISJ` (minor runtime cost compared to `ZfitFFT`)
+
+
+4. Most performant implementations for total runtime and  `\(n \geq 10^8\)`: `ZfitBinned`, `ZfitFFT`
 
 ---
 
