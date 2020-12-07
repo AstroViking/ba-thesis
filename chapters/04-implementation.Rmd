@@ -48,8 +48,7 @@ An exact KDE using zfit called `ZfitExact` is implemented as a
 
 The method `ZfitBinned` also implements kernel density estimation as a constructed `MixtureSameFamily` distribution, however it bins the data (either simple or linearly) to an equally spaced grid and uses only the grid points weighted by their grid count as kernel locations (see section \@ref(binningTheory)).
 
-Since simple binning is already implemented in TensorFlow in the function 
-`tf.histogram_fixed_width`, the contribution of this thesis for `ZfitBinned` lies in an implementation of linear binning in TensorFlow. Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided as the graph based computation is fastest with vectorized operations and loops pose a significant runtime overhead. However with some inspiration from the KDEpy package[@KDEpy] this can be done without using loops at all. 
+Since simple binning is already implemented in TensorFlow as `tf.histogram_fixed_width`, the contribution of this thesis for `ZfitBinned` lies in an implementation of linear binning in TensorFlow. Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided as the graph based computation is fastest with vectorized operations and loops pose a significant runtime overhead. However with some inspiration from the KDEpy package[@KDEpy] this can be done without using loops at all. 
 
 First, every data point $x_k$ is transformed to $\tilde{x}_k$ in the following way (the transformation can be vectorized)
 
