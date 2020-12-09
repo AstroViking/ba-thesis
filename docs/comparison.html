@@ -252,8 +252,8 @@ For other type of distributions the exact, linearly binned and FFT based method 
 <div id="runtime" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Runtime</h3>
 <p>The runtime comparisons are split in an instantiation and an evaluation phase. In the instantiation phase everything is prepared for evaluation at different values of <span class="math inline">\(x\)</span>, depending on the method used more or less calculation happens during this phase. In the evaluation phase the kernel density estimate is calculated and returned for the evaluation points.</p>
-<div class="figure"><span id="fig:compareSimpleBinnedFFTISJRuntimeInstantiation"></span>
-<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJRuntimeInstantiation-1.png" alt="Runtime difference of the instantiaton phase between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'" width="768" />
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJRuntimeInstantiation"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJRuntimeInstantiation-1.png" alt="Runtime difference of the instantiaton phase between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'" width="100%" />
 <p class="caption">
 Figure 5.5: Runtime difference of the instantiaton phase between the five algorithms ‘Exact,’ ‘Binned,’ ‘FFT,’ ‘ISJ’ and ‘Hofmeyr’
 </p>
@@ -313,8 +313,8 @@ Figure 5.10: Runtime difference of the evaluation phase between the newly propos
 <p>Now we compare the new methods against KDEpy while leveraging TensorFlow’s capability of GPU based optimization. All computations were executed using two Tesla P100 GPU’s on the openSUSE Leap operating system running on an internal server of the University of Zurich. The number of samples per test distribution is again in the range of <span class="math inline">\(10^3\)</span> - <span class="math inline">\(10^8\)</span>. As using the GPU does not change the accuracy, we will only compare the runtimes here. Also the Hofmeyr method is excluded as it was not implemented for running on the GPU.</p>
 <div id="runtime-2" class="section level3" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Runtime</h3>
-<div class="figure"><span id="fig:compareZfitKDEpyRuntimeInstantiationGPU"></span>
-<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeInstantiationGPU-1.png" alt="Runtime difference of the instantiaton phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="768" />
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimeInstantiationGPU"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeInstantiationGPU-1.png" alt="Runtime difference of the instantiaton phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="100%" />
 <p class="caption">
 Figure 5.11: Runtime difference of the instantiaton phase between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy (run on GPU)
 </p>
