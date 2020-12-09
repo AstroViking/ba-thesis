@@ -14,13 +14,28 @@
     width: 85%;
 }
 
+.align-bottom2 {
+    position: absolute;
+    bottom: 10%;
+    width: 80%;
+}
+
+.align-bottom img {
+    width: 100%;
+}
+
 .total-center {
     left: 50%;
     top: 50%;
     margin: 0;
     position: absolute;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    padding: 0 90px;
+    padding-top: 90px;
+}
+
+ol li, ul li {
+    padding: 15px 0;
 }

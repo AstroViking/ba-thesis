@@ -577,6 +577,9 @@ where $\tilde{n}(x)$ is defined to be the number of sample points less than or e
 - However due to the recursive nature of this method implementing it in TensorFlow proved quite inefficient as it has to be implemented with loops and due to the graph paradigm of TensorFlow loops should be avoided whenever possible
 - Therefore the taken approach was to implement the whole computation in a custom TensorFlow operation directly in C++, whereas the other methods were implemented in Python TensorFlow only
 
+- In the scope of the thesis, the Hofmeyr method was implemented for CPU only and does not compute its own gradient currently, which breaks TensorFlow's automatic differentiation
+- Therefore the Hofmeyr method, although very promising, is currently only implemented as proof of concept and not yet suitable to be used in production
+
 ---
 
 class: inverse, center, middle
@@ -642,7 +645,7 @@ figure
 
 - The ISJ based method (`ZfitISJ`) has the lowest integrated squared error for the spiky 'Claw' distribution, which confirms the superiority of the ISJ based bandwidth estimation for highly non-normal, spiky distributions
 
-- The specialized kernel method (implemented as TensorFlow operation in C++: `ZfitHofmeyrK1withCpp`) has a higher integrated squared error than the other methods for all distributions and fails to capture the true density for large sample sizes completely, however this is likely due to an uncaught overflow error in the underlying implementation and does not reflect directly on the performance of the method itself. This indicates that here, more work is needed to correctly evaluate this method.
+- The specialized kernel method (implemented as TensorFlow operation in C++: `ZfitHofmeyrK1withCpp`) has a higher integrated squared error than the other methods for all distributions and fails to capture the true density for large sample sizes completely, however this is likely due to an uncaught overflow error in the underlying implementation and does not reflect directly on the performance of the method itself. This indicates that here, more work is needed to correctly evaluate this method
 
 ---
 
@@ -654,7 +657,8 @@ figure
 
 ???
 
-- Next, we look at the runtimes of the different methods
+- Next, we look at the runtimes of the different methods run on the GPU
+- The Hofmeyr method is exluded here, as it is not implemented to be run on a GPU yet, however runtime comparisons run on the CPU can be found in my thesis papers as well
 - First we look at the instantiation runtime and the evaluation runtime independently, as for applications where the PDF has to be evaluated repeatedly (for instance to use it in a parametric fitting) the evaluation runtime is of much higher importance.
 
 - On the x-axis is again the number of samples, whereas on the y-axis is the runtime in seconds
