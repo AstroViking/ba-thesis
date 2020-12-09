@@ -27,6 +27,7 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+      countdown: 60000
 ---
 
 ```{r setup, include=FALSE, cache=TRUE}
@@ -35,10 +36,78 @@ library('reticulate')
 use_condaenv('ba-thesis')
 ```
 
-```{r xaringan-themer, include=FALSE, warning=FALSE}
+```{r xaringan-themer-and-kde-plots, include=FALSE, warning=FALSE, fig.showtext=TRUE}
+library(ggplot2)
+library(gifski)
 library(xaringanthemer)
-style_mono_light(base_color = "#23395b", outfile='./docs/presentation/css/xaringan-themer.css')
+style_mono_light(base_color = "#23395b", 
+    header_font_google = google_font("Josefin Sans"),
+    text_font_google   = google_font("Montserrat", "300", "300i"),
+    code_font_google   = google_font("Fira Mono"),
+    outfile='./docs/presentation/css/xaringan-themer.css'
+)
+
+set.seed(191919)
+
+n <- 30
+data = rnorm(n, mean = 0, sd = 1)
+h <- bw.nrd0(data)
+
+plot_kde <- function(data, h, n) {
+    for (k in (1:n)) {
+        dataf <- data.frame('x' = data[1:k])
+        
+        plot <- ggplot(dataf, aes(x=x)) +
+            stat_function(fun = ~dnorm(.x, mean = 0, sd = 1), n = 101, linetype="dashed") + 
+            geom_density(bw=h) +
+            xlab("x") + xlim(-4, 4) +
+            ylab("Probability(x)") + ylim(0, 0.8) + 
+            geom_text(data=data.frame(), aes(label = paste('n = ', k), x = Inf, y = Inf), hjust = 10, vjust = 10)
+        
+        for(i in 1:nrow(dataf)){
+            plot <- plot + stat_function(fun = function(...){1/n * dnorm(...)}, n = 101, args = list(mean = dataf[i,], sd = h)) 
+        }
+        
+        plot <- plot + geom_point(aes(x=dataf$x, y=numeric(k))) + theme_xaringan()
+        
+        print(plot)
+    }
+}
+
+save_gif(
+  plot_kde(data, h, n),
+  gif_file = "presentation/figures/kde.gif"
+)
+
+plot_kde2 <- function(data, n) {
+    dataf <- data.frame('x' = data[1:n])
+
+    for (h in seq(0.01, 0.8, by=0.02)) {
+        
+        plot <- ggplot(dataf, aes(x=x)) +
+            stat_function(fun = ~dnorm(.x, mean = 0, sd = 1), n = 101, linetype="dashed") + 
+            geom_density(bw=h) +
+            xlab("x") + xlim(-4, 4) +
+            ylab("Probability(x)") + ylim(0, 0.8) +
+            geom_text(data=data.frame(), aes(label = paste('h = ', h), x = Inf, y = Inf), hjust = 10, vjust = 10)
+        
+        for(i in 1:nrow(dataf)){
+            plot <- plot + stat_function(fun = function(...){1/n * dnorm(...)}, n = 101, args = list(mean = dataf[i,], sd = h))
+        }
+        
+        plot <- plot + geom_point(aes(x=dataf$x, y=numeric(n))) + theme_xaringan()
+        
+        print(plot)
+    }
+}
+
+save_gif(
+  plot_kde2(data, 10),
+  gif_file = "presentation/figures/kde-bandwidth.gif",
+  delay = 0.2
+)
 ```
+
 
 ```{python, pythonSetup, echo = FALSE, eval=TRUE, cache=FALSE}
 import warnings
@@ -70,14 +139,37 @@ restricted_estimations = pd.read_pickle('./benchmark/cpu_macbook_hofmeyr/restric
 
 ```
 
-class: inverse, center, middle
+# Purpose of the thesis
 
-# Experimental data and interpretation
+- Research on what algorithms exist to compute a kernel density estimation
+- Implementation of four kernel density estimation methods in TensorFlow and zfit
+- Comparison of the different methods leading to conclusions, if and when to use which one
+- Display competitiveness of the newly proposed implementations against current state-of-the-art
 
 ???
 
-- Suppose we have measured data experimentally
-- How probable are certain types of events?
+- Research on KDE
+- Implement four kde methods
+- Benchmark and compare the 
+- Was able to show competitiveness against current state-of-the-art
+
+1. Introduce kernel density estimation conceptually
+2. Talk about TensorFlow and zfit
+3. Explain the four implemented methods
+4. Show the benchmarking results
+5. Draw conclusions
+
+---
+
+class: inverse, center, middle
+
+# What is kernel density estimation
+
+???
+
+- Suppose we are trying to understand some physical system
+- We have measured data experimentally (registered particle energies, high energy physics, CERN)
+- We might be interested in how probable certain events are, which is described by the probability density function (PDF)
 
 ---
 
@@ -86,154 +178,194 @@ class: inverse, center, middle
 .total-center[
 Parametric function: 
 
-\begin{equation*}
+\begin{align*}
 y = f(x,a,b,c) 
-\end{equation*}
+\end{align*}
 
 Least squares:
 
-\begin{equation*}
+\begin{align*}
 \min_{a, b, c}\{\sum_{k=1}^{n}(f(x_i, a, b, c) - y_i)^2 \}
-\end{equation*}
+\end{align*}
 ]
 
 ???
 
-- Parametric fitting (y=f(a,b,c, x), find a, b, c)
-- What if parametric fitting is not applicable? (CERN: Huge data, complex interactions)
-- Non-parametric fitting
+
+- Already have some knowledge of system, underlying mechanisms well understood => guess shape of the probability density function 
+- Define it mathematically as some function f, depending on parameters a, b and c
+- The parameters might have physical meanings which we are interested in
+- By some goodness-of-fit criterion like log-likelihood or $\chi^2$ we can fit the defined function to the data
+
+- But what if the knowledge of the system is too poor, the underlying mechanisms to complex
+- CERN: A whooping 25 gigabytes of data recorded per second, many complex physical interactions => very complicated probability density function
+- When parametric fitting is not applicable, we can resort to so called non-parametric fitting
 
 ---
 # Histograms
 
 .align-bottom[
-![Bin count defines height of histogram](figures/datapoints.gif)
+![Creating equal sized bins](figures/datapoints.gif)
 ]
 
 ???
 
-- Divide into equal sized bins
+- The most straightforward approach for non-parametric fitting are histograms
+- By dividing the data into equal sized bins (as seen here)...
 
 ---
 # Histograms
 
 .align-bottom[
-![Creating equal sized bins](figures/histogram.gif)
+![Bin count defines height of histogram](figures/histogram.gif)
 ]
 
 ???
 
-- Bin count defines height of histogramm
+- ... and generating a bar plot for each bin with the height scaled according to the number of data points inside it
+- We get a discrete PDF already
+
+- However, histograms are highly dependent on bin width and bin positioning
+- Shape of the distribution can change very much
+- These are somewhat arbitrary parameters, difficult to define rules for good values to use
+- Not quite so non-parametric
 
 ---
-class: inverse, center, middle
 
-# Kernel Density Estimation
+# Kernel density estimation
 
----
-
-# Kernel Density Estimation
-
-... !TODO: KDE animation
+.align-bottom2[
+![Kernel density estimation](figures/kde.gif)
+]
 
 ???
 
+- A more sophisticated approach is the kernel density estimation or KDE
+- Can be looked at as sort of a generalization of the histogram
+- Works by replacing every data point with a so-called kernel function or simply kernel
+- And summing up all the kernels to a probability density estimate
+- The most often used kernel is the Gaussian density
 
 ---
 
-# Kernel Density Estimation
+# Kernel density estimation
 
 .total-center[
-\begin{equation*}
-\widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
-\end{equation*}
+\begin{align*}
+& K(x) :=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}x^2} \\\
+& \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big) \\\\
+& \mathcal{O}(n\cdot m)
+\end{align*}
+
+where $n$ is the number of sample points and $m$ is the number of evaluation points
 ]
 
 ???
 
+- Mathematically a kernel density estimation looks like this, where
 - $f$ is the real distribution we want to approximate
 - $\widehat{f}_h(x)$ is the kernel density estimator
-- $h$ is the bandwidth parameter, which controls how wide the kernels are spread
+- $h$ is the bandwidth parameter, which controls how wide the kernels are spread out
 - $n$ is the number of samples
 
----
+- Summation over all the kernels
 
-# Kernel Density Estimation
+- Advantages:
+- Smooth kernel => smooth PDF
+- Depends only on a single bandwidth parameter $h$
 
-## Linear Binning
-
-...
-
----
-
-# Kernel Density Estimation
-
-## Fast Fourier Transform
+- The computational complexity however is of order n times m, which is quite high, especially for large data and repeated evaluation
+- This can be mitigated by different mathematical tricks, as we see later when I talk about my implementations of KDE
 
 ---
 
-# Kernel Density Estimation
+# Kernel density estimation
 
-## Improved Sheather Jones
+.align-bottom2[
+![Kernel density estimation dependence on bandwith](figures/kde-bandwidth.gif)
+]
 
-...
+???
 
----
+- As we see here, the wider the bandwith is, the more smoothed out is the resulting PDF
+- To small a bandwidth displays each datapoint as feature
+- To high of a bandwidth might oversmooth important features, especially if the underlying PDF has multiple peaks
 
-# Kernel Density Estimation
-
-## Hofmeyr
-
-...
+- More advantages of KDE:
+- A lot better reference rules for the bandwidth than for histogram parameters
+- By imposing the approximately optimal bandwidth from the data, the approach becomes truly non-parametric
 
 ---
 
 class: inverse, center, middle
 
-# Implementation
+# What is TensorFlow
+
+???
+
+- As said, my goal was to implement KDE in TensorFlow and zfit
+
+- TensorFlow is a just-in-time compiled mathematical Python library
+- But what does that mean?
 
 ---
 
 # TensorFlow
 
-Addition in Python:
+.pull-left[
+Pure Python:
 
-.pull-left2[
 ```{python}
 a = 3
 b = 5
 c = a + b
-
-print(c)
 ```
 ]
+
+.pull-right[
+TensorFlow Python:
+
+```{python}
+import tensorflow as tf
+
+a = tf.constant(3, dtype=tf.int32) 
+b = tf.constant(5, dtype=tf.int32) 
+c = tf.add(a, b) 
+```
+
+![TensorFlow graph](figures/tensorflow-graph.png)
+]
+
+???
+
+- Addition in pure Python looks like this
+- Addition in TensorFlow looks like this
+- Not that different, right?
+- However, TensorFlow can be configured to compute a graph of the whole computation before executing anything, which looks like this, where a and be are tensors and the oval shape is the add operation in between
 
 ---
 
 # TensorFlow
 
-Addition in TensorFlow:
+![TensorFlow graph complex](figures/tensorflow-graph2.png)
 
-.pull-left2[
-````{python}
-import tensorflow as tf
-tf.compat.v1.disable_eager_execution()
-  
-a = tf.constant(3, dtype=tf.int32) 
-b = tf.constant(5, dtype=tf.int32) 
-c = tf.add(a, b) 
+???
 
-print(c)
-  
-session = tf.compat.v1.Session()
-session.run(c)
-session.close()
-````
-]
+- For a more complex program the graph might look like this
+- Once the graph is built it can then be executed and we get the result of the program
 
-.pull-right2[
-![TensorFlow graph](figures/tensorflow-graph.png)
-]
+- Computing this graph first provides several advantages:
+- TensorFlow acts itself as a kind of just-in-time compiler and can optimize code before running
+- TensorFlow can schedule independent branches of the whole graph to different CPUs and GPUs, so that things like the addition and the multiplication here for instance can be run in parallel
+
+- The graph structure allows for something called automatic differentation
+- Since every TensorFlow operation defines its own derivative, TensorFlow can calculate the derivative of the whole graph by simply applying the chain rule
+
+- Finally, the underlying basic TensorFlow operations, like add and multiply, are programmed in C++ and therefore benefit from static typing and compile time optimization
+
+- All of this makes TensorFlow very useful for efficient processing of large scale data 
+
+
 
 ---
 
@@ -247,29 +379,215 @@ session.close()
 ![Zfit workflow](figures/zfit-workflow.png)
 ]
 
----
+???
 
-# New methods
-
-Four new proposed methods:
-
-- `ZfitBinned`: linear binning
-
-
-- `ZfitFFT`: Fast Fourier Transformation
-
-
-- `ZfitISJ`: Improved Sheather-Jones algorithm by Botev et al.
-
-
-- `ZfitHofmeyr`: Specialized kernel functions ($poly(x)\cdot\exp(x)$) by Hofmeyr
-
+- zfit is a highly scalable and customizable model manipulation and fitting library based on TensorFlow
+- It was started and maintained and is actively developed by my thesis supervisor Jonas Eschle
+- The basic idea behind zfit is to offer a Python oriented alternative to the very successful RooFit library from the ROOT data analysis package that can integrate with the other packages that are part if the scientific Python ecosystem
 
 ---
 
 class: inverse, center, middle
 
-# Comparison
+# What did I implement
+
+???
+
+- Calculating the exact kernel density estimation in TensorFlow is relatively straightforward and already explained by the TensorFlow authors
+- Therefore the contribution of my thesis are four more complicated implementations that approximate the KDE with high accuracy but much lower runtime
+
+---
+
+# Implemented methods
+
+- `ZfitBinned`: Linear binning
+- `ZfitFFT`: Fast Fourier Transformation
+- `ZfitISJ`: Improved Sheather-Jones algorithm by Botev et al.
+- `ZfitHofmeyr`: Specialized kernel functions of the form $poly(x)\cdot\exp(x)$ by Hofmeyr
+
+???
+
+- The first method uses linear binning
+- The second method Fast Fourier Transformation
+- The third method uses something called the improved Sheather-Jones algorithm for computing an especially optimal bandwidth
+- Finally, the last one uses specialized kernel functions of the form "polynomial times exponential" to speed up the calculation
+
+---
+
+# ZfitBinned
+
+.total-center[
+\begin{align*}
+& \widehat{f}_h(x) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{x-g_l}{h}\Big) \\\\
+& \mathcal{O}(N\cdot m),\quad with \quad N < n
+\end{align*}
+
+![Simple versus linear binning](figures/simple-vs-linear-binning.png)
+]
+
+???
+
+- The first method to lower the runtime is by lowering the number of sample points by binning beforehand
+- Simple binning is the same as taking a histogram and  is already implemented in TensorFlow
+- However linear binning is a lot more accurate while essentially imposing the same computational complexity
+- Implementation of linear binning in TensorFlow is a bit tricky, since loops in the graph are not efficient and should be avoided
+
+- ...
+
+- As can be seen in the benchmarking later, linear binning is a very efficient method that provides very accurate approximations of the exact kernel density estimation
+- It reduces the computational complexity to order N times m, where N is the number of grid points choosen
+
+---
+
+# ZfitFFT
+
+Only evaluating at grid points themselves, setting $c_l = 0$ for all $l$ not in the set $\{1, ..., N\}$ and notice that $K(-x) = K(x)$ we can expand the KDE to a discrete convolution as follows:
+
+.total-center[
+\begin{align*}
+& \widehat{f}_h(g_j) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{g_j-g_l}{h}\Big) = \frac{1}{nh}\\
+& \implies\\
+& \widehat{f}_h(g_j) = \frac{1}{nh} \sum_{l=-N}^N k_{j-l} \cdot c_l = \vec{c} \ast \vec{k} \\\\
+& \mathcal{O}(\log{N} \cdot N)
+\end{align*}
+]
+
+???
+
+- Another approach at reducing the computational complexity is using a Fast Fourier Transformation
+- Using the binned scheme from before and only evaluating at the grid points themselves, we can extend the kernel density estimation to a discrete convolution
+- Then we use the well known convolution theorem to Fourier Transform to morph the convolution into a multiplication
+
+- This leads to a computational complexity of order log(N) times N
+
+---
+
+# ZfitISJ
+
+.total-center[
+\begin{align*}
+& MISE(h) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x) - f(x)]^2 dx \\\\
+& h_{AMISE}(x) = \Big( \frac{1}{2N\sqrt{\pi} \| f^{(2)}(x)\|^2}\Big)^{\frac{1}{5}}
+\end{align*}
+]
+
+???
+
+- Another more recently developed alogrithm called improved Sheather-Jones was proposed by Botev et al. in 2010
+- It is quite similar to the FFT method described above as it uses a Fast Cosine Transform to calculate the binned KDE and I won't go into much detail here
+- The important difference however is, that it calculates the approximately optimal bandwidth and therefore leads to much better accuracy while only bringing a minor runtime cost compared to the previous methods
+
+- The approximately optimal bandwidth is often defined as the one that asymptotically minimizes the mean integral squared error between the PDF and the PDF estimation
+- As derived by Wand and Jones in 1994 $h_{AMISE}$ is given by the following equation and depends on the second derivative of the true PDF $f$
+- Simply assuming that $f$ is the Normal distribution with mean and variance computed from the data to calculate the second derivative of $f$ leads to the Silverman rule of thumb for the optimal bandwith, however as expected this rule of thumb has poor performance for non-normal distributions
+
+---
+
+# ZfitISJ
+
+.total-center[
+\begin{align*}
+& h_j=\left(\frac{1+1 / 2^{j+1 / 2}}{3} \frac{1 \times 3 \times 5 \times \cdots \times(2 j-1)}{N \sqrt{\pi / 2}\left\|f^{(j+1)}\right\|^{2}}\right)^{1 /(3+2 j)} = \gamma_j(h_{j+1})\\\\
+&
+\end{align*}
+
+where $h_j$ is the optimal bandwidth for the $j$-th derivative of $f$ and the function $\gamma_j$ defines the dependency of $h_j$ on $h_{j+1}$
+]
+
+???
+
+- Sheather and Jones improved this rule of thumb by estimating the second derivative of $f$ and therefore the optimal bandwidth by an even higher order derivative
+
+# ZfitISJ
+
+Original Sheather-Jones algorithm:
+
+1. Compute $\|\widehat{f}^{(l+2)}\|^2$ by **assuming that $f$ is the normal pdf with mean and variance estimated from the sample data**
+2. Using $\|\widehat{f}^{(l+2)}\|^2$ compute $h_{l+1}$
+3. Using $h_{l+1}$ compute $\|\widehat{f}^{(l+1)}\|^2$
+4. Repeat steps 2 and 3 to compute $h^{l}$, $\|\widehat{f}^{(l)}\|^2$, $h^{l-1}$, $\cdots$ and so on until 
+$\|\widehat{f}^{(2)}\|^2$ is calculated
+5. Use $\|\widehat{f}^{(2)}\|^2$ to compute $h_{AMISE}$
+
+- By starting from a high order derivative and assuming that the underlying PDF is the Normal distribution
+- One can then recursively calculate the optimal bandwidth $h_{AMISE}$
+- This improves the accuracy of the PDF estimation
+- But it does still rely on assuming a normal distribution
+
+---
+
+# ZfitISJ
+
+.total-center[
+\begin{align*}
+& \gamma^{[k]}(h)=\underbrace{\gamma_{1}\left(\cdots \gamma_{k-1}\left(\gamma_{k}\right.\right.}_{k \text { times }}(h)) \cdots) \\\\
+& h_{AMISE} = h_{1} = \gamma^{[1]}(h_{2})= \gamma^{[2]}(h_{3})=\cdots=\gamma^{[l]}(h_{l+1}) \\\\
+& h_{l+1} := h_{AMISE} \\
+& \implies \\\\
+& h_{AMISE} = \gamma^{[l]}(h_{AMISE})
+\end{align*}
+]
+
+???
+
+- Botev et al. showed that this can be circumvented by setting $h_{l+1} equal to $h_{AMISE}$, because the true optimal bandwidth should be the same for all derivatives
+- Using this relationship one can then directly use fixed point iteration and solve for the root of the equation to calculate the optimal bandwidth
+- Since this approach does not rely on any assumption about the underlying performance it shows superior accuracy for non-normal distributions
+- They coined this algorithm the improved Sheather-Jones algorithm
+
+---
+
+# ZfitHofmeyr
+
+.total-center[
+\begin{align*}
+& K_{\alpha}(x) := \sum_{j=0}^{\alpha} |x|^j \cdot e^{−|x|} \\\\
+& \implies \\\\
+& \widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^{n}\sum_{j=0}^{\alpha} (\frac{|x-x_k|}{h})^{j} \cdot e^{(-\frac{|x-x_k|}{h})}
+\end{align*}
+]
+
+???
+
+- Lastly an entirely different approach is using specialized kernels of the form "polynomial times exponential" as proposed by Hofmeyr in 2018
+- He showed that given such kernels one can calculate a kernel density estimation very efficiently by using binomial expansion
+
+---
+
+# ZfitHofmeyr
+
+.total-center[
+\begin{align*}
+& \widehat{f}_h(x) = \sum_{j=0}^{\alpha}\sum_{i=0}^{j} {j \choose i}(\exp (\frac{x_{(\tilde{n}(x))}-x}{h}) x^{j-i} \ell (i, \tilde{n}(x)) \\
+& +\exp (\frac{x-x_{(n(x))}}{h})(-x)^{j-i} r(i, \tilde{n}(x))) \\\\
+& \ell(i, \tilde{n})=\sum_{k=1}^{\tilde{n}}(-x_{k})^{i} \exp (\frac{x_{k}-x_{\tilde{n}}}{h}) \\
+& r(i, \tilde{n})=\sum_{k=\tilde{n}+1}^{\tilde{n}}(x_{k})^{i} \exp (\frac{x_{\tilde{n}} - x_{k}}{h})\\\\
+&\mathcal{O}((\alpha+1)(n+m))
+\end{align*}
+
+where $\tilde{n}(x)$ is defined to be the number of sample points less than or equal to $x$
+]
+
+???
+
+- Using such kernels the KDE can be expanded into a linear combination of terms $\ell$ and terms $r$
+- The terms themselves can be calculated recursively and therefore the algorithm is extremely fast
+- The computational complexity of this method is of order (\alpha+1) n plus m
+
+- However due to the recursive nature of this method implementing it in TensorFlow proved quite inefficient as it has to be implemented with loops and due to the graph paradigm of TensorFlow loops should be avoided whenever possible
+- Therefore the taken approach was to implement the whole computation in a custom TensorFlow operation directly in C++, whereas the other methods were implemented in Python TensorFlow only
+
+---
+
+class: inverse, center, middle
+
+# How does my implementation compare
+
+???
+
+- The current state-of-the-art of kernel density estimation in Python is a package called KDEpy
+- To show their competitiveness the new implementations were therefore directly compared to KDEpy's Fast Fourier Transform based method which showed the best performance as shown by the author himself
+- For all methods the Silverman rule of thumb was used for the bandwidth parameter, except for the ISJ method which computes a more optimal bandwidth directly
 
 ---
 
@@ -280,6 +598,17 @@ figure
 
 ???
 
+- The following test probability density functions were used to sample from:
+- A simple normal distribution
+- A simple uniform distribution
+- A bimodal distribution comprised of two normals
+- A skewed bimodal distribution
+- A claw distribution that has spikes
+- And one called asymmetric double claw that has different sized spikes left and right.
+
+- The x-axis describes possible values of $x$ from -8 to 8
+- On the y-axis we have the probability density for a given $x$
+
 ---
 
 ```{python compareZfitKDEpyEstimations, echo=FALSE, eval=TRUE, fig.cap="KDE using different methods (10'000 samples)", fig.align='center', out.width='85%', dpi=300, cache=TRUE}
@@ -288,6 +617,11 @@ figure
 ```
 
 ???
+
+- First we look at the estimations for a sample size of 10'000
+
+- As seen here, all implementations are capturing the underlying distributions rather well, except for the complicated spiky distributions at the bottom
+- Here the ISJ, colored in pink, approach is especially favorable, since it does not rely on Silverman's rule of thumb to calculate the bandwidth
 
 ---
 
@@ -298,7 +632,17 @@ figure
 
 ???
 
+- Next we look at the integrated squared errors between the different methods and the true probability density functions
+- On the x-axis the number of samples are given
+- And on the y-axis the integrated squared errors are shown
 
+- As expected the integrated squared error decreases with increased sample size
+
+- The new FFT and ISJ method capture the underlying PDF with constant high accuracy whereas KDEpy's FFT based method decreases in accuracy for large sample sizes
+
+- The ISJ based method (`ZfitISJ`) has the lowest integrated squared error for the spiky 'Claw' distribution, which confirms the superiority of the ISJ based bandwidth estimation for highly non-normal, spiky distributions
+
+- The specialized kernel method (implemented as TensorFlow operation in C++: `ZfitHofmeyrK1withCpp`) has a higher integrated squared error than the other methods for all distributions and fails to capture the true density for large sample sizes completely, however this is likely due to an uncaught overflow error in the underlying implementation and does not reflect directly on the performance of the method itself. This indicates that here, more work is needed to correctly evaluate this method.
 
 ---
 
@@ -310,6 +654,13 @@ figure
 
 ???
 
+- Next, we look at the runtimes of the different methods
+- First we look at the instantiation runtime and the evaluation runtime independently, as for applications where the PDF has to be evaluated repeatedly (for instance to use it in a parametric fitting) the evaluation runtime is of much higher importance.
+
+- On the x-axis is again the number of samples, whereas on the y-axis is the runtime in seconds
+
+- During the instantiation phase the newly proposed methods are slower than KDEpy's FFT method by one order of magnitude. This is predictable, since generating the TensorFlow graph generates some runtime overhead
+
 
 ---
 
@@ -320,16 +671,8 @@ figure
 
 ???
 
-
----
-
-```{python compareZfitRuntimePDFGPUwithoutKDEpy, echo=FALSE, eval=TRUE, fig.cap="Evaluation runtimes (without KDEpy)", fig.align='center', out.width='85%', dpi=300, cache=TRUE}
-figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ'], 'pdf')
-figure
-```
-
-???
-
+- If we look at the evaluation phase however things look quite different
+- All newly proposed methods evaluate in near constant time, whereas KDEpy's implementation runtime increases exponentially with sample size
 
 ---
 
@@ -340,21 +683,27 @@ figure
 
 ???
 
+- Finally looking at the combined runtime of instantiation and evaluation phase
+- We see that KDEpy outperforms the newly proposed methods for low number of sample sizes
+- However for sample sizes higher than one to ten million things start to change and the new binned as well as the new FFT method outperform the current state-of-the-art
+- Further investigations on larger machines would be needed to differentiate between the new FFT and Binned implementation, but I would guess that FFT might prove superior for even higher sample sizes
+
 
 ---
 
 # Findings
 
 1. `ZfitHofmeyr`: Difficult to implement efficiently in TensorFlow due to recursion
-
-
 2. Most performant implementations for evaluation: `ZfitFFT`, `ZfitISJ`
-
-
-3. Most accurate method for spiky non-normal distributions:`ZfitISJ` (minor runtime cost compared to `ZfitFFT`)
-
-
+3. Most accurate method for spiky non-normal distributions: `ZfitISJ` (minor runtime cost compared to `ZfitFFT`)
 4. Most performant implementations for total runtime and  $n \geq 10^8$: `ZfitBinned`, `ZfitFFT`
+
+???
+
+1. The method based on specialized kernels of the form "polynomial times exponential" proved to be difficult to implement in TensorFlow, however implementing it correclty in future work might speed up the KDE calculation even more 
+2. If we want to evaluate the generated PDF repeatedly, for instance if we want to use it for parametric fitting, the most performant implementations are the new ZfitFFT and ZfitISJ
+3. The most accurate method for spiky non-normal distributions is ZfitISJ while only imposing a minor runtime cost compared to the other methods
+4. Finally, the new implementations ZfitBinned and ZfitFFT were able to outperform the current state-of-the-art KDEpy for large number of samples in terms of accuracy as well in terms of runtime for a given accuracy
 
 ---
 
@@ -365,6 +714,10 @@ class: inverse, center, middle
 ---
 
 # Conclusion
+
+- Multiple new implementations of kernel density estimation are proposed, based on TensorFlow and zfit
+- Three of the new methods are shown to be competitive in general and even superior for large datasets
+- Furthermore since all new methods are based on TensorFlow, they are optimally suited for parallel computation on different machines and processors
 
 ---
 
@@ -372,5 +725,21 @@ class: inverse, center, middle
 
 # Thank you for listening!
 
+---
+
+class: inverse, center, middle
+
+# Backup Slides
+
+---
+
+# KDE: Linear Binning
+
+.total-center[
+\begin{align*}
+& c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l < x_k < g_{l+1}}} \frac{g_{k+1}-x_k}{g_{l+1} - g_l} \cdot w_k + \sum_{\substack{x_k \in X\\g_{l-1} < x_k < g_l}} \frac{x_k - g_{l-1}}{g_{l+1} - g_l} \cdot w_k \\\\
+& \mathcal{O}(N\cdot m),\quad with \quad N < n
+\end{align*}
+]
 
 
