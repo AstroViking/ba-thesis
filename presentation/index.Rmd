@@ -141,7 +141,9 @@ restricted_estimations = pd.read_pickle('./benchmark/cpu_macbook_hofmeyr/restric
 
 # High energy physics
 
+.width-60[
 ![Standard model](figures/standard-model.svg)
+]
 
 ???
 

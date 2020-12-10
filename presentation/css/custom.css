@@ -8,6 +8,10 @@
     width: 39%;
 }
 
+.width-60 {
+    width: 60%;
+}
+
 .align-bottom {
     position: absolute;
     bottom: 10%;
