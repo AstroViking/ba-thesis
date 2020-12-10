@@ -151,7 +151,7 @@ where `\(n\)` is the number of sample points and `\(m\)` is the number of evalua
 - By using a smooth kernel, we get a smooth probability density estimate as well
 - Depends only on a single bandwidth parameter `\(h\)`
 
-- The computational complexity however is of order n times m, which is quite high, especially for large data and repeated evaluation
+- The computational complexity however is of order n times m, where m is the number of evaluation points, which is quite high, especially for large data and repeated evaluation
 - This can be mitigated by different mathematical tricks, as we see later when I talk about the implementations of KDE
 
 ---
@@ -184,12 +184,12 @@ where `\(n\)` is the number of sample points and `\(m\)` is the number of evalua
 
 - So, it might seem that we run into the same problems with arbitrary parameters, as it was the case for the histogram
 - It is however possible to define the optimal bandwidth mathematically, which is not the case for the histogram parameters
-- The asymptotically optimal bandwidth, called `\(h_{AMISE}\)`, can be defined as the one that asymptotically minimizes the mean integral squared error, or `\(MISE\)`, between the true probability density function and the probability density estimate
+- The asymptotically optimal bandwidth, called `\(h_{AMISE}\)`, can be defined as the one that asymptotically minimizes the mean integrated squared error, or `\(MISE\)`, between the true probability density function and the probability density estimate
 - As derived by Wand and Jones, `\(h_{AMISE}\)` is given by the following equation and depends on the second derivative of the true probability density function `\(f\)`
 
-- Since the true PDF is unknown, an often used rule of thumb is the one proposed by Silverman
-- By simply assuming that the underlying distribution `\(f\)` is a Gaussian with mean and variance computed from the sampled data, the second derivative of `\(f\)` can be calculated, which yields surprisingly good accuracy in many cases
-- However, as expected, in cases where the underlying distribution is far from normal, the kernel density estimation shows poor performance
+- Since the true PDF is unknown, and actually the one we want to find, an often used rule of thumb is the one proposed by Silverman
+- By simply assuming that the underlying distribution `\(f\)` is a Gaussian with mean and variance computed from the sampled data, the second derivative of `\(f\)` can be calculated, which yields surprisingly good accuracy in many cases, despite being somewhat paradoxical
+- However, as expected, in cases where the underlying distribution is far from normal, Silverman's rule of thumb shows poor performance
 - I will discuss later what can be done in these cases
 
 - Currently there exist multiple tools for parametric fitting as well as non-parametric density estimation
@@ -260,10 +260,11 @@ class: inverse, center, middle
 
 - Calculating the exact kernel density estimation in TensorFlow is relatively straightforward and already explained by the TensorFlow authors themselves
 - Therefore the contribution of the thesis are four more complicated implementations that approximate the KDE with high accuracy but much lower runtime
-- The first method uses linear binning
-- The second method Fast Fourier Transformation
-- The third method uses the improved Sheather-Jones algorithm, which computes an especially optimal bandwidth and uses Fast Cosine Transformation
-- Finally, the last one uses specialized kernel functions of the form "polynomial times exponential", an approach first proposed by Hofmeyr in 2018
+- All proposed methods use linear binning
+- The first method `ZfitBinned` uses linear binning only
+- The second method `ZfitFFT` uses Fast Fourier Transformation
+- The third method `ZfitISJ` uses the improved Sheather-Jones algorithm, which computes an especially optimal bandwidth and uses Fast Cosine Transformation
+- Finally, the last one `ZfitHofmeyr` uses specialized kernel functions of the form "polynomial times exponential", an approach first proposed by Hofmeyr in 2018
 
 ---
 
@@ -280,8 +281,8 @@ class: inverse, center, middle
 
 ???
 
-- The first method to lower the runtime is by lowering the number of sample points by binning beforehand
-- This reduces the computational complexity to order N times m, where N is the number of grid points choosen
+- The first method to lower the runtime is by lowering the number of sample points by binning beforehand to a number of equally spaced grid points
+- This reduces the computational complexity to order capital N times m, where capital N is the number of grid points choosen
 - Whereas simple binning assigns a datapoint and its weight to one specific grid point, linear binning assigns a fraction of the datapoint's weight to the grid points on either side, depending its distance to the grid point
 - Linear binning is a lot more accurate while essentially imposing the same computational complexity
 
@@ -308,8 +309,7 @@ Only evaluating at grid points themselves, setting `\(c_l = 0\)` for all `\(l\)`
 - First we use the binned scheme from before and only evaluate at the grid points themselves
 - Secondly by using a symmetric kernel, we can extend the kernel density estimation to a discrete convolution
 - Then we use the well known convolution theorem to morph the convolution into a multiplication
-
-- This leads to a computational complexity of order log(N) times N
+- This leads to a computational complexity of order log (captial N) times capital N
 
 ---
 
@@ -377,7 +377,7 @@ class: inverse, center, middle
 ???
 
 - The four new KDE implementations are now compared among themselves as well as to the current state-of-the-art kernel density estimation in Python, which is a package called KDEpy
-- For all methods the Silverman rule of thumb was used for the bandwidth parameter, except for the Improved Sheather Jones method which computes a more optimal bandwidth directly
+- For all methods the Silverman rule of thumb was used for the bandwidth parameter, except for the Improved Sheather Jones method, which computes a more optimal bandwidth directly
 
 ---
 
@@ -570,51 +570,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-(function(time) {
-  var d2 = function(number) {
-    return ('0' + number).slice(-2); // left-pad 0 to minutes/seconds
-  },
-
-  time_format = function(total) {
-    var secs = Math.abs(total) / 1000;
-    var h = Math.floor(secs / 3600);
-    var m = Math.floor(secs % 3600 / 60);
-    var s = Math.round(secs % 60);
-    var res = d2(m) + ':' + d2(s);
-    if (h > 0) res = h + ':' + res;
-    return res;  // [hh:]mm:ss
-  },
-
-  slide_number_div = function(i) {
-    return document.getElementsByClassName('remark-slide-number').item(i);
-  },
-
-  current_page_number = function(i) {
-    return slide_number_div(i).firstChild.textContent;  // text "i / N"
-  };
-
-  var timer = document.createElement('span'); timer.id = 'slide-time-left';
-  var time_left = time, k = slideshow.getCurrentSlideIndex(),
-      last_page_number = current_page_number(k);
-
-  setInterval(function() {
-    time_left = time_left - 1000;
-    timer.innerHTML = ' ' + time_format(time_left);
-    if (time_left < 0) timer.style.color = 'red';
-  }, 1000);
-
-  slide_number_div(k).appendChild(timer);
-
-  slideshow.on('showSlide', function(slide) {
-    var i = slide.getSlideIndex(), n = current_page_number(i);
-    // reset timer when a new slide is shown and the page number is changed
-    if (last_page_number !== n) {
-      time_left = time; last_page_number = n;
-      timer.innerHTML = ' ' + time_format(time); timer.style.color = null;
-    }
-    slide_number_div(i).appendChild(timer);
-  });
-})(60000);
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
