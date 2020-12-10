@@ -611,6 +611,7 @@ class: inverse, center, middle
 ---
 
 ```{python compareZfitKDEpyRuntimeTotalGPU, echo=FALSE, eval=TRUE, fig.cap="Total runtimes", fig.align='center', out.width='85%', dpi=300, cache=TRUE}
+unrestricted_runtimes = pd.read_pickle('./benchmark/gpu_linux/unrestricted_runtimes.pkl')
 figure, axes = runner.plot_runtimes(unrestricted_runtimes, distributions_to_evaluate, ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'KDEpyFFT'], 'total')
 figure
 ```
@@ -618,7 +619,7 @@ figure
 ---
 
 ```{python compareSimpleBinnedFFTISJEstimationClaw, echo=FALSE, eval=TRUE, fig.cap="KDE for Claw (10'000 samples)", fig.align='center', out.width='85%', dpi=300, cache=TRUE}
-figure, axes = runner.plot_estimation(restricted_estimations, 'Claw', ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'ZfitHofmeyrK1withCpp', 'KDEpyFFT'], 1e4)
+figure, axes = runner.plot_estimation(unrestricted_estimations, 'Claw', ['ZfitBinned', 'ZfitFFT', 'ZfitISJ', 'ZfitHofmeyrK1withCpp', 'KDEpyFFT'], 1e4)
 figure
 ```
 
