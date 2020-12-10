@@ -461,6 +461,7 @@ class: inverse, center, middle
 
 ???
 
+- So in conclusion, I have 4 key findings:
 - The method based on specialized kernels of the form "polynomial times exponential" proved to be difficult to implement in TensorFlow due to its recursive approach
 - If we want to evaluate the generated PDF repeatedly, for instance in a parametric fitting, the most performant implementations are the new ZfitFFT and ZfitISJ
 - The most accurate method for spiky non-normal distributions is ZfitISJ while only imposing a minor runtime cost compared to the other methods
@@ -496,7 +497,40 @@ class: inverse, center, middle
 \end{align*}`
 ]
 
+---
 
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="index_files/figure-html/compareZfitKDEpyRuntimeTotalGPU-1.png" alt="Total runtimes" width="85%" /&gt;
+&lt;p class="caption"&gt;Total runtimes&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="index_files/figure-html/compareSimpleBinnedFFTISJEstimationClaw-1.png" alt="KDE for Claw (10'000 samples)" width="85%" /&gt;
+&lt;p class="caption"&gt;KDE for Claw (10'000 samples)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="index_files/figure-html/compareZfitKDEpyRuntimeInstantiation-1.png" alt="Instantiation runtimes (CPU)" width="85%" /&gt;
+&lt;p class="caption"&gt;Instantiation runtimes (CPU)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="index_files/figure-html/compareZfitKDEpyRuntimePDF-1.png" alt="Evaluation runtimes (CPU)" width="85%" /&gt;
+&lt;p class="caption"&gt;Evaluation runtimes (CPU)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="index_files/figure-html/compareZfitKDEpyRuntimeTotal-1.png" alt="Total runtimes (CPU)" width="85%" /&gt;
+&lt;p class="caption"&gt;Total runtimes (CPU)&lt;/p&gt;
+&lt;/div&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
