@@ -6,4 +6,4 @@ view: https://github.com/AstroViking/ba-thesis/blob/master/%s
 edit: https://github.com/AstroViking/ba-thesis/edit/master/%s
 #before_chapter_script: ["scripts/createvirtualEnv.R", "scripts/useVirtualEnv.R"]
 before_chapter_script: "scripts/useVirtualEnv.R"
-clean: ["thesis.log", "thesis.lol", "docs"]
+clean: ["thesis.log", "thesis.lol", "thesis.lof", "thesis.lot", "thesis.toc", "thesis.aux", "docs"]

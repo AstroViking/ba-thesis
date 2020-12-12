@@ -1,0 +1,102 @@
+# Implementation {#tensorflowImplementation}
+
+In addition to the rather simple case of an exact univariate kernel density estimation (henceforth called `ZfitExact`), four conceptually different novel implementations in zfit and TensorFlow are proposed. A method based on simple or linear binning (called `ZfitBinned`), a method using the FFT algorithm (called `ZfitFFT`), a method based on the improved Sheather Jones algorithm (called `ZfitISJ`) and lastly a method based on Hofmeyr's method of using a specialized kernel of the form $poly(x)\cdot\exp(x)$ (called `ZfitHofmeyr`) and recursive computation of the bases needed to calculate the kernel density estimations as linear combination. All methods are implemented for the univariate case only.
+
+Important to note is that for `ZfitISJ` and `ZfitFFT` simple or linear binning is necessary as a preliminary step.
+
+## Advantages of using zfit and TensorFlow
+
+The benefit of using zfit, which is based on TensorFlow, is that both frameworks are optimized for parallel processing and CPU as well as GPU processing. TensorFlow uses graph based computation, which means that it generates a computational graph of all operations to be done and their order, before actually executing the computation. This has two key advantages. 
+
+First it allows TensorFlow to act as a kind of compiler and optimize the code before running and schedule graph branches that are independent of each other to be run on different processors and executed in parallel. Operations in TensorFlow are often implemented twice, once for CPU and once for GPU to make use of the different environments available on each processor type. Also, similarly to NumPy[@harrisArrayProgrammingNumPy2020], TensorFlow's underlying operations are programmed in C++ and therefore benefit from static typing and compile time optimization.
+
+Secondly it allows fore automatic differentiation, meaning that every TensorFlow operation defines its own derivative. Using the chain rule, TensorFlow can then automatically compute the gradient of the whole program, which is especially useful for non-parametric fitting (i.e. gradient descent computations in function approximations using a neural network).
+
+
+## Exact univariate kernel density estimation
+
+The implementation of an exact univariate kernel density estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper[@googleTFP], a KDE can be constructed by using its `MixtureSameFamily` distribution class, given sampled `data`, their associated `weights` and bandwidth `h` as follows
+
+```{python exactKDE, eval=FALSE}
+import tensorflow as tf
+from tensorflow_probability import distributions as tfd
+
+data = [...]
+weights = [...]
+h = ...
+
+f = lambda x: tfd.Independent(tfd.Normal(loc=x, scale=h))
+n = data.shape[0].value
+
+probs = weights / tf.reduce_sum(weights)
+
+kde = tfd.MixtureSameFamily(
+    mixture_distribution=tfd.Categorical(
+        probs=probs),
+    components_distribution=f(data))
+```
+
+Interestingly, due to the smart encapsulated structure of TensorFlow Probability we can use any distribution of the location-scale family type as a kernel as long as it follows the Distribution contract in TensorFlow Probability. If the used Kernel has only bounded support, the implementation proposed in this paper allows to specify the support upon instantiation of the class. If the Kernel has infinite support (like a Gaussian kernel for instance) a practical support estimate is calculated by searching for approximate roots with Brent's method[@brent1971algorithm] implemented for TensorFlow in the python package `tf_quant_finance` by Google. This allows us to speed up the calculation as negligible contributions from far away kernels are neglected.
+
+However calculating an exact kernel density estimation is not always feasible as this can take a long time with a huge collection of data points. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, due to TensorFlow's advantages mentioned above. Nonetheless the computational complexity remains the same and for large data this can still make the exact KDE impractical.
+
+An exact KDE using zfit called `ZfitExact` is implemented as a
+`zfit.pdf.WrapDistribution` class, which is zfit's class type for wrapping TensorFlow Probability distributions.
+
+
+## Binned method
+
+The method `ZfitBinned` also implements kernel density estimation as a constructed `MixtureSameFamily` distribution, however it bins the data (either simple or linearly) to an equally spaced grid and uses only the grid points weighted by their grid count as kernel locations (see section \@ref(binningTheory)).
+
+Since simple binning is already implemented in TensorFlow as `tf.histogram_fixed_width`, the contribution of this thesis for `ZfitBinned` lies in an implementation of linear binning in TensorFlow. Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided as the graph based computation is fastest with vectorized operations and loops pose a significant runtime overhead. However with some inspiration from the KDEpy package[@KDEpy] this can be done without using loops at all. 
+
+First, every data point $x_k$ is transformed to $\tilde{x}_k$ in the following way (the transformation can be vectorized)
+
+\begin{equation}
+\tilde{x}_k = \frac{x_k - g_0}{\Delta g}
+(\#eq:linbintransform)
+\end{equation}
+
+where $\Delta g$ is the grid spacing and $g_0$ is the left-most value of the grid.
+
+Given this transformation every $\tilde{x}_k$ can then be described by an integral part $\tilde{x}^{int}_k$ (equal to its nearest left grid point index $l$ = $x^{int}_k$) plus some fractional part $\tilde{x}^{frac}_k$ (corresponding to the additional distance between grid point $g_l$ and data point $x_k$). The linear binning can then be solved in the following way.
+
+For data points on the right side of the grid point $g_l$: The fractional parts of the data points are summed if the integral parts equal $l$. 
+
+For data points on the left side of the grid point $g_l$: $1$ minus the fractional parts of the data points are summed if the integral parts equal $l-1$.
+
+Including the weights this looks as follows
+
+\begin{equation}
+c_l = c(g_l) = \sum_{\substack{\tilde{x}^{frac}_k  \in \tilde{X}^{frac}\\l = \tilde{x}^{int}_k}} \tilde{x}^{frac}_k \cdot w_k + \sum_{\substack{\tilde{x}^{frac}_k  \in \tilde{X}^{frac}\\l = \tilde{x}^{int}_k + 1}} (1-\tilde{x}^{frac}_k) \cdot w_k
+(\#eq:linbinnoloop)
+\end{equation}
+
+
+Left and right side sums can then be calculated efficiently with the TensorFlow function `tf.math.bincount`.
+
+The binned method `ZfitBinned` is implemented in the same class definition as `ZfitExact`, the binning can be enabled by specifying a constructor argument.
+
+
+## FFT based method
+
+The KDE method called `ZfitFFT`, which uses the FFT based method (discussed in section \@ref(fftTheory)), is implemented as a `zfit.pdf.BasePdf` class. It is not based on TensorFlow Probability as it does not use a `MixtureDistribution` but instead calculates the estimate for the given grid points directly. To still infer values for other points in the range of $x$ `tfp.math.interp_regular_1d_grid` is used, which computes a linear interpolation of values between the grid. In TensorFlow one-dimensional discrete convolutions are efficiently implemented already if we use `tf.nn.conv1d`. In benchmarking using this method to calculate the estimate proved significantly faster than using `tf.signal.rfft` and `tf.signal.irfft` to transform, multiply and inverse transform the vectors, which is implemented as an alternative option as well.
+
+
+## ISJ based method {#isjMethod}
+
+The method called `ZfitISJ` is also implemented as a `zfit.pdf.BasePdf` class. After using simple or linear binning to calculate the grid counts, the estimate for the grid points is calculated using the improved Sheather Jones method (discussed in section \@ref(isjTheory)).
+
+
+To find the roots for $\gamma^l$ in equation \@ref(eq:hamisegamma2) Brent's method[@brent1971algorithm] implemented `tf_quant_finance` is used again. To avoid loops the iterative function $\gamma^l$ is statically unrolled for $l = 5$, since higher values would not lead to any practical differences according to the paper authors. For the Discrete Cosine Transform `tf.signal.dct` is used.
+
+
+## Specialized kernel method {#hofmeyrMethod}
+
+The method called `ZfitHofmeyr` is again implemented as a `zfit.pdf.BasePdf` class. It uses specialized kernels of the form $poly(x)\cdot\exp(x)$ (as discussed in \@ref(hofmeyrTheory)).
+
+However due to the recursive nature of the method, an implementation in TensorFlow directly displayed the same poor performance as using an exact kernel density estimation based on a mixture distribution. This is due to the fact, that recursive functions of this type can not be vectorized and have to be implemented using loops, which are ill-advised for TensorFlow due to its graph based paradigm. Implementing the recursion using NumPy and `tf.numpy_function` (which wraps a NumPy based Python function to create a single TensorFlow operation) was an order of magnitude faster, but still slower than all approximative methods discussed before.
+
+Finally, implementing the method in C++ directly as a custom TensorFlow operation appropriately named `tf.hofmeyr_kde` yielded the competitive execution runtime expected from theory. The code for the C++ based implementation is based on the C++ code used for the author's own R package FKSUM[@hofmeyrFastKernelSmoothing2020]. 
+
+So far the custom TensorFlow operation is only implemented as a proof of concept and poses severe limitations. Its C++ library has to be compiled for every platform specifically and it currently does not compute its own gradient and therefore does not support TensorFlow's automatic differentiation. It is also implemented only for the CPU and does therefore not benefit of using the GPU.

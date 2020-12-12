@@ -1,0 +1,10 @@
+# Appendix {.unnumbered}
+
+## Source Code {.unnumbered}
+
+The source code of the newly proposed implementations can be found at [https://github.com/AstroViking/tf-kde](https://github.com/AstroViking/tf-kde)
+
+\newpage
+
+`r if (knitr::is_html_output()) '# References {-}'`
+

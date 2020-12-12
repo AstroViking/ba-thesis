@@ -1,0 +1,24 @@
+# Current state of the art {#currentState}
+
+To get a sense of what the current state of kernel density estimation in Python is, we will look at several current implementations and their distinctions. This will lead to an understanding of their different properties and allow us to compare and classify the new methods proposed in the next chapter inside Python's ecosystem.
+
+The most popular KDe implementations in Python are SciPy's `gaussian_kde`[@ScipyStatsGaussian], Statsmodels' `KDEUnivariate`[@KernelDensityEstimation], Scikit-learn's `KernelDensity`  package[@SklearnNeighborsKernelDensity] as well as KDEpy by Tommy Odland[@KDEpy].
+
+The question of the optimal KDE implementation for any situation is not entirely straightforward and depends a lot on what your particular goals are. Statsmodels includes a computation based on Fast Fourier Transform (FFT) and normal reference rules for choosing the optimal bandwidth, which Scikit-learns package lacks for instance. On the other hand, Scikit-learn includes a $k$-d-tree based kernel density estimation, which is not available in Statsmodels. As Jake VanderPlas was able to show in his comparison[@vanderplas2013] Scikit-learn's tree based approach to compute the kernel density estimation was the most efficient in the vast majority of cases in 2013.
+
+However the new implementation proposed by Tommy Odland in 2018 called KDEpy[@KDEpy] was able to outperform all previous implementations (even Scikit-learn's tree based approach) in terms of runtime for a given accuracy by a factor of at least one order of magnitude, using an FFT based approach. Additionally it incorporates features of all implementations mentioned before as well as additional kernels and an additional method to calculate the bandwidth using the Improved Sheather Jones (ISJ) algorithm first proposed by Botev et al[@botev2010kernel], which was discussed in the previous chapter.
+
+This makes KDEpy the de-facto standard of kernel density estimation in Python.
+
+
+Feature / Library                      scipy       sklearn   statsmodels             KDEpy
+------------------------------ ------------- ------------- ------------- -----------------
+Number of kernel functions                 1             6    7 (6 slow)                 9
+Weighted data points                      No            No       Non-FFT               Yes
+Automatic bandwidth                       NR          None         NR,CV           NR, ISJ
+Multidimensional                          No            No           Yes               Yes
+Supported algorithms                   Exact          Tree    Exact, FFT  Exact, Tree, FFT
+
+Table: (\#tab:kdepyComparison) Comparison between KDE implementations by Tommy Odland[@KDEpyDoc] (NR: normal reference rules, namely Scott/Silverman, CV: Cross Validation, ISJ: Improved Sheater Jones according to Botev et al.[@botev2010kernel])
+
+Therefore the novel implementation for kernel density estimation based on TensorFlow and zfit proposed in this thesis is compared to KDEpy directly to show that it can outperform KDEpy in terms of runtime and accuracy for large datasets ($n \geq 10^8$).

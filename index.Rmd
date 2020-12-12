@@ -1,19 +1,31 @@
 ---
-title: "Performance of Univariate Kernel Density Estimation methods in TensorFlow"
+title: "Performance of univariate kernel density estimation methods in TensorFlow"
 subtitle: "Bachelor Thesis"
 author: ["Marc Steiner"]
-supervisor: ["Jonas Eschle", "Nicola Serra"]
+supervisor: ["Jonas Eschle", "Prof. Dr. Nicola Serra"]
 institute: ["University of Zurich"]
-keywords: ["Kernel Density Estimation", "Python", "TensorFlow", "Zfit"]
+keywords: ["Kernel density estimation", "Python", "TensorFlow", "Zfit"]
 site: "bookdown::bookdown_site"
-bibliography: ["citations/papers.bib"]
+bibliography: ["citations/papers.json"]
 link-citations: True
-csl: "citation-styles/aip.csl"
+csl: "citation-styles/aps-with-supscript.csl"
 ---
 
-# Abstract {-}
+# Acknowledgements {.unlisted .unnumbered}
 
-Multiple implementations of a one-dimensional Kernel Density Estimation in TensorFlow/Zfit are proposed. Starting from the basic algorithm, several optimizations from recent papers are introduced and combined to ameliorate the efficiency of the algorithm. By comparing its accuracy and efficiency to implementations in pure Python it is shown as competitive and useful in real world applications.
+I am grateful to Prof. Dr. Nicola Serra, for giving me the opportunity to complete my bachelor thesis under his domain.
+
+I would also like to thank my supervisor Jonas Eschle, which advised me a lot concerning research, implementation and writing. He provided both technical and emotional guidance and helped me fulfill my potential.
+
+Finally, I would like to thank my girlfriend Christa Schläppi, who unconditionally supported me through every challenge in the last year and acted as a sounding board for all the intelligent as well as not so intelligent ideas I had.
+
+\newpage
+
+
+# Abstract {.unlisted .unnumbered}
+
+Kernel density estimation is a non-parametric density estimation and often used in statistical inference, especially in scientific fields like high energy physics. Multiple new implementations of univariate kernel density estimation are proposed, based on TensorFlow (a just-in-time compiled mathematical Python library for CPU and GPU) and zfit (a highly scalable and customizable model manipulation and fitting library based on TensorFlow). Starting from the exact algorithm, several optimizations from recent papers are implemented to boost its efficiency. These optimizations include linear binning, Fast Fourier Transformed kernel functions, the Improved Sheather-Jones algorithm proposed by Botev et al., and specialized kernel functions as proposed by Hofmeyr. The accuracy and efficiency of the proposed implementation suite is then compared to existing implementations in Python and shown to be competitive. The proposed univariate kernel density estimation suite achieves state-of-the-art accuracy as well as efficiency, especially for large number of samples ($n \geq 10^8$).
 
 \newpage
 \tableofcontents
+\newpage

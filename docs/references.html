@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
-  <meta name="description" content="References | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
-  <meta name="generator" content="bookdown 0.19.1 and GitBook 2.6.7" />
+  <title>References | Performance of univariate kernel density estimation methods in TensorFlow</title>
+  <meta name="description" content="References | Performance of univariate kernel density estimation methods in TensorFlow" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta property="og:title" content="References | Performance of univariate kernel density estimation methods in TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta name="twitter:title" content="References | Performance of univariate kernel density estimation methods in TensorFlow" />
   
   
   
@@ -30,8 +30,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="summary.html"/>
+<link rel="prev" href="appendix.html"/>
 
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -49,21 +50,22 @@
 
 
 
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -77,46 +79,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    background-color: #232629;
-    color: #7a7c7d;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #cfcfc2; background-color: #232629; }
+  {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span. { color: #cfcfc2; } /* Normal */
-code span.al { color: #95da4c; } /* Alert */
-code span.an { color: #3f8058; } /* Annotation */
-code span.at { color: #2980b9; } /* Attribute */
-code span.bn { color: #f67400; } /* BaseN */
-code span.bu { color: #7f8c8d; } /* BuiltIn */
-code span.cf { color: #fdbc4b; } /* ControlFlow */
-code span.ch { color: #3daee9; } /* Char */
-code span.cn { color: #27aeae; } /* Constant */
-code span.co { color: #7a7c7d; } /* Comment */
-code span.cv { color: #7f8c8d; } /* CommentVar */
-code span.do { color: #a43340; } /* Documentation */
-code span.dt { color: #2980b9; } /* DataType */
-code span.dv { color: #f67400; } /* DecVal */
-code span.er { color: #da4453; } /* Error */
-code span.ex { color: #0099ff; } /* Extension */
-code span.fl { color: #f67400; } /* Float */
-code span.fu { color: #8e44ad; } /* Function */
-code span.im { color: #27ae60; } /* Import */
-code span.in { color: #c45b00; } /* Information */
-code span.kw { color: #cfcfc2; } /* Keyword */
-code span.op { color: #cfcfc2; } /* Operator */
-code span.ot { color: #27ae60; } /* Other */
-code span.pp { color: #27ae60; } /* Preprocessor */
-code span.re { color: #2980b9; } /* RegionMarker */
-code span.sc { color: #3daee9; } /* SpecialChar */
-code span.ss { color: #da4453; } /* SpecialString */
-code span.st { color: #f44f4f; } /* String */
-code span.va { color: #27aeae; } /* Variable */
-code span.vs { color: #da4453; } /* VerbatimString */
-code span.wa { color: #da4453; } /* Warning */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -131,35 +130,63 @@ code span.wa { color: #da4453; } /* Warning */
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel density estimation</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>2</b> Current state of the art</a></li>
-<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a><ul>
-<li class="chapter" data-level="3.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>3.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="3.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>3.2</b> Simple and linear Binning</a></li>
-<li class="chapter" data-level="3.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>3.3</b> Using convolution and the Fast Fourier Transform</a></li>
-<li class="chapter" data-level="3.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>3.4</b> Improved Sheather Jones Algorithm</a></li>
+<li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact kernel density estimation</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binningTheory"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#linear-binning"><i class="fa fa-check"></i><b>2.2.2</b> Linear binning</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a><ul>
-<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>4.1</b> Benchmark setup</a></li>
-<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#basic-implementation-against-binned-and-fft-implementations"><i class="fa fa-check"></i><b>4.2</b> Basic implementation against Binned and FFT implementations</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>4.2.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>4.2.2</b> Accuracy</a></li>
+<li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#fftTheory"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#isjTheory"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#hofmeyrTheory"><i class="fa fa-check"></i><b>2.5</b> Using specialized kernel functions and their series expansion</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="comparison.html"><a href="comparison.html#new-implementation-against-kdepy"><i class="fa fa-check"></i><b>4.3</b> New implementation against KDEpy</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>4.3.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.3.2" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>4.3.2</b> Accuracy</a></li>
+<li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
+<li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#advantages-of-using-zfit-and-tensorflow"><i class="fa fa-check"></i><b>4.1</b> Advantages of using zfit and TensorFlow</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-univariate-kernel-density-estimation"><i class="fa fa-check"></i><b>4.2</b> Exact univariate kernel density estimation</a></li>
+<li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#binned-method"><i class="fa fa-check"></i><b>4.3</b> Binned method</a></li>
+<li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#fft-based-method"><i class="fa fa-check"></i><b>4.4</b> FFT based method</a></li>
+<li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#isjMethod"><i class="fa fa-check"></i><b>4.5</b> ISJ based method</a></li>
+<li class="chapter" data-level="4.6" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#hofmeyrMethod"><i class="fa fa-check"></i><b>4.6</b> Specialized kernel method</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="comparison.html"><a href="comparison.html#new-implementation-run-with-gpu-support"><i class="fa fa-check"></i><b>4.4</b> New implementation run with GPU support</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>4.4.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.4.2" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>4.4.2</b> Accuracy</a></li>
+<li class="chapter" data-level="5" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>5</b> Comparison</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>5.1</b> Benchmark setup</a></li>
+<li class="chapter" data-level="5.2" data-path="comparison.html"><a href="comparison.html#differences-of-exact-binned-fft-isj-and-hofmeyr-implementations"><i class="fa fa-check"></i><b>5.2</b> Differences of Exact, Binned, FFT, ISJ and Hofmeyr implementations</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>5.2.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>5.2.2</b> Runtime</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy"><i class="fa fa-check"></i><b>5.3</b> Comparison to KDEpy</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>5.3.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.3.2" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>5.3.2</b> Runtime</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
+<li class="chapter" data-level="5.4" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-gpu"><i class="fa fa-check"></i><b>5.4</b> Comparison to KDEpy on GPU</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.1</b> Runtime</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="comparison.html"><a href="comparison.html#findings"><i class="fa fa-check"></i><b>5.5</b> Findings</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#source-code"><i class="fa fa-check"></i>Source Code</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="presentation/index.html" target="_blank">Presentation</a></li>
+
 </ul>
 
       </nav>
@@ -169,7 +196,7 @@ code span.wa { color: #da4453; } /* Warning */
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of Univariate Kernel Density Estimation methods in TensorFlow</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of univariate kernel density estimation methods in TensorFlow</a>
           </h1>
         </div>
 
@@ -180,51 +207,75 @@ code span.wa { color: #da4453; } /* Warning */
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 
-<div id="refs" class="references">
-<div>
-<p><sup>1</sup>CERN (n.d.).</p>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-martinabadiTensorFlowLargeScaleMachine2015" class="csl-entry">
+<div class="csl-left-margin"><sup>1</sup> </div><div class="csl-right-inline">Martín Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Y. Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Mané, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viégas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng, <em>TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems</em> (2015).</div>
 </div>
-<div>
-<p><sup>2</sup> M. Rosenblatt, (1956).</p>
+<div id="ref-googleTFP" class="csl-entry">
+<div class="csl-left-margin"><sup>2</sup> </div><div class="csl-right-inline">J. V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton, A. Alemi, M. D. Hoffman, and R. A. Saurous, <em>TensorFlow Distributions</em>, CoRR <strong>abs/1711.10604</strong>, (2017).</div>
 </div>
-<div>
-<p><sup>3</sup> T. Duong, An Introduction to Kernel Density Estimation (2001).</p>
+<div id="ref-eschle2019zfit" class="csl-entry">
+<div class="csl-left-margin"><sup>3</sup> </div><div class="csl-right-inline">J. Eschle, A. Puig Navarro, R. Silva Coutinho, and N. Serra, <em>Zfit: Scalable Pythonic Fitting</em>, SoftwareX <strong>11</strong>, 100508 (2020).</div>
 </div>
-<div>
-<p><sup>4</sup> M. Lerner, Histograms and Kernel Density Estimation | Biophysics and Beer (2013).</p>
+<div id="ref-cern" class="csl-entry">
+<div class="csl-left-margin"><sup>4</sup> </div><div class="csl-right-inline"><em>Processing: What to Record? - CERN Accelerating Science</em>, <a href="https://home.cern/science/computing/processing-what-record">https://home.cern/science/computing/processing-what-record</a> (accessed Nov. 16, 2020).</div>
 </div>
-<div>
-<p><sup>5</sup> K.S. Cranmer, (2000).</p>
+<div id="ref-rosenblatt1956remarks" class="csl-entry">
+<div class="csl-left-margin"><sup>5</sup> </div><div class="csl-right-inline">M. Rosenblatt, <em>Remarks on Some Nonparametric Estimates of a Density Function</em>, Ann. Math. Statist. <strong>27</strong>, 832 (1956).</div>
 </div>
-<div>
-<p><sup>6</sup> J. Eschle, A.P. Navarro, R.S. Coutinho, and N. Serra, (2019).</p>
+<div id="ref-duong2001" class="csl-entry">
+<div class="csl-left-margin"><sup>6</sup> </div><div class="csl-right-inline">T. Duong, <em>Kernel Density Estimation in Python</em>, <a href="https://www.mvstat.net/tduong/research/seminars/seminar-2001-05/">https://www.mvstat.net/tduong/research/seminars/seminar-2001-05/</a> (accessed Nov. 16, 2020).</div>
 </div>
-<div>
-<p><sup>7</sup> J.V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton, A. Alemi, M.D. Hoffman, and R.A. Saurous, CoRR <strong>abs/1711.10604</strong>, (2017).</p>
+<div id="ref-lerner2013" class="csl-entry">
+<div class="csl-left-margin"><sup>7</sup> </div><div class="csl-right-inline">M. Lerner, <em>Kernel Density Estimation in Python</em>, <a href="https://mglerner.github.io/posts/histograms-and-kernel-density-estimation-kde-2.html">https://mglerner.github.io/posts/histograms-and-kernel-density-estimation-kde-2.html</a> (accessed Nov. 16, 2020).</div>
 </div>
-<div>
-<p><sup>8</sup> R.P. Brent, The Computer Journal <strong>14</strong>, 422 (1971).</p>
+<div id="ref-cranmer2000kernel" class="csl-entry">
+<div class="csl-left-margin"><sup>8</sup> </div><div class="csl-right-inline">K. Cranmer, <em>Kernel Estimation in High-Energy Physics</em>, Computer Physics Communications <strong>136</strong>, 198 (2001).</div>
 </div>
-<div>
-<p><sup>9</sup> T. Odland, Comparison - KDEpy 1.0.5 Documentation (n.d.).</p>
+<div id="ref-harrisArrayProgrammingNumPy2020" class="csl-entry">
+<div class="csl-left-margin"><sup>9</sup> </div><div class="csl-right-inline">C. R. Harris, K. J. Millman, S. J. van der Walt, R. Gommers, P. Virtanen, D. Cournapeau, E. Wieser, J. Taylor, S. Berg, N. J. Smith, R. Kern, M. Picus, S. Hoyer, M. H. van Kerkwijk, M. Brett, A. Haldane, J. F. del R'ıo, M. Wiebe, P. Peterson, P. G'erard-Marchant, K. Sheppard, T. Reddy, W. Weckesser, H. Abbasi, C. Gohlke, and T. E. Oliphant, <em>Array Programming with NumPy</em>, Nature <strong>585</strong>, 357 (2020).</div>
 </div>
-<div>
-<p><sup>10</sup> A. Gramacki, in <em>Nonparametric Kernel Density Estimation and Its Computational Aspects</em> (Springer, 2018), pp. 85–118.</p>
+<div id="ref-KDEpyDoc" class="csl-entry">
+<div class="csl-left-margin"><sup>10</sup> </div><div class="csl-right-inline">T. Odland, <em>Comparison | KDEpy</em>, <a href="https://kdepy.readthedocs.io/en/latest/comparison.html">https://kdepy.readthedocs.io/en/latest/comparison.html</a> (accessed Nov. 16, 2020).</div>
 </div>
-<div>
-<p><sup>11</sup> T. Odland, GitHub Repository (2020).</p>
+<div id="ref-gramacki2018fft" class="csl-entry">
+<div class="csl-left-margin"><sup>11</sup> </div><div class="csl-right-inline">A. Gramacki, <em>FFT-Based Algorithms for Kernel Density Estimation and Bandwidth Selection</em>, in <em>Nonparametric Kernel Density Estimation and Its Computational Aspects</em> (Springer, 2018), pp. 85–118.</div>
 </div>
-<div>
-<p><sup>12</sup> Z.I. Botev, J.F. Grotowski, D.P. Kroese, and others, The Annals of Statistics <strong>38</strong>, 2916 (2010).</p>
+<div id="ref-botev2010kernel" class="csl-entry">
+<div class="csl-left-margin"><sup>12</sup> </div><div class="csl-right-inline">Z. I. Botev, J. F. Grotowski, D. P. Kroese, and others, <em>Kernel Density Estimation via Diffusion</em>, The Annals of Statistics <strong>38</strong>, 2916 (2010).</div>
 </div>
-<div>
-<p><sup>13</sup> D.P. Kroese, T. Taimre, and Z.I. Botev, <em>Handbook of Monte Carlo Methods</em> (John Wiley &amp; Sons, 2013).</p>
+<div id="ref-kroese2013handbook" class="csl-entry">
+<div class="csl-left-margin"><sup>13</sup> </div><div class="csl-right-inline">D. P. Kroese, T. Taimre, and Z. I. Botev, <em>Handbook of Monte Carlo Methods</em>, Vol. 706 (John Wiley &amp; Sons, 2013).</div>
 </div>
-<div>
-<p><sup>14</sup> S.J. Sheather and M.C. Jones, Journal of the Royal Statistical Society: Series B (Methodological) <strong>53</strong>, 683 (1991).</p>
+<div id="ref-wand1994kernel" class="csl-entry">
+<div class="csl-left-margin"><sup>14</sup> </div><div class="csl-right-inline">M. P. Wand and M. C. Jones, <em>Kernel Smoothing</em> (Crc Press, 1994).</div>
 </div>
-<div>
-<p><sup>15</sup> M.P. Wand and M.C. Jones, <em>Kernel Smoothing</em> (Crc Press, 1994).</p>
+<div id="ref-hofmeyrFastExactEvaluation2019" class="csl-entry">
+<div class="csl-left-margin"><sup>15</sup> </div><div class="csl-right-inline">D. Hofmeyr, <em>Fast Exact Evaluation of Univariate Kernel Sums</em>, IEEE Trans. Pattern Anal. Mach. Intell. 1 (2019).</div>
+</div>
+<div id="ref-ScipyStatsGaussian" class="csl-entry">
+<div class="csl-left-margin"><sup>16</sup> </div><div class="csl-right-inline"><em>Scipy.stats.gaussian_kde — SciPy V1.5.4 Reference Guide</em>, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-KernelDensityEstimation" class="csl-entry">
+<div class="csl-left-margin"><sup>17</sup> </div><div class="csl-right-inline"><em>Kernel Density Estimation — Statsmodels</em>, <a href="https://www.statsmodels.org/devel/examples/notebooks/generated/kernel_density.html">https://www.statsmodels.org/devel/examples/notebooks/generated/kernel_density.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-SklearnNeighborsKernelDensity" class="csl-entry">
+<div class="csl-left-margin"><sup>18</sup> </div><div class="csl-right-inline"><em>Sklearn.neighbors.KernelDensity — Scikit-Learn 0.23.2 Documentation</em>, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html">https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-KDEpy" class="csl-entry">
+<div class="csl-left-margin"><sup>19</sup> </div><div class="csl-right-inline">T. Odland, <em>KDEpy</em>, <a href="https://github.com/tommyod/KDEpy">https://github.com/tommyod/KDEpy</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-vanderplas2013" class="csl-entry">
+<div class="csl-left-margin"><sup>20</sup> </div><div class="csl-right-inline">J. VanderPlas, <em>Kernel Density Estimation in Python</em>, <a href="https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/">https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/</a> (accessed Nov. 16, 2020).</div>
+</div>
+<div id="ref-brent1971algorithm" class="csl-entry">
+<div class="csl-left-margin"><sup>21</sup> </div><div class="csl-right-inline">R. P. Brent, <em>An Algorithm with Guaranteed Convergence for Finding a Zero of a Function</em>, The Computer Journal <strong>14</strong>, 422 (1971).</div>
+</div>
+<div id="ref-hofmeyrFastKernelSmoothing2020" class="csl-entry">
+<div class="csl-left-margin"><sup>22</sup> </div><div class="csl-right-inline">D. P. Hofmeyr, <em>Fast Kernel Smoothing in R with Applications to Projection Pursuit</em>, arXiv:2001.02225 [stat] (2020).</div>
+</div>
+<div id="ref-silvermanDensityEstimationStatistics1998" class="csl-entry">
+<div class="csl-left-margin"><sup>23</sup> </div><div class="csl-right-inline">B. W. Silverman, <em>Density Estimation for Statistics and Data Analysis</em> (Chapman &amp; Hall/CRC, Boca Raton, 1998).</div>
 </div>
 </div>
 </div>
@@ -233,7 +284,7 @@ code span.wa { color: #da4453; } /* Warning */
           </div>
         </div>
       </div>
-<a href="summary.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -265,7 +316,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/06-references.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/07-references.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -273,7 +324,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/06-references.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/07-references.Rmd",
 "text": null
 },
 "download": ["thesis.pdf", "thesis.epub"],

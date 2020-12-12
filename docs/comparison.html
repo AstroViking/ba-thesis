@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
-  <meta name="description" content="4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
-  <meta name="generator" content="bookdown 0.19.1 and GitBook 2.6.7" />
+  <title>5 Comparison | Performance of univariate kernel density estimation methods in TensorFlow</title>
+  <meta name="description" content="5 Comparison | Performance of univariate kernel density estimation methods in TensorFlow" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta property="og:title" content="5 Comparison | Performance of univariate kernel density estimation methods in TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Comparison | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta name="twitter:title" content="5 Comparison | Performance of univariate kernel density estimation methods in TensorFlow" />
   
   
   
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="tensorflowImplementation.html"/>
 <link rel="next" href="summary.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -49,21 +50,22 @@
 
 
 
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -77,46 +79,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    background-color: #232629;
-    color: #7a7c7d;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #cfcfc2; background-color: #232629; }
+  {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span. { color: #cfcfc2; } /* Normal */
-code span.al { color: #95da4c; } /* Alert */
-code span.an { color: #3f8058; } /* Annotation */
-code span.at { color: #2980b9; } /* Attribute */
-code span.bn { color: #f67400; } /* BaseN */
-code span.bu { color: #7f8c8d; } /* BuiltIn */
-code span.cf { color: #fdbc4b; } /* ControlFlow */
-code span.ch { color: #3daee9; } /* Char */
-code span.cn { color: #27aeae; } /* Constant */
-code span.co { color: #7a7c7d; } /* Comment */
-code span.cv { color: #7f8c8d; } /* CommentVar */
-code span.do { color: #a43340; } /* Documentation */
-code span.dt { color: #2980b9; } /* DataType */
-code span.dv { color: #f67400; } /* DecVal */
-code span.er { color: #da4453; } /* Error */
-code span.ex { color: #0099ff; } /* Extension */
-code span.fl { color: #f67400; } /* Float */
-code span.fu { color: #8e44ad; } /* Function */
-code span.im { color: #27ae60; } /* Import */
-code span.in { color: #c45b00; } /* Information */
-code span.kw { color: #cfcfc2; } /* Keyword */
-code span.op { color: #cfcfc2; } /* Operator */
-code span.ot { color: #27ae60; } /* Other */
-code span.pp { color: #27ae60; } /* Preprocessor */
-code span.re { color: #2980b9; } /* RegionMarker */
-code span.sc { color: #3daee9; } /* SpecialChar */
-code span.ss { color: #da4453; } /* SpecialString */
-code span.st { color: #f44f4f; } /* String */
-code span.va { color: #27aeae; } /* Variable */
-code span.vs { color: #da4453; } /* VerbatimString */
-code span.wa { color: #da4453; } /* Warning */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -131,35 +130,63 @@ code span.wa { color: #da4453; } /* Warning */
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel density estimation</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>2</b> Current state of the art</a></li>
-<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a><ul>
-<li class="chapter" data-level="3.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>3.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="3.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>3.2</b> Simple and linear Binning</a></li>
-<li class="chapter" data-level="3.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>3.3</b> Using convolution and the Fast Fourier Transform</a></li>
-<li class="chapter" data-level="3.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>3.4</b> Improved Sheather Jones Algorithm</a></li>
+<li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact kernel density estimation</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binningTheory"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#linear-binning"><i class="fa fa-check"></i><b>2.2.2</b> Linear binning</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a><ul>
-<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>4.1</b> Benchmark setup</a></li>
-<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#basic-implementation-against-binned-and-fft-implementations"><i class="fa fa-check"></i><b>4.2</b> Basic implementation against Binned and FFT implementations</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>4.2.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>4.2.2</b> Accuracy</a></li>
+<li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#fftTheory"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#isjTheory"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#hofmeyrTheory"><i class="fa fa-check"></i><b>2.5</b> Using specialized kernel functions and their series expansion</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="comparison.html"><a href="comparison.html#new-implementation-against-kdepy"><i class="fa fa-check"></i><b>4.3</b> New implementation against KDEpy</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>4.3.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.3.2" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>4.3.2</b> Accuracy</a></li>
+<li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
+<li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#advantages-of-using-zfit-and-tensorflow"><i class="fa fa-check"></i><b>4.1</b> Advantages of using zfit and TensorFlow</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-univariate-kernel-density-estimation"><i class="fa fa-check"></i><b>4.2</b> Exact univariate kernel density estimation</a></li>
+<li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#binned-method"><i class="fa fa-check"></i><b>4.3</b> Binned method</a></li>
+<li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#fft-based-method"><i class="fa fa-check"></i><b>4.4</b> FFT based method</a></li>
+<li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#isjMethod"><i class="fa fa-check"></i><b>4.5</b> ISJ based method</a></li>
+<li class="chapter" data-level="4.6" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#hofmeyrMethod"><i class="fa fa-check"></i><b>4.6</b> Specialized kernel method</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="comparison.html"><a href="comparison.html#new-implementation-run-with-gpu-support"><i class="fa fa-check"></i><b>4.4</b> New implementation run with GPU support</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>4.4.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.4.2" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>4.4.2</b> Accuracy</a></li>
+<li class="chapter" data-level="5" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>5</b> Comparison</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>5.1</b> Benchmark setup</a></li>
+<li class="chapter" data-level="5.2" data-path="comparison.html"><a href="comparison.html#differences-of-exact-binned-fft-isj-and-hofmeyr-implementations"><i class="fa fa-check"></i><b>5.2</b> Differences of Exact, Binned, FFT, ISJ and Hofmeyr implementations</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>5.2.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>5.2.2</b> Runtime</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy"><i class="fa fa-check"></i><b>5.3</b> Comparison to KDEpy</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>5.3.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.3.2" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>5.3.2</b> Runtime</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
+<li class="chapter" data-level="5.4" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-gpu"><i class="fa fa-check"></i><b>5.4</b> Comparison to KDEpy on GPU</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.1</b> Runtime</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="comparison.html"><a href="comparison.html#findings"><i class="fa fa-check"></i><b>5.5</b> Findings</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#source-code"><i class="fa fa-check"></i>Source Code</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="presentation/index.html" target="_blank">Presentation</a></li>
+
 </ul>
 
       </nav>
@@ -169,7 +196,7 @@ code span.wa { color: #da4453; } /* Warning */
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of Univariate Kernel Density Estimation methods in TensorFlow</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of univariate kernel density estimation methods in TensorFlow</a>
           </h1>
         </div>
 
@@ -177,58 +204,155 @@ code span.wa { color: #da4453; } /* Warning */
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="comparison" class="section level1">
-<h1><span class="header-section-number">4</span> Comparison</h1>
-<pre><code>## /opt/miniconda3/envs/ba-thesis/lib/python3.7/site-packages/zfit/util/execution.py:70: UserWarning: Not running on Linux. Determining available cpus for thread can failand be overestimated. Workaround (only if too many cpus are used):`zfit.run.set_n_cpu(your_cpu_number)`
-##   warnings.warn(&quot;Not running on Linux. Determining available cpus for thread can fail&quot;</code></pre>
-<p>To show the efficiency and performance of the Kernel Density Estimation methods implemented with TensorFlow a benchmarking suite was developed. It consists of three parts, a collection of distributions, a collection of methods to compare and a runner module that implements helper methods to execute the methods to test against the different distributions and plot the generated dataset nicely.</p>
-<div id="benchmark-setup" class="section level2">
-<h2><span class="header-section-number">4.1</span> Benchmark setup</h2>
-<p>To compare the different implementations multiple popular test distributions mentioned in Wand et al.<span class="citation"><sup><a href="#ref-wand1994kernel" role="doc-biblioref">15</a></sup></span> were used. A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes and one called asymmetric double claw that has different sized spikes left and right. All comparisons were made using a standard Gaussian Kernel. Although all loc-scale family distributions of TensorFlow Probability may be used for the new implmentation proposed in this paper may be used, the Gaussian kernel is the most used one and provides best reference to compare different implementations against eachother.</p>
-<div class="figure"><span id="fig:distDisplay"></span>
-<img src="benchmark/cpu/distributions.pdf" alt="Distribution used to benchmark"  />
+<div id="comparison" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Comparison</h1>
+<p>To compare the efficiency and performance of the different kernel density estimation methods implemented with TensorFlow a benchmarking suite was developed. It consists of three parts: a collection of distributions to use, a collection of methods to compare and a runner module that implements helper methods to execute the methods to test against the different distributions and plot the generated datasets nicely.</p>
+<p>The goal is to access whether the newly proposed methods (<code>ZfitBinned</code>, <code>ZfitFFT</code>, <code>ZfitISJ</code> and <code>ZfitHofmeyr</code>) are able to compete with current KDE implementations in Python in terms of runtime for a given accuracy. Furthermore the benchmarking between the four new implementations should yield insights to choose the right method for the right use case.</p>
+<div id="benchmark-setup" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Benchmark setup</h2>
+<p>To compare the different implementations multiple popular test distributions mentioned in Wand et al.<span class="citation"><sup><a href="references.html#ref-wand1994kernel" role="doc-biblioref">14</a></sup></span> were used (see figure <a href="comparison.html#fig:showDistributions">5.1</a>). A simple normal distribution, a simple uniform distribution, a bimodal distribution comprised of two normals, a skewed bimodal distribution, a claw distribution that has spikes, and one called asymmetric double claw that has different sized spikes left and right. This test distributions are implemented using TensorFlow Probability and data is sampled from each test distribution at random. The different KDE methods are then used to approximate this test distributions from the sampled data.</p>
+<div class="figure" style="text-align: center"><span id="fig:showDistributions"></span>
+<img src="thesis_files/figure-html/showDistributions-1.png" alt="Test distributions used to sample data from" width="100%" />
 <p class="caption">
-Figure 4.1: Distribution used to benchmark
+Figure 5.1: Test distributions used to sample data from
+</p>
+</div>
+<p>All comparisons were made using a standard Gaussian kernel function. Although all location-scale family distributions of TensorFlow Probability may be used for the new implementation proposed in this paper, the Gaussian kernel function is the most used one and provides best reference to compare different implementations against each other. An exception is <code>ZfitHofmeyr</code> (see <a href="tensorflowImplementation.html#hofmeyrMethod">4.6</a>), which uses a specialized kernel function of the form <span class="math inline">\(poly(x)\cdot\exp(x)\)</span>, namely the <span class="math inline">\(K_1\)</span> kernel function with a polynom of order <span class="math inline">\(\alpha = 1\)</span> as given by equation <a href="mathematicalTheory.html#eq:polyexpkernel">(2.13)</a>. The <span class="math inline">\(K_1\)</span> kernel function is used, since it was shown to be the most performant in nearly all cases in Hofmeyr’s own benchmarking<span class="citation"><sup><a href="references.html#ref-hofmeyrFastKernelSmoothing2020" role="doc-biblioref">22</a></sup></span>. Indicating this and the fact that the underlying algorithm was implemented in C++ as a custom TensorFlow operation, the Hofmeyr method used in the comparisons is therefore appropriately called <code>ZfitHofmeyrK1withCpp</code>.</p>
+<p>For all approximative implementations linear binning with a fixed bin count of <span class="math inline">\(N = 2^{10} = 1024\)</span> was used. This is the default in KDEpy, a power of <span class="math inline">\(2\)</span> (which is favorable for FFT based algorithms), results in an exact kernel density calculation for the lowest sample size used (<span class="math inline">\(10^3\)</span>) but also yields results with high accuracy for the highest sample size used (<span class="math inline">\(10^8\)</span>). Decreasing the bin count would decrease the runtime while providing lesser accuracy whereas increasing the bin count would yield higher accuracy while increasing the runtime (see <a href="mathematicalTheory.html#binningTheory">2.2</a>). However, as all methods compared use the same linear binning routine, changing the bin count does not change how they compare. Therefore the bin size is kept fixed.</p>
+<p>For nearly all implementations the bandwidth was calculated using the popular rule of thumb introduced by Silverman<span class="citation"><sup><a href="references.html#ref-silvermanDensityEstimationStatistics1998" role="doc-biblioref">23</a></sup></span>, because it is simple to compute and sufficient to capture the differences between implementations. The only exception is the ISJ based method, since it is based on calculating the approximately optimal bandwidth directly (as shown in section <a href="mathematicalTheory.html#isjTheory">2.4</a>).</p>
+</div>
+<div id="differences-of-exact-binned-fft-isj-and-hofmeyr-implementations" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Differences of Exact, Binned, FFT, ISJ and Hofmeyr implementations</h2>
+<p>First, the exact kernel density estimation implementation is compared against the linearly binned, FFT and ISJ and Hofmeyr implementations run on a Macbook Pro 2013 Retina using the CPU.</p>
+<p>The sample sizes lie in the range of <span class="math inline">\(10^3\)</span> to <span class="math inline">\(10^4\)</span>. The number of samples is restricted because calculating the exact kernel density estimation for more than <span class="math inline">\(10^4\)</span> kernels is computationally unfeasible (larger datasets would lead to an exponentially larger runtime).</p>
+<div id="accuracy" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Accuracy</h3>
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJEstimations"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJEstimations-1.png" alt="Comparison between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr' with $n=10^4$ sample points" width="100%" />
+<p class="caption">
+Figure 5.2: Comparison between the five algorithms ‘Exact,’ ‘Binned,’ ‘FFT,’ ‘ISJ’ and ‘Hofmeyr’ with <span class="math inline">\(n=10^4\)</span> sample points
+</p>
+</div>
+<p>As seen in figure <a href="comparison.html#fig:compareSimpleBinnedFFTISJEstimations">5.2</a>, all implementations are capturing the underlying distributions rather well, except for the complicated spiky distributions at the bottom. Here the ISJ approach is especially favorable, since it does not rely on Silverman’s rule of thumb to calculate the bandwidth. This can be seen in figure <a href="comparison.html#fig:compareSimpleBinnedFFTISJEstimationClaw">5.3</a> in more detail.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJEstimationClaw"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJEstimationClaw-1.png" alt="Comparison between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr' with $n=10^4$ sample points on distribution 'Claw'" width="100%" />
+<p class="caption">
+Figure 5.3: Comparison between the five algorithms ‘Exact,’ ‘Binned,’ ‘FFT,’ ‘ISJ’ and ‘Hofmeyr’ with <span class="math inline">\(n=10^4\)</span> sample points on distribution ‘Claw’
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJErrors"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJErrors-1.png" alt="Integrated square errors ($ISE$) for the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'" width="100%" />
+<p class="caption">
+Figure 5.4: Integrated square errors (<span class="math inline">\(ISE\)</span>) for the five algorithms ‘Exact,’ ‘Binned,’ ‘FFT,’ ‘ISJ’ and ‘Hofmeyr’
+</p>
+</div>
+<p>The calculated integrated square errors (<span class="math inline">\(ISE\)</span>) per sample size can be seen in figure <a href="comparison.html#fig:compareSimpleBinnedFFTISJErrors">5.4</a>. As expected the <span class="math inline">\(ISE\)</span> decreases with increased sample size. The specialized kernel method (implemented as TensorFlow operation in C++: <code>ZfitHofmeyrK1withCpp</code>) has a higher <span class="math inline">\(ISE\)</span> than the other methods for all distributions. Although the ISJ based method’s (<code>ZfitISJ</code>) accuracy is equally as poor for the uniform distribution, it has the lowest <span class="math inline">\(ISE\)</span> for the spiky ‘Claw’ distribution, which confirms the superiority of the ISJ based bandwidth estimation for highly non-normal, spiky distributions.
+For other type of distributions the exact, linearly binned and FFT based method have comparable integrated square errors, which suggest that the the accuracy loss of linear binning is negligible compared to the exact kernel density estimate.</p>
+</div>
+<div id="runtime" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Runtime</h3>
+<p>The runtime comparisons are split in an instantiation and an evaluation phase. In the instantiation phase everything is prepared for evaluation at different values of <span class="math inline">\(x\)</span>, depending on the method used more or less calculation happens during this phase. In the evaluation phase the kernel density estimate is calculated and returned for the evaluation points.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJRuntimeInstantiation"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJRuntimeInstantiation-1.png" alt="Runtime difference of the instantiaton phase between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'" width="100%" />
+<p class="caption">
+Figure 5.5: Runtime difference of the instantiaton phase between the five algorithms ‘Exact,’ ‘Binned,’ ‘FFT,’ ‘ISJ’ and ‘Hofmeyr’
+</p>
+</div>
+<p>As seen in figure <a href="comparison.html#fig:compareSimpleBinnedFFTISJRuntimeInstantiation">5.5</a>, the FFT and ISJ method use more time during the instantiation phase than the other methods. This is expected, since for these methods the kernel density estimate is calculated for every grid point during the instantiation phase, whereas for the other methods, the calculation is only prepared and actually executed during the evaluation phase itself. In addition, we can see that the FFT method is faster than the ISJ method in calculating the kernel density estimate for the grid points. The linear binning method is slower than the exact method because the bin counts are calculated during the instantiation phase.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareSimpleBinnedFFTISJRuntimePDF"></span>
+<img src="thesis_files/figure-html/compareSimpleBinnedFFTISJRuntimePDF-1.png" alt="Runtime difference of the evaluation phase between the five algorithms 'Exact', 'Binned', 'FFT', 'ISJ' and 'Hofmeyr'" width="100%" />
+<p class="caption">
+Figure 5.6: Runtime difference of the evaluation phase between the five algorithms ‘Exact,’ ‘Binned,’ ‘FFT,’ ‘ISJ’ and ‘Hofmeyr’
+</p>
+</div>
+<p>In figure <a href="comparison.html#fig:compareSimpleBinnedFFTISJRuntimePDF">5.6</a> we can see that evaluation runtime of the exact KDE method increases with increased bin size, whereas for the other methods it stays nearly constant. The binned method benefits from the fact that, no matter how big the sample size is, it has to compute the kernel density estimate only for the fixed bin count of <span class="math inline">\(N=1024\)</span>. The other methods are faster during the evaluation phase, because they have already calculated estimate in the instantiation phase and only need to interpolate for the values in between.</p>
+</div>
+</div>
+<div id="comparison-to-kdepy" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Comparison to KDEpy</h2>
+<p>Now the newly proposed methods (Binned, FFT, ISJ, Hofmeyr) are compared against the state of the art implementation in Python KDEpy, also run on a Macbook Pro 2013 Retina using the CPU.
+The number of samples per test distribution is in the range of <span class="math inline">\(10^3\)</span> - <span class="math inline">\(10^8\)</span>. By excluding the exact kernel density estimation, larger sample data sizes can be used for comparison.</p>
+<div id="accuracy-1" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Accuracy</h3>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyEstimations"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyEstimations-1.png" alt="Comparison between the newly proposed algorithms 'Binned', 'FFT', 'ISJ', 'Hofmeyr' and the FFT based implementation in KDEpy with $n=10^4$ sample points" width="100%" />
+<p class="caption">
+Figure 5.7: Comparison between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ,’ ‘Hofmeyr’ and the FFT based implementation in KDEpy with <span class="math inline">\(n=10^4\)</span> sample points
+</p>
+</div>
+<p>The different methods show the same behavior as the reference implementation in KDEpy, again with the exception of the ISJ algorithm, which works better for spiky distributions (figure <a href="comparison.html#fig:compareZfitKDEpyEstimations">5.7</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyErrors"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyErrors-1.png" alt="Integrated square errors ($ISE$) for the newly proposed algorithms 'Binned', 'FFT', 'ISJ', 'Hofmeyr' and the FFT based implementation in KDEpy" width="100%" />
+<p class="caption">
+Figure 5.8: Integrated square errors (<span class="math inline">\(ISE\)</span>) for the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ,’ ‘Hofmeyr’ and the FFT based implementation in KDEpy
+</p>
+</div>
+<p>The integrated square errors plotted in figure <a href="comparison.html#fig:compareZfitKDEpyErrors">5.8</a>, are in general in the same order of magnitude for all implementations, except for the Hofmeyr method, which shows unrealistically high errors for higher sample sizes. This might relate to an uncaught overflow error in the custom TensorFlow operation implemented in C++ and should be investigated further. Additionally we see again that the ISJ method’s <span class="math inline">\(ISE\)</span> is an order of magnitude lower for the spiky ‘Claw’ distribution, because it calculates a bandwidth closer to the optimum and does not rely on assuming a normal distribution in doing so. It can be shown also that the binned, FFT and ISJ methods capture the nature of the underlying distributions with high accuracy using only <span class="math inline">\(N = 2^{10}\)</span> bins even for a sample size of <span class="math inline">\(n = 10^8\)</span>. KDEpy’s FFT based implementation loses accuracy for higher sample sizes (<span class="math inline">\(n \geq 10^8\)</span>), whereas the new binned, FFT and ISJ methods increase their accuracy even further, which suggests that using TensorFlow increases numerical stability for extensive calculations like kernel density estimations.</p>
+</div>
+<div id="runtime-1" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Runtime</h3>
+<p>Again the runtime comparisons are split in an instantiation and an evaluation phase.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimeInstantiation"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeInstantiation-1.png" alt="Runtime difference of the instantiaton phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ', 'Hofmeyr' and the FFT based implementation in KDEpy" width="100%" />
+<p class="caption">
+Figure 5.9: Runtime difference of the instantiaton phase between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ,’ ‘Hofmeyr’ and the FFT based implementation in KDEpy
+</p>
+</div>
+<p>During the instantiation phase the newly proposed binned, FFT, ISJ and Hofmeyr methods are slower than KDEpy’s FFT method by one or two orders of magnitude (figure <a href="comparison.html#fig:compareZfitKDEpyRuntimeInstantiation">5.9</a>). This is predictable, since generating the TensorFlow graph generates some runtime overhead.</p>
+<p>In many practical situtations in high energy physics however, generating the TensorFlow graph and the PDF has to be done only once and the PDF is evaluated repeatedly. This is for instance important if using the distribution estimate for log-likelihood or <span class="math inline">\(\chi^2\)</span> fits, which is a prime use case of zfit. Therefore in such cases the PDF evaluation phase is of much higher importance. We can see, that once the initial graph is built, evaluating the PDF for different values of <span class="math inline">\(x\)</span> is nearly constant instead increasing exponentially as in the case of KDEpy’s FFT method (figure <a href="comparison.html#fig:compareZfitKDEpyRuntimePDF">5.10</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimePDF"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimePDF-1.png" alt="Runtime difference of the evaluation phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ', 'Hofmeyr' and the FFT based implementation in KDEpy" width="100%" />
+<p class="caption">
+Figure 5.10: Runtime difference of the evaluation phase between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ,’ ‘Hofmeyr’ and the FFT based implementation in KDEpy
 </p>
 </div>
 </div>
-<div id="basic-implementation-against-binned-and-fft-implementations" class="section level2">
-<h2><span class="header-section-number">4.2</span> Basic implementation against Binned and FFT implementations</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="comparison.html#cb4-1"></a>figure, axes <span class="op">=</span> runner.plot_estimations(restricted_estimations, distributions_to_evaluate, <span class="fl">1e3</span>, [<span class="st">&#39;ZfitExact&#39;</span>, <span class="st">&#39;ZfitExactwithAdaptiveBandwidth&#39;</span>, <span class="st">&#39;ZfitBinned&#39;</span>])</span>
-<span id="cb4-2"><a href="comparison.html#cb4-2"></a>figure</span></code></pre></div>
-<p><img src="thesis_files/figure-html/unnamed-chunk-7-1.png" /><!-- --></p>
-<div id="runtime" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> Runtime</h3>
-<p><embed src="./benchmark/cpu/distributions.pdf" /><!-- --></p>
 </div>
-<div id="accuracy" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> Accuracy</h3>
+<div id="comparison-to-kdepy-on-gpu" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Comparison to KDEpy on GPU</h2>
+<p>Now we compare the new methods against KDEpy while leveraging TensorFlow’s capability of GPU based optimization. All computations were executed using two Tesla P100 GPU’s on the openSUSE Leap operating system running on an internal server of the University of Zurich. The number of samples per test distribution is again in the range of <span class="math inline">\(10^3\)</span> - <span class="math inline">\(10^8\)</span>. As using the GPU does not change the accuracy, we will only compare the runtimes here. Also the Hofmeyr method is excluded as it was not implemented for running on the GPU.</p>
+<div id="runtime-2" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Runtime</h3>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimeInstantiationGPU"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeInstantiationGPU-1.png" alt="Runtime difference of the instantiaton phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="100%" />
+<p class="caption">
+Figure 5.11: Runtime difference of the instantiaton phase between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy (run on GPU)
+</p>
+</div>
+<p>The instantiation of the newly proposed implementations runs faster on the GPU than the CPU. This is no surprise as many operations in TensorFlow benefit from the parallel processing on the GPU. For a high number of sample points the newly proposed binned as well as the newly proposed FFT implementation are instantiated nearly as fast as KDEpy’s FFT implementation if run on a GPU (figure <a href="comparison.html#fig:compareZfitKDEpyRuntimeInstantiationGPU">5.11</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimePDFGPU"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimePDFGPU-1.png" alt="Runtime difference of the evaluation phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="100%" />
+<p class="caption">
+Figure 5.12: Runtime difference of the evaluation phase between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy (run on GPU)
+</p>
+</div>
+<p>The runtime of the PDF evaluation phase does not differ much from the one seen on the CPU. All new methods are evaluated in near constant time (figure <a href="comparison.html#fig:compareZfitKDEpyRuntimePDFGPU">5.12</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitRuntimePDFGPUwithoutKDEpy"></span>
+<img src="thesis_files/figure-html/compareZfitRuntimePDFGPUwithoutKDEpy-1.png" alt="Runtime difference of the evaluation phase between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' only (run on GPU)" width="100%" />
+<p class="caption">
+Figure 5.13: Runtime difference of the evaluation phase between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ only (run on GPU)
+</p>
+</div>
+<p>Looking at the evaluation runtimes of only the new methods, we can see that the differences are minimal (figure <a href="comparison.html#fig:compareZfitRuntimePDFGPUwithoutKDEpy">5.13</a>) and all evaluation runtimes are of the same order of magnitude.</p>
+<div class="figure" style="text-align: center"><span id="fig:compareZfitKDEpyRuntimeTotal"></span>
+<img src="thesis_files/figure-html/compareZfitKDEpyRuntimeTotal-1.png" alt="Runtime difference of the total calculation (instantiation and evaluation phase) between the newly proposed algorithms 'Binned', 'FFT', 'ISJ' and the FFT based implementation in KDEpy (run on GPU)" width="100%" />
+<p class="caption">
+Figure 5.14: Runtime difference of the total calculation (instantiation and evaluation phase) between the newly proposed algorithms ‘Binned,’ ‘FFT,’ ‘ISJ’ and the FFT based implementation in KDEpy (run on GPU)
+</p>
+</div>
+<p>For larger datasets (<span class="math inline">\(n \geq 10^8\)</span>) even the total runtime (instantiation and PDF evaluation combined) of the newly proposed binned and FFT methods is lower than for KDEpy’s FFT method, i.e these new methods based on TensorFlow and zfit can outperform KDEpy if run on the GPU (figure <a href="comparison.html#fig:compareZfitKDEpyRuntimeTotal">5.14</a>).</p>
 </div>
 </div>
-<div id="new-implementation-against-kdepy" class="section level2">
-<h2><span class="header-section-number">4.3</span> New implementation against KDEpy</h2>
-<div id="runtime-1" class="section level3">
-<h3><span class="header-section-number">4.3.1</span> Runtime</h3>
-</div>
-<div id="accuracy-1" class="section level3">
-<h3><span class="header-section-number">4.3.2</span> Accuracy</h3>
-</div>
-</div>
-<div id="new-implementation-run-with-gpu-support" class="section level2">
-<h2><span class="header-section-number">4.4</span> New implementation run with GPU support</h2>
-<div id="runtime-2" class="section level3">
-<h3><span class="header-section-number">4.4.1</span> Runtime</h3>
-</div>
-<div id="accuracy-2" class="section level3">
-<h3><span class="header-section-number">4.4.2</span> Accuracy</h3>
+<div id="findings" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Findings</h2>
+<p>The comparisons above lead to four distinct findings.</p>
+<ol style="list-style-type: decimal">
+<li>The Hofmeyr method (<code>ZfitHofmeyr</code>), although a performant algorithm in theory, is difficult to implement efficiently in TensorFlow due to recursion and needs more work to be used for real data.</li>
+<li>For use cases where only the evaluation runtime is of importance, for instance in log-likelihood fitting, the newly proposed FFT and ISJ based implementations (<code>ZfitFFT</code> and <code>ZfitISJ</code>) are the most efficient ones.</li>
+<li>The ISJ based implementation (<code>ZfitISJ</code>) provides superior accuracy for spiky non-normal distributions by an order of magnitude, while imposing only a minor runtime cost.</li>
+<li>For sample sizes <span class="math inline">\(n \geq 10^8\)</span>, the newly proposed binned and FFT methods (<code>ZfitBinned</code>, <code>ZfitFFT</code>) are able to outperform KDEpy in terms of total runtime for a given accuracy if run on the GPU.</li>
+</ol>
 
-</div>
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-wand1994kernel">
-<p><sup>15</sup> M.P. Wand and M.C. Jones, <em>Kernel Smoothing</em> (Crc Press, 1994).</p>
 </div>
 </div>
             </section>
@@ -268,7 +392,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/04-comparison.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/05-comparison.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -276,7 +400,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/04-comparison.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/05-comparison.Rmd",
 "text": null
 },
 "download": ["thesis.pdf", "thesis.epub"],

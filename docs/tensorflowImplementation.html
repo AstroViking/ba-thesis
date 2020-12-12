@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Implementation | Performance of Univariate Kernel Density Estimation methods in TensorFlow</title>
-  <meta name="description" content="3 Implementation | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
-  <meta name="generator" content="bookdown 0.19.1 and GitBook 2.6.7" />
+  <title>4 Implementation | Performance of univariate kernel density estimation methods in TensorFlow</title>
+  <meta name="description" content="4 Implementation | Performance of univariate kernel density estimation methods in TensorFlow" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Implementation | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta property="og:title" content="4 Implementation | Performance of univariate kernel density estimation methods in TensorFlow" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Implementation | Performance of Univariate Kernel Density Estimation methods in TensorFlow" />
+  <meta name="twitter:title" content="4 Implementation | Performance of univariate kernel density estimation methods in TensorFlow" />
   
   
   
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="currentState.html"/>
 <link rel="next" href="comparison.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -49,21 +50,22 @@
 
 
 
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -77,46 +79,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    background-color: #232629;
-    color: #7a7c7d;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #cfcfc2; background-color: #232629; }
+  {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span. { color: #cfcfc2; } /* Normal */
-code span.al { color: #95da4c; } /* Alert */
-code span.an { color: #3f8058; } /* Annotation */
-code span.at { color: #2980b9; } /* Attribute */
-code span.bn { color: #f67400; } /* BaseN */
-code span.bu { color: #7f8c8d; } /* BuiltIn */
-code span.cf { color: #fdbc4b; } /* ControlFlow */
-code span.ch { color: #3daee9; } /* Char */
-code span.cn { color: #27aeae; } /* Constant */
-code span.co { color: #7a7c7d; } /* Comment */
-code span.cv { color: #7f8c8d; } /* CommentVar */
-code span.do { color: #a43340; } /* Documentation */
-code span.dt { color: #2980b9; } /* DataType */
-code span.dv { color: #f67400; } /* DecVal */
-code span.er { color: #da4453; } /* Error */
-code span.ex { color: #0099ff; } /* Extension */
-code span.fl { color: #f67400; } /* Float */
-code span.fu { color: #8e44ad; } /* Function */
-code span.im { color: #27ae60; } /* Import */
-code span.in { color: #c45b00; } /* Information */
-code span.kw { color: #cfcfc2; } /* Keyword */
-code span.op { color: #cfcfc2; } /* Operator */
-code span.ot { color: #27ae60; } /* Other */
-code span.pp { color: #27ae60; } /* Preprocessor */
-code span.re { color: #2980b9; } /* RegionMarker */
-code span.sc { color: #3daee9; } /* SpecialChar */
-code span.ss { color: #da4453; } /* SpecialString */
-code span.st { color: #f44f4f; } /* String */
-code span.va { color: #27aeae; } /* Variable */
-code span.vs { color: #da4453; } /* VerbatimString */
-code span.wa { color: #da4453; } /* Warning */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -131,35 +130,63 @@ code span.wa { color: #da4453; } /* Warning */
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.1</b> Kernel Density Estimation</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.2</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#purpose-of-this-thesis"><i class="fa fa-check"></i><b>1.1</b> Purpose of this thesis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#kernel-density-estimation"><i class="fa fa-check"></i><b>1.2</b> Kernel density estimation</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#zfit-and-tensorflow"><i class="fa fa-check"></i><b>1.3</b> zfit and TensorFlow</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#introduction-univariate"><i class="fa fa-check"></i><b>1.4</b> Univariate case</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>2</b> Current state of the art</a></li>
-<li class="chapter" data-level="3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>3</b> Implementation</a><ul>
-<li class="chapter" data-level="3.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>3.1</b> Exact Kernel Density Estimation</a></li>
-<li class="chapter" data-level="3.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#simple-and-linear-binning"><i class="fa fa-check"></i><b>3.2</b> Simple and linear Binning</a></li>
-<li class="chapter" data-level="3.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#using-convolution-and-the-fast-fourier-transform"><i class="fa fa-check"></i><b>3.3</b> Using convolution and the Fast Fourier Transform</a></li>
-<li class="chapter" data-level="3.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#improved-sheather-jones-algorithm"><i class="fa fa-check"></i><b>3.4</b> Improved Sheather Jones Algorithm</a></li>
+<li class="chapter" data-level="2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html"><i class="fa fa-check"></i><b>2</b> Theory</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#exact-kernel-density-estimation"><i class="fa fa-check"></i><b>2.1</b> Exact kernel density estimation</a></li>
+<li class="chapter" data-level="2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#binningTheory"><i class="fa fa-check"></i><b>2.2</b> Binning</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#simple-binning"><i class="fa fa-check"></i><b>2.2.1</b> Simple binning</a></li>
+<li class="chapter" data-level="2.2.2" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#linear-binning"><i class="fa fa-check"></i><b>2.2.2</b> Linear binning</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>4</b> Comparison</a><ul>
-<li class="chapter" data-level="4.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>4.1</b> Benchmark setup</a></li>
-<li class="chapter" data-level="4.2" data-path="comparison.html"><a href="comparison.html#basic-implementation-against-binned-and-fft-implementations"><i class="fa fa-check"></i><b>4.2</b> Basic implementation against Binned and FFT implementations</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>4.2.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>4.2.2</b> Accuracy</a></li>
+<li class="chapter" data-level="2.3" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#fftTheory"><i class="fa fa-check"></i><b>2.3</b> Using convolution and the Fast Fourier Transform</a></li>
+<li class="chapter" data-level="2.4" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#isjTheory"><i class="fa fa-check"></i><b>2.4</b> Improved Sheather-Jones Algorithm</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematicalTheory.html"><a href="mathematicalTheory.html#hofmeyrTheory"><i class="fa fa-check"></i><b>2.5</b> Using specialized kernel functions and their series expansion</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="comparison.html"><a href="comparison.html#new-implementation-against-kdepy"><i class="fa fa-check"></i><b>4.3</b> New implementation against KDEpy</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>4.3.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.3.2" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>4.3.2</b> Accuracy</a></li>
+<li class="chapter" data-level="3" data-path="currentState.html"><a href="currentState.html"><i class="fa fa-check"></i><b>3</b> Current state of the art</a></li>
+<li class="chapter" data-level="4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#advantages-of-using-zfit-and-tensorflow"><i class="fa fa-check"></i><b>4.1</b> Advantages of using zfit and TensorFlow</a></li>
+<li class="chapter" data-level="4.2" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#exact-univariate-kernel-density-estimation"><i class="fa fa-check"></i><b>4.2</b> Exact univariate kernel density estimation</a></li>
+<li class="chapter" data-level="4.3" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#binned-method"><i class="fa fa-check"></i><b>4.3</b> Binned method</a></li>
+<li class="chapter" data-level="4.4" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#fft-based-method"><i class="fa fa-check"></i><b>4.4</b> FFT based method</a></li>
+<li class="chapter" data-level="4.5" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#isjMethod"><i class="fa fa-check"></i><b>4.5</b> ISJ based method</a></li>
+<li class="chapter" data-level="4.6" data-path="tensorflowImplementation.html"><a href="tensorflowImplementation.html#hofmeyrMethod"><i class="fa fa-check"></i><b>4.6</b> Specialized kernel method</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="comparison.html"><a href="comparison.html#new-implementation-run-with-gpu-support"><i class="fa fa-check"></i><b>4.4</b> New implementation run with GPU support</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>4.4.1</b> Runtime</a></li>
-<li class="chapter" data-level="4.4.2" data-path="comparison.html"><a href="comparison.html#accuracy-2"><i class="fa fa-check"></i><b>4.4.2</b> Accuracy</a></li>
+<li class="chapter" data-level="5" data-path="comparison.html"><a href="comparison.html"><i class="fa fa-check"></i><b>5</b> Comparison</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="comparison.html"><a href="comparison.html#benchmark-setup"><i class="fa fa-check"></i><b>5.1</b> Benchmark setup</a></li>
+<li class="chapter" data-level="5.2" data-path="comparison.html"><a href="comparison.html#differences-of-exact-binned-fft-isj-and-hofmeyr-implementations"><i class="fa fa-check"></i><b>5.2</b> Differences of Exact, Binned, FFT, ISJ and Hofmeyr implementations</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="comparison.html"><a href="comparison.html#accuracy"><i class="fa fa-check"></i><b>5.2.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.2.2" data-path="comparison.html"><a href="comparison.html#runtime"><i class="fa fa-check"></i><b>5.2.2</b> Runtime</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy"><i class="fa fa-check"></i><b>5.3</b> Comparison to KDEpy</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="comparison.html"><a href="comparison.html#accuracy-1"><i class="fa fa-check"></i><b>5.3.1</b> Accuracy</a></li>
+<li class="chapter" data-level="5.3.2" data-path="comparison.html"><a href="comparison.html#runtime-1"><i class="fa fa-check"></i><b>5.3.2</b> Runtime</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5</b> Summary</a></li>
+<li class="chapter" data-level="5.4" data-path="comparison.html"><a href="comparison.html#comparison-to-kdepy-on-gpu"><i class="fa fa-check"></i><b>5.4</b> Comparison to KDEpy on GPU</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="comparison.html"><a href="comparison.html#runtime-2"><i class="fa fa-check"></i><b>5.4.1</b> Runtime</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="comparison.html"><a href="comparison.html#findings"><i class="fa fa-check"></i><b>5.5</b> Findings</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>6</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#source-code"><i class="fa fa-check"></i>Source Code</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="presentation/index.html" target="_blank">Presentation</a></li>
+
 </ul>
 
       </nav>
@@ -169,7 +196,7 @@ code span.wa { color: #da4453; } /* Warning */
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of Univariate Kernel Density Estimation methods in TensorFlow</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Performance of univariate kernel density estimation methods in TensorFlow</a>
           </h1>
         </div>
 
@@ -177,126 +204,77 @@ code span.wa { color: #da4453; } /* Warning */
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tensorflowImplementation" class="section level1">
-<h1><span class="header-section-number">3</span> Implementation</h1>
-<div id="exact-kernel-density-estimation" class="section level2">
-<h2><span class="header-section-number">3.1</span> Exact Kernel Density Estimation</h2>
-<p>The implementation of a simple Kernel Density Estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper<span class="citation"><sup><a href="#ref-googleTFP" role="doc-biblioref">7</a></sup></span>, a KDE can be constructed by using its MixtureSameFamily Distribution, given sampled <code>data</code> as follows</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="tensorflowImplementation.html#cb1-1"></a><span class="im">from</span> tensorflow_probability <span class="im">import</span> distributions <span class="im">as</span> tfd</span>
-<span id="cb1-2"><a href="tensorflowImplementation.html#cb1-2"></a></span>
-<span id="cb1-3"><a href="tensorflowImplementation.html#cb1-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: tfd.Independent(tfd.Normal(loc<span class="op">=</span>x, scale<span class="op">=</span><span class="fl">1.</span>))</span>
-<span id="cb1-4"><a href="tensorflowImplementation.html#cb1-4"></a>n <span class="op">=</span> data.shape[<span class="dv">0</span>].value</span>
-<span id="cb1-5"><a href="tensorflowImplementation.html#cb1-5"></a></span>
-<span id="cb1-6"><a href="tensorflowImplementation.html#cb1-6"></a>kde <span class="op">=</span> tfd.MixtureSameFamily(</span>
-<span id="cb1-7"><a href="tensorflowImplementation.html#cb1-7"></a>    mixture_distribution<span class="op">=</span>tfd.Categorical(</span>
-<span id="cb1-8"><a href="tensorflowImplementation.html#cb1-8"></a>        probs<span class="op">=</span>[<span class="dv">1</span> <span class="op">/</span> n] <span class="op">*</span> n),</span>
-<span id="cb1-9"><a href="tensorflowImplementation.html#cb1-9"></a>    components_distribution<span class="op">=</span>f(data))</span></code></pre></div>
-<p>Interestingly, due to the smartly capsulated structure of TensorFlow Probability we can use any distribution of the loc-scale family type as a Kernel, if there exists an implementation for it in TensorFlow Probability. If the used Kernel has bounded support, the implementation proposed in this paper allows to specify the support upon instanciation of the class. If the Kernel has infinite support (like a Gaussian kernel i. e.) a practical support estimate is calculated by searching for approximative roots with the Brent’s method<span class="citation"><sup><a href="#ref-brent1971algorithm" role="doc-biblioref">8</a></sup></span> implemented in TensorFlow the python package <code>tf_quant_finance</code> by Google. This allows us to speed up the calculation</p>
-<p>However calculating an exact Kernel Density Estimation is not always feasible as this can take a long time with a huge collection of events, especially in high energy physics. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, since most of TensorFlow is actually implemented in C++ and the code is optimized before running. The computational complexity however, remains the same nonetheless.</p>
-<p><span class="math display" id="eq:kde">\[\begin{equation}
-\widehat{f}_h(x) = \frac{1}{nh} \sum_{k=1}^n K\Big(\frac{x-x_k}{h}\Big)
-\tag{3.1}
-\end{equation}\]</span></p>
-<p>The computational complexity of the basic exact KDE above is <span class="math inline">\(\mathcal{O}(nm)\)</span> where <span class="math inline">\(n\)</span> is the number of sample points to estimate from and <span class="math inline">\(m\)</span> is the number of evaluation points (the points where you want to calculate the estimate).</p>
-<p>To combat this complexity several methods exist.</p>
+<div id="tensorflowImplementation" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Implementation</h1>
+<p>In addition to the rather simple case of an exact univariate kernel density estimation (henceforth called <code>ZfitExact</code>), four conceptually different novel implementations in zfit and TensorFlow are proposed. A method based on simple or linear binning (called <code>ZfitBinned</code>), a method using the FFT algorithm (called <code>ZfitFFT</code>), a method based on the improved Sheather Jones algorithm (called <code>ZfitISJ</code>) and lastly a method based on Hofmeyr’s method of using a specialized kernel of the form <span class="math inline">\(poly(x)\cdot\exp(x)\)</span> (called <code>ZfitHofmeyr</code>) and recursive computation of the bases needed to calculate the kernel density estimations as linear combination. All methods are implemented for the univariate case only.</p>
+<p>Important to note is that for <code>ZfitISJ</code> and <code>ZfitFFT</code> simple or linear binning is necessary as a preliminary step.</p>
+<div id="advantages-of-using-zfit-and-tensorflow" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Advantages of using zfit and TensorFlow</h2>
+<p>The benefit of using zfit, which is based on TensorFlow, is that both frameworks are optimized for parallel processing and CPU as well as GPU processing. TensorFlow uses graph based computation, which means that it generates a computational graph of all operations to be done and their order, before actually executing the computation. This has two key advantages.</p>
+<p>First it allows TensorFlow to act as a kind of compiler and optimize the code before running and schedule graph branches that are independent of each other to be run on different processors and executed in parallel. Operations in TensorFlow are often implemented twice, once for CPU and once for GPU to make use of the different environments available on each processor type. Also, similarly to NumPy<span class="citation"><sup><a href="references.html#ref-harrisArrayProgrammingNumPy2020" role="doc-biblioref">9</a></sup></span>, TensorFlow’s underlying operations are programmed in C++ and therefore benefit from static typing and compile time optimization.</p>
+<p>Secondly it allows fore automatic differentiation, meaning that every TensorFlow operation defines its own derivative. Using the chain rule, TensorFlow can then automatically compute the gradient of the whole program, which is especially useful for non-parametric fitting (i.e. gradient descent computations in function approximations using a neural network).</p>
 </div>
-<div id="simple-and-linear-binning" class="section level2">
-<h2><span class="header-section-number">3.2</span> Simple and linear Binning</h2>
-<p>The most straightforward way to decrease runtime is by limiting the number of sample points. This can be done by a binning routine, where the values at a smaller number of regular grid points are estimated from the original large number of sample points.
-Given a set of sample points <span class="math inline">\(X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}\)</span> with weights <span class="math inline">\(w_k\)</span> and a set of equally spaced grid points <span class="math inline">\(G = \{g_0, g_1, ..., g_l, ..., g_{n-1}, g_M\}\)</span> where <span class="math inline">\(N &lt; n\)</span> we can assign an estimate (or a count) <span class="math inline">\(c_l\)</span> to each grid point <span class="math inline">\(g_l\)</span> and use the newly found <span class="math inline">\(g_l\)</span>’s to calculate the kernel density estimation instead. This brings the computational complexity down to <span class="math inline">\(\mathcal{O}(Nm)\)</span>. Depending on the number of grid points <span class="math inline">\(N\)</span> the estimate is either more accurate and slower or less accurate and faster. However as we will see in the comparison chapter later as well, even a grid of size <span class="math inline">\(1024\)</span> is enough to capture the true density with high accuracy on a million data points.<span class="citation"><sup><a href="#ref-KDEpyDoc" role="doc-biblioref">9</a></sup></span>.</p>
-<p>As described in the excellent overview by Artur Gramacki<span class="citation"><sup><a href="#ref-gramacki2018fft" role="doc-biblioref">10</a></sup></span> simple binning or linear binning can be used, although the last is often preferred since it is more accurate and the difference in computational complexity is negligible.</p>
-<p>Simple binning is just the standard process of taking a weighted histogram that is divided by the sum of the sample points weights (normalization). In one dimension simple binning is binary in that it assigns a data points weight (<span class="math inline">\(1\)</span> for an unweighted historgram) either to the bin left or right of itself. Linear binning on the other hand assigns a fraction of the whole weight to both bins on either side, proportional to the closeness of bin and data point in relation to the bin width.</p>
-<p>Mathematically linear binning in one dimension can be calculated like this:</p>
-<p><span class="math display" id="eq:linbin">\[\begin{equation}
-c_l = c(g_l) = \sum_{\substack{x_k \in X\\g_l &lt; x_k &lt; g_{l+1}}} \frac{g_{k+1}-x_k}{g_{l+1} - g_l} \cdot w_k + \sum_{\substack{x_k \in X\\g_{l-1} &lt; x_k &lt; g_l}} \frac{x_k - g_{l-1}}{g_{l+1} - g_l} \cdot w_k
-\tag{3.2}
-\end{equation}\]</span></p>
-<p>Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided. However with some inspiration from the excellent KDEpy package<span class="citation"><sup><a href="#ref-KDEpy" role="doc-biblioref">11</a></sup></span> which implements a kernel density estimation in native python/cython this can be done without using loops at all. By transforming the data such that every data point <span class="math inline">\(x_k\)</span> can be described by an integral part (corresponding to its nearest left grid point number <span class="math inline">\(l\)</span>) plus some fractional part (corresponding to the distance between grid point <span class="math inline">\(g_l\)</span> and data point <span class="math inline">\(x_k\)</span>) and applying <code>tf.math.bincount</code> twice to the transformed integral part weighting it with the fractional part times the initial weight.</p>
-<p>The kernel density estimation can then be calculated as a mixture distribution of kernels located at the grid points, weighted with their associated grid count.</p>
-<p><span class="math display" id="eq:kdebin">\[\begin{equation}
-\widehat{f}_h(x) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{x-g_l}{h}\Big)
-\tag{3.3}
-\end{equation}\]</span></p>
+<div id="exact-univariate-kernel-density-estimation" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Exact univariate kernel density estimation</h2>
+<p>The implementation of an exact univariate kernel density estimation in TensorFlow is straightforward. As described in the original Tensorflow Probability Paper<span class="citation"><sup><a href="references.html#ref-googleTFP" role="doc-biblioref">2</a></sup></span>, a KDE can be constructed by using its <code>MixtureSameFamily</code> distribution class, given sampled <code>data</code>, their associated <code>weights</code> and bandwidth <code>h</code> as follows</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="tensorflowImplementation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-2"><a href="tensorflowImplementation.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow_probability <span class="im">import</span> distributions <span class="im">as</span> tfd</span>
+<span id="cb1-3"><a href="tensorflowImplementation.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="tensorflowImplementation.html#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [...]</span>
+<span id="cb1-5"><a href="tensorflowImplementation.html#cb1-5" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> [...]</span>
+<span id="cb1-6"><a href="tensorflowImplementation.html#cb1-6" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> ...</span>
+<span id="cb1-7"><a href="tensorflowImplementation.html#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="tensorflowImplementation.html#cb1-8" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: tfd.Independent(tfd.Normal(loc<span class="op">=</span>x, scale<span class="op">=</span>h))</span>
+<span id="cb1-9"><a href="tensorflowImplementation.html#cb1-9" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> data.shape[<span class="dv">0</span>].value</span>
+<span id="cb1-10"><a href="tensorflowImplementation.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="tensorflowImplementation.html#cb1-11" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> weights <span class="op">/</span> tf.reduce_sum(weights)</span>
+<span id="cb1-12"><a href="tensorflowImplementation.html#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="tensorflowImplementation.html#cb1-13" aria-hidden="true" tabindex="-1"></a>kde <span class="op">=</span> tfd.MixtureSameFamily(</span>
+<span id="cb1-14"><a href="tensorflowImplementation.html#cb1-14" aria-hidden="true" tabindex="-1"></a>    mixture_distribution<span class="op">=</span>tfd.Categorical(</span>
+<span id="cb1-15"><a href="tensorflowImplementation.html#cb1-15" aria-hidden="true" tabindex="-1"></a>        probs<span class="op">=</span>probs),</span>
+<span id="cb1-16"><a href="tensorflowImplementation.html#cb1-16" aria-hidden="true" tabindex="-1"></a>    components_distribution<span class="op">=</span>f(data))</span></code></pre></div>
+<p>Interestingly, due to the smart encapsulated structure of TensorFlow Probability we can use any distribution of the location-scale family type as a kernel as long as it follows the Distribution contract in TensorFlow Probability. If the used Kernel has only bounded support, the implementation proposed in this paper allows to specify the support upon instantiation of the class. If the Kernel has infinite support (like a Gaussian kernel for instance) a practical support estimate is calculated by searching for approximate roots with Brent’s method<span class="citation"><sup><a href="references.html#ref-brent1971algorithm" role="doc-biblioref">21</a></sup></span> implemented for TensorFlow in the python package <code>tf_quant_finance</code> by Google. This allows us to speed up the calculation as negligible contributions from far away kernels are neglected.</p>
+<p>However calculating an exact kernel density estimation is not always feasible as this can take a long time with a huge collection of data points. By implementing it in TensorFlow we already get a significant speed up compared to implementations in native Python, due to TensorFlow’s advantages mentioned above. Nonetheless the computational complexity remains the same and for large data this can still make the exact KDE impractical.</p>
+<p>An exact KDE using zfit called <code>ZfitExact</code> is implemented as a
+<code>zfit.pdf.WrapDistribution</code> class, which is zfit’s class type for wrapping TensorFlow Probability distributions.</p>
 </div>
-<div id="using-convolution-and-the-fast-fourier-transform" class="section level2">
-<h2><span class="header-section-number">3.3</span> Using convolution and the Fast Fourier Transform</h2>
-<p>With binning implemented, another technique to speed up the computation is rewriting the Kernel Density Estimation as convolution operation between the kernel and the grid counts calculated by the binning routine. By using the fact that a convolution is just a multiplication in Fourier space one can reduce the computational complexity down to <span class="math inline">\(\mathcal{O}(\log{N} \cdot m)\)</span>.<span class="citation"><sup><a href="#ref-gramacki2018fft" role="doc-biblioref">10</a></sup></span></p>
-<p>Using the equation <a href="tensorflowImplementation.html#eq:kdebin">(3.3)</a> from above but also only evaluating it at grid points gives us</p>
-<p><span class="math display" id="eq:binkdegrid">\[\begin{equation}
-\widehat{f}_h(g_j) = \frac{1}{nh} \sum_{l=1}^N c_l \cdot K\Big(\frac{g_j-g_l}{h}\Big) = \frac{1}{nh} \sum_{l=1}^N k_{j-l} \cdot c_l
-\tag{3.4}
+<div id="binned-method" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Binned method</h2>
+<p>The method <code>ZfitBinned</code> also implements kernel density estimation as a constructed <code>MixtureSameFamily</code> distribution, however it bins the data (either simple or linearly) to an equally spaced grid and uses only the grid points weighted by their grid count as kernel locations (see section <a href="mathematicalTheory.html#binningTheory">2.2</a>).</p>
+<p>Since simple binning is already implemented in TensorFlow as <code>tf.histogram_fixed_width</code>, the contribution of this thesis for <code>ZfitBinned</code> lies in an implementation of linear binning in TensorFlow. Implementing linear binning efficiently with TensorFlow is a bit tricky since loops should be avoided as the graph based computation is fastest with vectorized operations and loops pose a significant runtime overhead. However with some inspiration from the KDEpy package<span class="citation"><sup><a href="references.html#ref-KDEpy" role="doc-biblioref">19</a></sup></span> this can be done without using loops at all.</p>
+<p>First, every data point <span class="math inline">\(x_k\)</span> is transformed to <span class="math inline">\(\tilde{x}_k\)</span> in the following way (the transformation can be vectorized)</p>
+<p><span class="math display" id="eq:linbintransform">\[\begin{equation}
+\tilde{x}_k = \frac{x_k - g_0}{\Delta g}
+\tag{4.1}
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(k_{j-l} = K(\frac{g_j-g_l}{h})\)</span>.
-If we set <span class="math inline">\(c_l = 0\)</span> for all <span class="math inline">\(l\)</span> not in the set <span class="math inline">\(\{1, ..., N\}\)</span> and notice that <span class="math inline">\(K(-x) = K(x)\)</span> we can extend equation <a href="tensorflowImplementation.html#eq:binkdegrid">(3.4)</a> to a discrete convolution as follows</p>
-<p><span class="math display" id="eq:binkdeconv">\[\begin{equation}
-\widehat{f}_h(g_j) = \frac{1}{nh} \sum_{l=-N}^N k_{j-l} \cdot c_l = \vec{c} \ast \vec{k}
-\tag{3.5}
+<p>where <span class="math inline">\(\Delta g\)</span> is the grid spacing and <span class="math inline">\(g_0\)</span> is the left-most value of the grid.</p>
+<p>Given this transformation every <span class="math inline">\(\tilde{x}_k\)</span> can then be described by an integral part <span class="math inline">\(\tilde{x}^{int}_k\)</span> (equal to its nearest left grid point index <span class="math inline">\(l\)</span> = <span class="math inline">\(x^{int}_k\)</span>) plus some fractional part <span class="math inline">\(\tilde{x}^{frac}_k\)</span> (corresponding to the additional distance between grid point <span class="math inline">\(g_l\)</span> and data point <span class="math inline">\(x_k\)</span>). The linear binning can then be solved in the following way.</p>
+<p>For data points on the right side of the grid point <span class="math inline">\(g_l\)</span>: The fractional parts of the data points are summed if the integral parts equal <span class="math inline">\(l\)</span>.</p>
+<p>For data points on the left side of the grid point <span class="math inline">\(g_l\)</span>: <span class="math inline">\(1\)</span> minus the fractional parts of the data points are summed if the integral parts equal <span class="math inline">\(l-1\)</span>.</p>
+<p>Including the weights this looks as follows</p>
+<p><span class="math display" id="eq:linbinnoloop">\[\begin{equation}
+c_l = c(g_l) = \sum_{\substack{\tilde{x}^{frac}_k  \in \tilde{X}^{frac}\\l = \tilde{x}^{int}_k}} \tilde{x}^{frac}_k \cdot w_k + \sum_{\substack{\tilde{x}^{frac}_k  \in \tilde{X}^{frac}\\l = \tilde{x}^{int}_k + 1}} (1-\tilde{x}^{frac}_k) \cdot w_k
+\tag{4.2}
 \end{equation}\]</span></p>
-<p>where the two vectors look like this</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="tensorflowImplementation.html#cb2-1"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&#39;figures/c_conv_k.png&#39;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:ckFigure"></span>
-<img src="figures/c_conv_k.png" alt="Vectors $\vec{c}$ and $\vec{k}$"  />
-<p class="caption">
-Figure 3.1: Vectors <span class="math inline">\(\vec{c}\)</span> and <span class="math inline">\(\vec{k}\)</span>
-</p>
+<p>Left and right side sums can then be calculated efficiently with the TensorFlow function <code>tf.math.bincount</code>.</p>
+<p>The binned method <code>ZfitBinned</code> is implemented in the same class definition as <code>ZfitExact</code>, the binning can be enabled by specifying a constructor argument.</p>
 </div>
-<p>By using the well known convolution theorem we can fourier transform <span class="math inline">\(\vec{c}\)</span> and <span class="math inline">\(\vec{k}\)</span> multiply them and inverse fourier transform them back into real space.</p>
-<p>In TensorFlow convolutions are efficiently implemented already in this way if we use <code>tf.nn.conv1d</code>. In benchmarking using this method proved significantly faster than using <code>tf.signal.rfft</code> and <code>tf.signal.irfft</code> to transform, multiply and inverse transform the vectors, which is implemented as an alternative as well.</p>
-<p>This algorithm is implemented as its own class since it does not represent a complete mixture distribution anymore but calculates just the density distribution values at the speficied grid points. To still infer values for other points in the range of <span class="math inline">\(x\)</span> <code>tfp.math.interp_regular_1d_grid</code> is used which computes a linear interpolation of values between the grid.</p>
+<div id="fft-based-method" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> FFT based method</h2>
+<p>The KDE method called <code>ZfitFFT</code>, which uses the FFT based method (discussed in section <a href="mathematicalTheory.html#fftTheory">2.3</a>), is implemented as a <code>zfit.pdf.BasePdf</code> class. It is not based on TensorFlow Probability as it does not use a <code>MixtureDistribution</code> but instead calculates the estimate for the given grid points directly. To still infer values for other points in the range of <span class="math inline">\(x\)</span> <code>tfp.math.interp_regular_1d_grid</code> is used, which computes a linear interpolation of values between the grid. In TensorFlow one-dimensional discrete convolutions are efficiently implemented already if we use <code>tf.nn.conv1d</code>. In benchmarking using this method to calculate the estimate proved significantly faster than using <code>tf.signal.rfft</code> and <code>tf.signal.irfft</code> to transform, multiply and inverse transform the vectors, which is implemented as an alternative option as well.</p>
 </div>
-<div id="improved-sheather-jones-algorithm" class="section level2">
-<h2><span class="header-section-number">3.4</span> Improved Sheather Jones Algorithm</h2>
-<p>A different take on Kernel Density Estimators is described in the paper ‘Kernel density estimation by diffusion’ by Botev et al.<span class="citation"><sup><a href="#ref-botev2010kernel" role="doc-biblioref">12</a></sup></span>. The authors present a new adaptive kernel density estimator based on linear diffusion processes which also includes an estimation for the optimal bandwidth.</p>
-<p>The algorithm is quite difficult to understand, a detailed explanation is given in the ‘Handbook of Monte Carlo Methods’<span class="citation"><sup><a href="#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span> by the original paper authors. However the general idea is briefly sketched below.</p>
-<p>A critical insight is that the Gaussian kernel density estimator <span class="math inline">\(\widehat{f}_{h,norm}\)</span> is the solution of the partial differential equation</p>
-<p><span class="math display" id="eq:heatpde">\[\begin{equation}
-\frac{\partial}{\partial t} \widehat{f}_{h,norm}(x,t) = \frac{1}
-{2} \frac{\partial^2}{\partial x^2} \widehat{f}_{h,norm}(x,t),\space t&gt;0 
-\tag{3.6}
-\end{equation}\]</span></p>
-<p>with <span class="math inline">\(x \in \mathbb{R}\)</span>, <span class="math inline">\(\lim_{x\rightarrow \pm \infty}{\widehat{f}_{h,norm}(x,t) = 0}\)</span> and initial condition <span class="math inline">\(\widehat{f}_{h,norm}(x,0) = \Delta(x)\)</span>, where <span class="math inline">\(\Delta(x) = \frac{1}{N} \sum_{k=0}^N \delta_{x_k}(x)\)</span> us the empirical density of the given sample points <span class="math inline">\(X = \{x_0, x_1, ..., x_k, ..., x_{n-1}, x_n\}\)</span> and <span class="math inline">\(\delta_{x_k}(x)\)</span> is the Dirac measure at <span class="math inline">\(x_k\)</span>. This means the kernel density estimator can be obtained by evolving the solution of the partial differential equation <a href="tensorflowImplementation.html#eq:heatpde">(3.6)</a> up to time <span class="math inline">\(t\)</span>. The key observation is that <a href="tensorflowImplementation.html#eq:heatpde">(3.6)</a> can be solved on a finite domain efficiently using the fast cosine transform - an FFT-related transform.<span class="citation"><sup><a href="#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span></p>
-<p>The optimal bandwidth is often defined as the one that minimizes the mean integrated square error(<span class="math inline">\(MISE\)</span>)</p>
-<p><span class="math display" id="eq:mise">\[\begin{equation}
-MISE(t) = \mathbb{E}_f\int [\widehat{f}_{h,norm}(x,t) - f(x)]^2 dx
-\tag{3.7}
-\end{equation}\]</span></p>
-<p>An asymptotically optimal value <span class="math inline">\(t^{\ast}\)</span> which minimizes a first-order asymptotic appoximation of the <span class="math inline">\(MISE\)</span> is then given by<span class="citation"><sup><a href="#ref-kroese2013handbook" role="doc-biblioref">13</a></sup></span></p>
-<p><span class="math display" id="eq:tstar">\[\begin{equation}
-t^{\ast} = \Big( \frac{1}{2N\sqrt{\pi} \| f&#39;&#39;\|^2}\Big)^{\frac{2}{5}}
-\tag{3.8}
-\end{equation}\]</span></p>
-<p>Using the fact that <span class="math inline">\(\|f^{(j)}\|^2 = (-1)^j \mathbb{E}_f[f^{(2j)}(X)], \space j\geq 1\)</span> and an initial estimation for <span class="math inline">\(\|\widehat{f}_{h,norm}^{(l+2)}\|^2\)</span> for some <span class="math inline">\(l \geq 3\)</span> one can then iteratively get a an estimation for <span class="math inline">\(\|\widehat{f}_{h,norm}^{(2)}\|^2\)</span> which can then be used to estimate <span class="math inline">\(t^{\ast}\)</span> instead of <span class="math inline">\(\|f&#39;&#39;\|^2\)</span>. According to their handbook <span class="math inline">\(l = 7\)</span> is a suitable value to yield good practical results.</p>
-<p>The improvment compared to the standard Sheather-Jones plug-on method<span class="citation"><sup><a href="#ref-sheather1991reliable" role="doc-biblioref">14</a></sup></span> consists in the fact that to compute the initial estimation of <span class="math inline">\(\|\widehat{f}_{h,norm}^{(l+2)}\|^2\)</span> is calculated by solving the partial differental equation using the fast cosine transform as described above, eliminating the need to assume normally distributed data for the initial estimate and leading improved performance, especially for density distributions that are far from normal as seen in the next chapter.</p>
-<p>The implementation of the algorithm in TensorFlow proposed in this paper was also inspired a lot by the python package KDEpy<span class="citation"><sup><a href="#ref-KDEpy" role="doc-biblioref">11</a></sup></span> and uses Brent’s method<span class="citation"><sup><a href="#ref-brent1971algorithm" role="doc-biblioref">8</a></sup></span> to find roots implemented in TensorFlow the python package <code>tf_quant_finance</code> as well.</p>
-<p>One shortcoming of the improved Sheather-Jones algorithm (ISJ) is that with few data points to estimate from, it is not guarenteed to converge. If that happens, one has to use the exact, binned or FFT kernel density estimators as described above.</p>
+<div id="isjMethod" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> ISJ based method</h2>
+<p>The method called <code>ZfitISJ</code> is also implemented as a <code>zfit.pdf.BasePdf</code> class. After using simple or linear binning to calculate the grid counts, the estimate for the grid points is calculated using the improved Sheather Jones method (discussed in section <a href="mathematicalTheory.html#isjTheory">2.4</a>).</p>
+<p>To find the roots for <span class="math inline">\(\gamma^l\)</span> in equation <a href="mathematicalTheory.html#eq:hamisegamma2">(2.12)</a> Brent’s method<span class="citation"><sup><a href="references.html#ref-brent1971algorithm" role="doc-biblioref">21</a></sup></span> implemented <code>tf_quant_finance</code> is used again. To avoid loops the iterative function <span class="math inline">\(\gamma^l\)</span> is statically unrolled for <span class="math inline">\(l = 5\)</span>, since higher values would not lead to any practical differences according to the paper authors. For the Discrete Cosine Transform <code>tf.signal.dct</code> is used.</p>
+</div>
+<div id="hofmeyrMethod" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Specialized kernel method</h2>
+<p>The method called <code>ZfitHofmeyr</code> is again implemented as a <code>zfit.pdf.BasePdf</code> class. It uses specialized kernels of the form <span class="math inline">\(poly(x)\cdot\exp(x)\)</span> (as discussed in <a href="mathematicalTheory.html#hofmeyrTheory">2.5</a>).</p>
+<p>However due to the recursive nature of the method, an implementation in TensorFlow directly displayed the same poor performance as using an exact kernel density estimation based on a mixture distribution. This is due to the fact, that recursive functions of this type can not be vectorized and have to be implemented using loops, which are ill-advised for TensorFlow due to its graph based paradigm. Implementing the recursion using NumPy and <code>tf.numpy_function</code> (which wraps a NumPy based Python function to create a single TensorFlow operation) was an order of magnitude faster, but still slower than all approximative methods discussed before.</p>
+<p>Finally, implementing the method in C++ directly as a custom TensorFlow operation appropriately named <code>tf.hofmeyr_kde</code> yielded the competitive execution runtime expected from theory. The code for the C++ based implementation is based on the C++ code used for the author’s own R package FKSUM<span class="citation"><sup><a href="references.html#ref-hofmeyrFastKernelSmoothing2020" role="doc-biblioref">22</a></sup></span>.</p>
+<p>So far the custom TensorFlow operation is only implemented as a proof of concept and poses severe limitations. Its C++ library has to be compiled for every platform specifically and it currently does not compute its own gradient and therefore does not support TensorFlow’s automatic differentiation. It is also implemented only for the CPU and does therefore not benefit of using the GPU.</p>
 
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-googleTFP">
-<p><sup>7</sup> J.V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton, A. Alemi, M.D. Hoffman, and R.A. Saurous, CoRR <strong>abs/1711.10604</strong>, (2017).</p>
-</div>
-<div id="ref-brent1971algorithm">
-<p><sup>8</sup> R.P. Brent, The Computer Journal <strong>14</strong>, 422 (1971).</p>
-</div>
-<div id="ref-KDEpyDoc">
-<p><sup>9</sup> T. Odland, Comparison - KDEpy 1.0.5 Documentation (n.d.).</p>
-</div>
-<div id="ref-gramacki2018fft">
-<p><sup>10</sup> A. Gramacki, in <em>Nonparametric Kernel Density Estimation and Its Computational Aspects</em> (Springer, 2018), pp. 85–118.</p>
-</div>
-<div id="ref-KDEpy">
-<p><sup>11</sup> T. Odland, GitHub Repository (2020).</p>
-</div>
-<div id="ref-botev2010kernel">
-<p><sup>12</sup> Z.I. Botev, J.F. Grotowski, D.P. Kroese, and others, The Annals of Statistics <strong>38</strong>, 2916 (2010).</p>
-</div>
-<div id="ref-kroese2013handbook">
-<p><sup>13</sup> D.P. Kroese, T. Taimre, and Z.I. Botev, <em>Handbook of Monte Carlo Methods</em> (John Wiley &amp; Sons, 2013).</p>
-</div>
-<div id="ref-sheather1991reliable">
-<p><sup>14</sup> S.J. Sheather and M.C. Jones, Journal of the Royal Statistical Society: Series B (Methodological) <strong>53</strong>, 683 (1991).</p>
 </div>
 </div>
             </section>
@@ -336,7 +314,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/03-implementation.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/edit/master/chapters/04-implementation.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -344,7 +322,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/03-implementation.Rmd",
+"link": "https://github.com/AstroViking/ba-thesis/blob/master/chapters/04-implementation.Rmd",
 "text": null
 },
 "download": ["thesis.pdf", "thesis.epub"],

@@ -1,13 +1,14 @@
 bookdown::gitbook:
-  highlight: "breezedark"
   config:
     download: ["pdf", "epub"]
+    toc:
+      after: |
+        <li><a href="presentation/index.html" target="_blank">Presentation</a></li>
 bookdown::pdf_book:
-  includes:
-    in_header: preamble.tex
   latex_engine: xelatex
   keep_tex: False
   template: "templates/eisvogel-m.latex"
   pandoc_args:
-    "--metadata-file=_pdf_options.yml"
+    - "--metadata-file=_pdf_options.yml"
+    - "--highlight=breezedark"
 bookdown::epub_book: default

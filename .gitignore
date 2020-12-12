@@ -10,3 +10,4 @@ renv
 _bookdown_files
 *.toc
 *.aux
+presentation/index_cache
